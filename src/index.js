@@ -6,10 +6,6 @@ const mongoose = require('mongoose');
 const app = express();
 
 //Conectando ao MongoDBAtlas (servidor mongo em cloud)
-mongoose.connect('mongodb+srv://hunter:hunter@159632478@cluster0-jcbux.mongodb.net/dailybakery-owner?retryWrites=true&w=majority', { 
-    useNewUrlParser: true, 
-    useUnifiedTopology: true 
-});
 
 //Definir como json o corpo das requisiçções nas API's
 app.use(express.json());

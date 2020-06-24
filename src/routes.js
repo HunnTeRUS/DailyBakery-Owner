@@ -3,7 +3,8 @@ const routes = Router();
 const PadariaServices = require('./services/PadariaServices');
 
 routes.post('/insertBakery', PadariaServices.insertBakery);
-routes.delete('/deleteBakery', PadariaServices.deleteBakery);
 routes.get('/listBakery', PadariaServices.listBakery);
+routes.get('/listBakeryByName', PadariaServices.listBakeryByName);
+
 
 module.exports = routes;

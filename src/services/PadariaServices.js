@@ -29,8 +29,18 @@ module.exports = {
         });
     },
 
+    async listBakeryByName(req, res) {
+        //Pega variavel pela query: localhost:3333/listBakeryByName?nome=PadariaDoZé
+        const nome = req.query.nome;
+        console.log(nome);
+
+        Padaria.find({"nome": nome}, function(err, result) {
+            res.json(result);
+        });
+    },
+
     async listByLocation(request, response) {
-        //Buscar todos os devs num raio de 10KM e filtrar por tecnologias
+        //Buscar todos as padarias num raio de 10KM
         console.log(request.query);
 
         const { latitude, longitude } = request.query;
