@@ -1,8 +1,11 @@
 // Nodejs encryption with CTR
 const crypto = require('crypto');
 
+require('dotenv').config('../../../.env');
+const pass = process.env.ENCRYPT_PASSWORD;
+
 const algorithm = 'aes-256-ctr';
-const password = 'd6F3Efeq';
+const password = pass;
 
 module.exports = {
     encrypt(text) {

@@ -1,4 +1,4 @@
-var express = require('express');
+const express = require('express');
 const routes = require('./routes');
 const mongoose = require('mongoose');
 
@@ -6,10 +6,10 @@ const mongoose = require('mongoose');
 const app = express();
 
 //Criando um buscador para variaveis de ambiente
-require('dotenv').config('./.env');
+require('dotenv').config('../.env');
 
 //Setando variavel de ambiente
-const mongoURL = process.env.MONGO_HOME;
+const mongoURL = String(process.env.MONGO_HOME);
 
 //Conectando ao MongoDBAtlas (servidor mongo em cloud)
 mongoose.connect(mongoURL, {

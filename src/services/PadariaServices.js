@@ -70,7 +70,12 @@ module.exports = {
         const { cnpj, senha } = request.body;
 
         Padaria.findOne({ "cnpj": cnpj }, (err, result) => {
+            console.log(senha)
+            console.log(result.senha)
+            
             let senhaalterada = cryp.decrypt(result.senha);
+
+            
 
             if (senha == senhaalterada) {
                 response.json(result);
