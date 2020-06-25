@@ -1,18 +1,24 @@
 const Padaria = require('../models/Padaria');
 const { request } = require('express');
+const cryp = require('./utils/EncryptMethods')
 
 module.exports = {
     async insertBakery(request, response) {
-        const { nome, email, senha, numero_celular, numero_telefone,
+
+        const { nome, email, numero_celular, numero_telefone,
             cnpj, aberto_fechado, ultima_fornada, cep, rua,
             numero, bairro, cidade, estado, ibge, gia, latitude, longitude } = request.body;
+
+        let { senha } = request.body;
 
         const location = {
             type: 'Point',
             coordinates: [longitude, latitude]
         }
 
-        const dev = Padaria.create({
+        senha = String(cryp.encrypt(senha));
+
+        const dev = await Padaria.create({
             nome, email, senha, numero_celular,
             numero_telefone, cnpj, aberto_fechado,
             ultima_fornada, cep, rua,
@@ -24,7 +30,7 @@ module.exports = {
     },
 
     async listBakery(req, res) {
-        Padaria.find({}, function(err, result) {
+        Padaria.find({}, function (err, result) {
             res.json(result);
         });
     },
@@ -34,7 +40,7 @@ module.exports = {
         const nome = req.query.nome;
         console.log(nome);
 
-        Padaria.find({"nome": nome}, function(err, result) {
+        Padaria.find({ "nome": nome }, function (err, result) {
             res.json(result);
         });
     },
@@ -56,7 +62,24 @@ module.exports = {
                 },
             },
         });
-        
-        return response.json({padarias});
-    }
+
+        return response.json({ padarias });
+    },
+
+    async bakeryLogin(request, response) {
+        const { cnpj, senha } = request.body;
+
+        Padaria.findOne({ "cnpj": cnpj }, (err, result) => {
+            let senhaalterada = cryp.decrypt(result.senha);
+
+            if (senha == senhaalterada) {
+                response.json(result);
+            }
+            else {
+                response.json({ Erro: "CNPJ ou senha incorretos" })
+            }
+        });
+
+    },
+
 };
