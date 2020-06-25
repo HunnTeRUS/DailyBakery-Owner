@@ -10,8 +10,12 @@
   "author": "Otavio Celestino dos Santos",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "mongoose": "^5.9.20"
+    "getenv": "^1.0.0",
+    "modules": "^0.4.0",
+    "mongoose": "^5.9.20",
+    "node": "^14.4.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
