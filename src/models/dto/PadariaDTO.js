@@ -1,7 +1,6 @@
-const mongoose = require('mongoose');
-const PointSchema = require('./utils/PointSchema')
+const PointSchema = require('../utils/PointSchema')
 
-const PadariaSchema = mongoose.Schema({
+const PadariaDTO = {
     nome: String, 
     email: String,
     senha: String,
@@ -22,6 +21,6 @@ const PadariaSchema = mongoose.Schema({
         type: PointSchema,
         index: '2dsphere'
     }
-});
+}
 
-module.exports = mongoose.model('Padaria', PadariaSchema);
+module.exports = PadariaDTO;

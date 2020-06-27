@@ -1,36 +1,36 @@
 const Padaria = require('../models/Padaria');
-const { request } = require('express');
 const cryp = require('./utils/EncryptMethods')
+let PadariaDTO = require('../models/dto/PadariaDTO');  
 
 module.exports = {
     async insertBakery(request, response) {
 
-        const { nome, email, numero_celular, numero_telefone,
-            cnpj, aberto_fechado, ultima_fornada, cep, rua,
-            numero, bairro, cidade, estado, ibge, gia, latitude, longitude } = request.body;
-
-        let { senha } = request.body;
+        //Como na API é recebida a latitude e longitude, é necessario pegar separado do objeto e 
+        //transformar em um objeto location para colocar dentro d objeto para inserção no DB
+        const { latitude, longitude } = request.body;
+        PadariaDTO = request.body;
 
         const location = {
             type: 'Point',
             coordinates: [longitude, latitude]
         }
 
-        senha = String(cryp.encrypt(senha));
+        PadariaDTO.location = location;
 
-        const dev = await Padaria.create({
-            nome, email, senha, numero_celular,
-            numero_telefone, cnpj, aberto_fechado,
-            ultima_fornada, cep, rua,
-            numero, bairro, cidade,
-            estado, ibge, gia, location
-        })
+        PadariaDTO.senha = String(cryp.encrypt(PadariaDTO.senha));
 
-        response.json(dev);
+        const foundBakery = await Padaria.create(PadariaDTO);
+
+        response.json(foundBakery);
     },
 
     async listBakery(req, res) {
         Padaria.find({}, function (err, result) {
+
+            for(var i = 0; i<result.length; i++) {
+                result[0].senha = cryp.decrypt(result[0].senha);
+            }
+
             res.json(result);
         });
     },
@@ -38,9 +38,12 @@ module.exports = {
     async listBakeryByName(req, res) {
         //Pega variavel pela query: localhost:3333/listBakeryByName?nome=PadariaDoZé
         const nome = req.query.nome;
-        console.log(nome);
 
         Padaria.find({ "nome": nome }, function (err, result) {
+            
+            for(var i = 0; i<result.length; i++) {
+                result[0].senha = cryp.decrypt(result[0].senha);
+            }
             res.json(result);
         });
     },
@@ -63,6 +66,12 @@ module.exports = {
             },
         });
 
+        if(padarias) {
+            for(var i = 0; i<result.length; i++) {
+                result[0].senha = cryp.decrypt(result[0].senha);
+            }
+        }
+
         return response.json({ padarias });
     },
 
@@ -70,14 +79,11 @@ module.exports = {
         const { cnpj, senha } = request.body;
 
         Padaria.findOne({ "cnpj": cnpj }, (err, result) => {
-            console.log(senha)
-            console.log(result.senha)
-            
             let senhaalterada = cryp.decrypt(result.senha);
 
-            
-
             if (senha == senhaalterada) {
+                result.senha = cryp.decrypt(result.senha);
+
                 response.json(result);
             }
             else {
