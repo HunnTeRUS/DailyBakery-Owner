@@ -72,6 +72,23 @@ module.exports = {
                 ultima_fornada: Joi.date().required()
             }),
         })
+    },
+
+    updatePassword(){
+        return celebrate({
+            [Segments.BODY]: Joi.object().keys({
+                email: Joi.string().email().required(),
+                novaSenha: Joi.string().required().min(4),
+            }),
+        })
+    },
+
+    forgotPassword(){
+        return celebrate({
+            [Segments.BODY]: Joi.object().keys({
+                email: Joi.string().email().required(),
+            }),
+        })
     }
 
 }

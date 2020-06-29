@@ -18,4 +18,9 @@ routes.post('/updateLastBatch', ApiValidations.updateLastBatch(), PadariaService
 
 routes.post('/updateOpenedOrClosed', ApiValidations.updateOpenedOrClosed(),PadariaServicesUtils.updateOpenedOrClosed);
 
+routes.post('/updatePassword', ApiValidations.updatePassword(), PadariaServicesUtils.updatePassword);
+
+routes.post('/forgotPassword', ApiValidations.forgotPassword(), PadariaServicesUtils.forgotPassword);
+
+
 module.exports = routes;

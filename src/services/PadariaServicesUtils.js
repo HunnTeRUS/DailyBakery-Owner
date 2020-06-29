@@ -1,6 +1,8 @@
 const Padaria = require('../models/Padaria');
 const cryp = require('./utils/EncryptMethods')
 let PadariaDTO = require('../models/dto/PadariaDTO');
+let Mailer = require('./utils/Mailer');
+
 
 module.exports = {
 
@@ -19,11 +21,11 @@ module.exports = {
                 return response.status(400).json({Erro: "CNPJ incorreto"});
             }
 
+            return response.json(updated);
+
         } catch(e) {
             return response.status(400).json(e);
         }
-
-        return response.json(updated);
     },
 
     //Altera o status da padaria: aberto/fechado
@@ -40,11 +42,51 @@ module.exports = {
             if(!updated){
                 return response.status(400).json({Erro: "CNPJ incorreto"});
             }
+            return response.json(updated);
         } catch(e) {
             return response.status(400).json(e);
         }
 
-        return response.json(updated);
-    }
+    },
+
+    async updatePassword(request, response) {
+        const { email, novaSenha } = request.body;
+
+        try{
+            const novaSenhaCrypt = String(cryp.encrypt(novaSenha));
+            await Padaria.updateOne({ "email": email }, { "senha": novaSenhaCrypt });
+            
+            return response.status(200).json();
+        } catch(e) {
+            return response.status(400).json(e);
+        }
+    },
+
+    async forgotPassword(request, response) {
+        const { email } = request.body;
+        let code; 
+
+        try{
+            const user = await Padaria.findOne({email: email});
+            
+            if(user) {
+                code = Mailer.sendNewPasswordCodeByEmail(email);
+
+                return response.status(200).json({
+                    email: email,
+                    codigoEnviado: code,
+                });
+            }
+
+            else {
+                return response.status(404).json({Error: "Email invalido"});
+            }
+            
+        } catch(e) {
+            return response.status(400).json(e);
+        }
+    },
+
+
 
 }
