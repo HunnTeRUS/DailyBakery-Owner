@@ -1,6 +1,7 @@
 const express = require('express');
 const routes = require('./routes');
 const mongoose = require('mongoose');
+const { errors } = require('celebrate')
 
 //Criando uma instancia do express pra variavel app conduzir o sistema
 const app = express();
@@ -22,6 +23,8 @@ app.use(express.json());
 
 //Importando o arquivo de rotas da aplicação
 app.use(routes);
+
+app.use(errors());
 
 //Qual porta a aplicalção esta usando
 app.listen(3333);

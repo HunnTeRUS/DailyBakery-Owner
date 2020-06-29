@@ -25,27 +25,30 @@ module.exports = {
     },
 
     async listBakery(req, res) {
-        Padaria.find({}, function (err, result) {
+        const padarias = await Padaria.find({});
 
-            for(var i = 0; i<result.length; i++) {
-                result[0].senha = cryp.decrypt(result[0].senha);
+        if(padarias){
+            for(var i = 0; i<padarias.length; i++) {
+                padarias[i].senha = cryp.decrypt(padarias[i].senha);
             }
-
-            res.json(result);
-        });
+        }
+        
+        res.json({padarias});
     },
 
     async listBakeryByName(req, res) {
         //Pega variavel pela query: localhost:3333/listBakeryByName?nome=PadariaDoZé
         const nome = req.query.nome;
 
-        Padaria.find({ "nome": nome }, function (err, result) {
+        const padarias = await Padaria.find({ "nome": nome });
             
-            for(var i = 0; i<result.length; i++) {
-                result[0].senha = cryp.decrypt(result[0].senha);
+            if(padarias){
+                for(var i = 0; i<padarias.length; i++) {
+                    padarias[i].senha = cryp.decrypt(padarias[i].senha);
+                }
             }
-            res.json(result);
-        });
+
+        res.json({padarias});
     },
 
     async listByLocation(request, response) {
@@ -67,8 +70,8 @@ module.exports = {
         });
 
         if(padarias) {
-            for(var i = 0; i<result.length; i++) {
-                result[0].senha = cryp.decrypt(result[0].senha);
+            for(var i = 0; i<padarias.length; i++) {
+                padarias[i].senha = cryp.decrypt(padarias[i].senha);
             }
         }
 
@@ -79,18 +82,23 @@ module.exports = {
         const { cnpj, senha } = request.body;
 
         Padaria.findOne({ "cnpj": cnpj }, (err, result) => {
-            let senhaalterada = cryp.decrypt(result.senha);
+            if(result) {
+                let senhaalterada = cryp.decrypt(result.senha);
 
-            if (senha == senhaalterada) {
-                result.senha = cryp.decrypt(result.senha);
+                if (senha == senhaalterada) {
+                    result.senha = cryp.decrypt(result.senha);
 
-                response.json(result);
+                    response.json(result);
+                }
+                else {
+                    return response.status(401).json({error: 'CNPJ ou senha incorretos'});
+                }
             }
             else {
-                response.json({ Erro: "CNPJ ou senha incorretos" })
+                return response.status(401).json({error: 'CNPJ ou senha incorretos'});
             }
         });
 
-    },
+    }
 
 };

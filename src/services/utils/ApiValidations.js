@@ -17,7 +17,7 @@ module.exports = {
                 numero: Joi.string().required(),
                 bairro: Joi.string().required(),
                 cidade: Joi.string().required(),
-                estado: Joi.string().requires(),
+                estado: Joi.string().required(),
                 ibge: Joi.string().optional(),
                 gia: Joi.string().optional(),
                 latitude: Joi.number(),
@@ -37,7 +37,7 @@ module.exports = {
     bakeryLogin(){
         return celebrate({
             [Segments.BODY]: Joi.object().keys({
-                cnpj: Joi.string().required(),
+                cnpj: Joi.string().required().length(14),
                 senha: Joi.string().required(), 
             })
         });
@@ -49,6 +49,28 @@ module.exports = {
                 latitude: Joi.number().required(),
                 longitude: Joi.number().required(),
             })
+        })
+    }, 
+
+    updateOpenedOrClosed(){
+        return celebrate({
+            [Segments.QUERY]: Joi.object().keys({
+                cnpj: Joi.string().required().length(14),
+            }),
+            [Segments.BODY]: Joi.object().keys({
+                aberto_fechado: Joi.boolean().required()
+            })
+        })
+    },
+
+    updateLastBatch(){
+        return celebrate({
+            [Segments.QUERY]: Joi.object().keys({
+                cnpj: Joi.string().required().length(14),
+            }),
+            [Segments.BODY]: Joi.object().keys({
+                ultima_fornada: Joi.date().required()
+            }),
         })
     }
 
