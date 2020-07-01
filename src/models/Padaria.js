@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
+const jwt = require("jsonwebtoken");
 const PointSchema = require('./utils/PointSchema')
 
 const PadariaSchema = mongoose.Schema({
-    nome: String, 
+    nome: String,
     email: String,
     senha: String,
     numero_celular: String,
@@ -23,5 +24,13 @@ const PadariaSchema = mongoose.Schema({
         index: '2dsphere'
     }
 });
+
+PadariaSchema.methods = {
+    generateToken(user) {
+        return jwt.sign(user, process.env.SECRET, {
+            expiresIn: 86400
+        });
+    }
+};
 
 module.exports = mongoose.model('Padaria', PadariaSchema);

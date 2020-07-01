@@ -1,7 +1,7 @@
 const { celebrate, Joi, Segments } = require('celebrate');
 
 module.exports = {
-    validateBakeryInsertion(){
+    validateBakeryInsertion() {
         return celebrate({
             [Segments.BODY]: Joi.object().keys({
                 nome: Joi.string().required(),
@@ -24,9 +24,9 @@ module.exports = {
                 longitude: Joi.number()
             })
         });
-    }, 
+    },
 
-    listBakeryByName(){
+    listBakeryByName() {
         return celebrate({
             [Segments.QUERY]: Joi.object().keys({
                 nome: Joi.string().required()
@@ -34,25 +34,26 @@ module.exports = {
         });
     },
 
-    bakeryLogin(){
+    bakeryLogin() {
         return celebrate({
             [Segments.BODY]: Joi.object().keys({
                 cnpj: Joi.string().required().length(14),
-                senha: Joi.string().required(), 
+                senha: Joi.string().required(),
+
             })
         });
     },
 
-    listByLocation(){
+    listByLocation() {
         return celebrate({
             [Segments.QUERY]: Joi.object().keys({
                 latitude: Joi.number().required(),
                 longitude: Joi.number().required(),
             })
         })
-    }, 
+    },
 
-    updateOpenedOrClosed(){
+    updateOpenedOrClosed() {
         return celebrate({
             [Segments.QUERY]: Joi.object().keys({
                 cnpj: Joi.string().required().length(14),
@@ -63,7 +64,7 @@ module.exports = {
         })
     },
 
-    updateLastBatch(){
+    updateLastBatch() {
         return celebrate({
             [Segments.QUERY]: Joi.object().keys({
                 cnpj: Joi.string().required().length(14),
@@ -74,7 +75,7 @@ module.exports = {
         })
     },
 
-    updatePassword(){
+    updatePassword() {
         return celebrate({
             [Segments.BODY]: Joi.object().keys({
                 email: Joi.string().email().required(),
@@ -83,12 +84,19 @@ module.exports = {
         })
     },
 
-    forgotPassword(){
+    forgotPassword() {
         return celebrate({
             [Segments.BODY]: Joi.object().keys({
                 email: Joi.string().email().required(),
             }),
         })
-    }
+    },
 
+    bakeryToken() {
+        return celebrate({
+            [Segments.HEADERS]: Joi.object().keys({
+                token: Joi.required()
+            }),
+        })
+    }
 }

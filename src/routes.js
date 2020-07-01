@@ -16,11 +16,10 @@ routes.get('/listByLocation', ApiValidations.listByLocation(), PadariaServices.l
 
 routes.post('/updateLastBatch', ApiValidations.updateLastBatch(), PadariaServicesUtils.updateLastBatch);
 
-routes.post('/updateOpenedOrClosed', ApiValidations.updateOpenedOrClosed(),PadariaServicesUtils.updateOpenedOrClosed);
+routes.post('/updateOpenedOrClosed', ApiValidations.updateOpenedOrClosed(), PadariaServicesUtils.updateOpenedOrClosed);
 
 routes.post('/updatePassword', ApiValidations.updatePassword(), PadariaServicesUtils.updatePassword);
 
 routes.post('/forgotPassword', ApiValidations.forgotPassword(), PadariaServicesUtils.forgotPassword);
-
 
 module.exports = routes;
