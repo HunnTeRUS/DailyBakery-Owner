@@ -3,8 +3,9 @@ const routes = Router();
 const PadariaServices = require('./services/PadariaServices');
 const ApiValidations = require('./services/utils/ApiValidations');
 const PadariaServicesUtils = require('./services/PadariaServicesUtils');
+const VerifyToken = require('./services/Authentication/VerifyToken');
 
-routes.post('/insertBakery', ApiValidations.validateBakeryInsertion(), PadariaServices.insertBakery);
+routes.post('/insertBakery', VerifyToken, ApiValidations.validateBakeryInsertion(), PadariaServices.insertBakery);
 
 routes.get('/listBakery', PadariaServices.listBakery);
 
@@ -14,9 +15,11 @@ routes.post('/bakeryLogin', ApiValidations.bakeryLogin(), PadariaServices.bakery
 
 routes.get('/listByLocation', ApiValidations.listByLocation(), PadariaServices.listByLocation);
 
-routes.post('/updateLastBatch', ApiValidations.updateLastBatch(), PadariaServicesUtils.updateLastBatch);
+routes.get('/findBakeryByCNPJ', ApiValidations.findBakeryByCNPJ(), PadariaServices.findBakeryByCNPJ);
 
-routes.post('/updateOpenedOrClosed', ApiValidations.updateOpenedOrClosed(), PadariaServicesUtils.updateOpenedOrClosed);
+routes.post('/updateLastBatch', VerifyToken, ApiValidations.updateLastBatch(), PadariaServicesUtils.updateLastBatch);
+
+routes.post('/updateOpenedOrClosed', VerifyToken, ApiValidations.updateOpenedOrClosed(), PadariaServicesUtils.updateOpenedOrClosed);
 
 routes.post('/updatePassword', ApiValidations.updatePassword(), PadariaServicesUtils.updatePassword);
 
