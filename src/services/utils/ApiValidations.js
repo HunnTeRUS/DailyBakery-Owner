@@ -1,4 +1,5 @@
 const { celebrate, Joi, Segments } = require('celebrate');
+const { join } = require('path');
 
 module.exports = {
     validateBakeryInsertion() {
@@ -106,5 +107,34 @@ module.exports = {
                 token: Joi.required()
             }),
         })
-    }
+    },
+
+    updateBakeryAddress() {
+        return celebrate({
+            [Segments.QUERY]: Joi.object().keys({
+                cnpj: Joi.string().required().length(14)
+            }),
+            [Segments.BODY]: Joi.object().keys({
+                cep: Joi.string().required().length(8),
+                rua: Joi.string().required(),
+                bairro: Joi.string().required(),
+                estado: Joi.string().required(),
+                cidade: Joi.string().required(),
+                numero: Joi.string().required()
+            }),
+        })
+    },
+
+    updatePhoneNumber() {
+        return celebrate({
+            [Segments.QUERY]: Joi.object().keys({
+                cnpj: Joi.string().required().length(14)
+            }),
+            [Segments.BODY]: Joi.object().keys({
+                numero_celular: Joi.string().required(),
+                numero_telefone: Joi.string().required()
+            }),
+        })
+    },
+
 }

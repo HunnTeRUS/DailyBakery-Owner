@@ -25,4 +25,8 @@ routes.post('/updatePassword', ApiValidations.updatePassword(), PadariaServicesU
 
 routes.post('/forgotPassword', ApiValidations.forgotPassword(), PadariaServicesUtils.forgotPassword);
 
+routes.post('/updatePhoneNumber', ApiValidations.updatePhoneNumber(), PadariaServicesUtils.updatePhoneNumber);
+
+routes.post('/updateBakeryAddress', ApiValidations.updateBakeryAddress(), PadariaServicesUtils.updateAddress);
+
 module.exports = routes;
