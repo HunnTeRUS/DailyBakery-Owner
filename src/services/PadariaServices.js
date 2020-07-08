@@ -2,8 +2,7 @@ const Padaria = require('../models/Padaria');
 const cryp = require('./utils/EncryptMethods');
 let PadariaDTO = require('../models/dto/PadariaDTO');
 const Auth = require('./Authentication/Auth');
-const { options } = require('../routes');
-const { numero_celular } = require('../models/dto/PadariaDTO');
+const CNPJValidation = require('./utils/CNPJValidation');
 
 module.exports = {
     async insertBakery(request, response) {
@@ -13,11 +12,26 @@ module.exports = {
         const { latitude, longitude } = request.body;
         PadariaDTO = request.body;
 
-        const returnApiForValidation = await Padaria.findOne({ "cnpj": request.body.cnpj });
+        if(!CNPJValidation.validarCNPJ(PadariaDTO.cnpj))
+            return response.status(400).json({ Erro: "CNPJ inválido" });
 
-        if(returnApiForValidation) {
+        if( (!( -90 < latitude) || !( latitude < 90)) || (!( -180 < longitude) || !( longitude < 180)))
+            return response.status(400).json({error: 'Latitude e/ou longitude incorretos!'});    
+
+        const validationOfCnpjDuplicates = await Padaria.findOne({ "cnpj": PadariaDTO.cnpj });
+
+        if(validationOfCnpjDuplicates)
             return response.status(400).json({error: 'Já existe uma padaria cadastrada com este CNPJ!'});
-        }
+
+        const validationOfEmailDuplicates = await Padaria.findOne({ "email": PadariaDTO.email });
+       
+        if(validationOfEmailDuplicates)
+            return response.status(400).json({error: 'Já existe uma padaria cadastrada com este email!'});
+
+        const validationOfAdressDuplicates = await Padaria.findOne({ "latitude": PadariaDTO.cep, "numero": PadariaDTO.numero });
+
+        if(validationOfAdressDuplicates)
+            return response.status(400).json({error: 'Já existe uma padaria cadastrada neste endereço!'});
 
         const location = {
             type: 'Point',
@@ -29,6 +43,10 @@ module.exports = {
         PadariaDTO.senha = String(cryp.encrypt(PadariaDTO.senha));
 
         const foundBakery = await Padaria.create(PadariaDTO);
+
+        foundBakery.email = null;
+        foundBakery.cnpj = null;
+        foundBakery.senha = null;
 
         response.json(foundBakery);
     },
@@ -68,6 +86,9 @@ module.exports = {
         //Pega variavel pela query: localhost:3333/listBakeryByName?nome=PadariaDoZé
         const cnpj = req.query.cnpj;
 
+        if(!CNPJValidation.validarCNPJ(cnpj))
+            return response.status(400).json({ Erro: "CNPJ inválido" });
+
         const padarias = await Padaria.find({ "cnpj": cnpj });
 
         if (padarias) {
@@ -83,9 +104,10 @@ module.exports = {
 
     async listByLocation(request, response) {
         //Buscar todos as padarias num raio de 10KM
-        console.log(request.query);
-
         const { latitude, longitude } = request.query;
+
+        if( (!( -90 < latitude) || !( latitude < 90)) || (!( -180 < longitude) || !( longitude < 180)))
+            return response.status(400).json({error: 'Latitude e/ou longitude incorretos!'});    
 
         const padarias = await Padaria.find({
             location: {

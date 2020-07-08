@@ -88,6 +88,7 @@ module.exports = {
         return celebrate({
             [Segments.BODY]: Joi.object().keys({
                 email: Joi.string().email().required(),
+                cnpj: Joi.string().required().length(14),
                 novaSenha: Joi.string().required().min(4),
             }),
         })
@@ -131,8 +132,8 @@ module.exports = {
                 cnpj: Joi.string().required().length(14)
             }),
             [Segments.BODY]: Joi.object().keys({
-                numero_celular: Joi.string().required(),
-                numero_telefone: Joi.string().required()
+                numero_celular: Joi.string().length(11).optional(),
+                numero_telefone: Joi.string().length(10).optional(),
             }),
         })
     },
