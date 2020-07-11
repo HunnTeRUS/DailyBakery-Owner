@@ -138,4 +138,13 @@ module.exports = {
         })
     },
 
+    getAddressByCep() {
+        return celebrate({
+            [Segments.QUERY]: Joi.object().keys({
+                cep: Joi.number().required().min(8).max(8)
+            }),
+        })
+    },
+
+
 }

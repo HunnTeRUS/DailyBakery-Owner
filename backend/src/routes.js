@@ -29,4 +29,6 @@ routes.put('/updatePhoneNumber', VerifyToken, ApiValidations.updatePhoneNumber()
 
 routes.put('/updateBakeryAddress', VerifyToken, ApiValidations.updateBakeryAddress(), PadariaServicesUtils.updateAddress);
 
+routes.get('/getAddressByCep', ApiValidations.getAddressByCep(), PadariaServicesUtils.getAddressByCep);
+
 module.exports = routes;

@@ -3,6 +3,7 @@ const cryp = require('./utils/EncryptMethods')
 let PadariaDTO = require('../models/dto/PadariaDTO');
 let Mailer = require('./utils/Mailer');
 const CNPJValidation = require('./utils/CNPJValidation');
+const axios = require('axios');
 
 
 module.exports = {
@@ -13,7 +14,7 @@ module.exports = {
         const { cnpj } = request.query;
         let updated;
 
-        if(!CNPJValidation.validarCNPJ(cnpj))
+        if (!CNPJValidation.validarCNPJ(cnpj))
             return response.status(400).json({ Erro: "CNPJ inválido" });
 
         try {
@@ -38,7 +39,7 @@ module.exports = {
         const { aberto_fechado } = request.body;
         let updated;
 
-        if(!CNPJValidation.validarCNPJ(cnpj))
+        if (!CNPJValidation.validarCNPJ(cnpj))
             return response.status(400).json({ Erro: "CNPJ inválido" });
 
         try {
@@ -59,12 +60,12 @@ module.exports = {
     async updatePassword(request, response) {
         const { cnpj, email, novaSenha } = request.body;
 
-        if(!CNPJValidation.validarCNPJ(cnpj))
+        if (!CNPJValidation.validarCNPJ(cnpj))
             return response.status(400).json({ Erro: "CNPJ inválido" });
 
         try {
             const novaSenhaCrypt = String(cryp.encrypt(novaSenha));
-            await Padaria.updateOne({ "cnpj" : cnpj, "email": email }, { "senha": novaSenhaCrypt });
+            await Padaria.updateOne({ "cnpj": cnpj, "email": email }, { "senha": novaSenhaCrypt });
 
             return response.status(200).json();
         } catch (e) {
@@ -99,7 +100,7 @@ module.exports = {
         const { cnpj } = request.query;
         const { cep, rua, numero, bairro, cidade, estado } = request.body;
 
-        if(!CNPJValidation.validarCNPJ(cnpj))
+        if (!CNPJValidation.validarCNPJ(cnpj))
             return response.status(400).json({ Erro: "CNPJ inválido" });
 
         try {
@@ -115,17 +116,17 @@ module.exports = {
         const { cnpj } = request.query;
         const { numero_celular, numero_telefone } = request.body;
 
-        if(!CNPJValidation.validarCNPJ(cnpj))
+        if (!CNPJValidation.validarCNPJ(cnpj))
             return response.status(400).json({ Erro: "CNPJ inválido" });
 
         try {
-            if((numero_celular != null && numero_celular != "") && (numero_telefone != null && numero_telefone != ""))
+            if ((numero_celular != null && numero_celular != "") && (numero_telefone != null && numero_telefone != ""))
                 await Padaria.updateOne({ "cnpj": cnpj }, { "numero_celular": numero_celular, "numero_telefone": numero_telefone });
 
-            else if((numero_celular === null || numero_celular === ""))
+            else if ((numero_celular === null || numero_celular === ""))
                 await Padaria.updateOne({ "cnpj": cnpj }, { "numero_telefone": numero_telefone });
 
-            else if((numero_telefone === null || numero_telefone === ""))
+            else if ((numero_telefone === null || numero_telefone === ""))
                 await Padaria.updateOne({ "cnpj": cnpj }, { "numero_celular": numero_celular });
 
             response.status(200).json();
@@ -133,6 +134,32 @@ module.exports = {
         } catch (error) {
             return response.status(400).json({ Error: error });
         }
+
+    },
+
+
+
+    async getAddressByCep(request, response) {
+        const { cep } = request.query;
+
+        let logradouro, bairro, cidade, estado;
+
+        axios.get('https://www.cepaberto.com/api/v3/cep', 
+            { 
+                headers: { "Authorization": 'Token token=b8589b52d467c9c5ded3c65c244b4fe6' }, 
+                params: { cep: cep } 
+            })
+            .then(responseAPI => {
+                logradouro = responseAPI.data.logradouro;
+                bairro = responseAPI.data.bairro;
+                cidade = responseAPI.data.cidade;
+                estado = responseAPI.data.estado;
+
+                response.json(responseAPI.data);
+            })
+            .catch((error) => {
+                console.log('error ' + error);
+            });
 
     }
 
