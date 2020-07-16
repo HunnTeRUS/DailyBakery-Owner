@@ -1,12 +1,11 @@
 import React from 'react';
-import {View, StatusBar, StyleSheet, Text} from 'react-native';
+import {View, StatusBar, StyleSheet, Button} from 'react-native';
 import Header from '../components/Header'
 
 export default Profile = () => (
     <>
-        <Header/>
         <View styles={styles.principalView}>
-            <StatusBar barStyle="light-content"/>
+            <Header/>
         </View>
     </>
 )
