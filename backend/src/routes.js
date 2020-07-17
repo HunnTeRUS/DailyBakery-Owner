@@ -31,4 +31,6 @@ routes.put('/updateBakeryAddress', VerifyToken, ApiValidations.updateBakeryAddre
 
 routes.get('/getAddressByCep', ApiValidations.getAddressByCep(), PadariaServicesUtils.getAddressByCep);
 
+routes.get('/verifyCnpj', ApiValidations.getCnpjFromWs(), PadariaServicesUtils.getCnpjFromWs);
+
 module.exports = routes;

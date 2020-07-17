@@ -1,5 +1,4 @@
 const { celebrate, Joi, Segments } = require('celebrate');
-const { join } = require('path');
 
 module.exports = {
     validateBakeryInsertion() {
@@ -22,7 +21,8 @@ module.exports = {
                 ibge: Joi.string().optional(),
                 gia: Joi.string().optional(),
                 latitude: Joi.number(),
-                longitude: Joi.number()
+                longitude: Joi.number(),
+                tempo_espera: Joi.date()
             })
         });
     },
@@ -141,10 +141,17 @@ module.exports = {
     getAddressByCep() {
         return celebrate({
             [Segments.QUERY]: Joi.object().keys({
-                cep: Joi.number().required().min(8).max(8)
+                cep: Joi.string().required().length(8)
             }),
-        })
+        });
     },
 
+    getCnpjFromWs() {
+        return celebrate({
+            [Segments.QUERY]: Joi.object().keys({
+                cnpj: Joi.string().required().length(14)
+            }),
+        });
+    },
 
 }

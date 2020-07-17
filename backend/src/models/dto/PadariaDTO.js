@@ -1,7 +1,7 @@
 const PointSchema = require('../utils/PointSchema')
 
 const PadariaDTO = {
-    nome: String, 
+    nome: String,
     email: String,
     senha: String,
     numero_celular: String,
@@ -20,7 +20,8 @@ const PadariaDTO = {
     location: {
         type: PointSchema,
         index: '2dsphere'
-    }
+    },
+    tempo_espera: Date
 }
 
 module.exports = PadariaDTO;

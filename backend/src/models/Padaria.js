@@ -22,7 +22,8 @@ const PadariaSchema = mongoose.Schema({
     location: {
         type: PointSchema,
         index: '2dsphere'
-    }
+    },
+    tempo_espera: Date
 });
 
 PadariaSchema.methods = {
