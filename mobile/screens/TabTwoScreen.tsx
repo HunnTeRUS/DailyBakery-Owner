@@ -1,32 +1,12 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
-
-import EditScreenInfo from '../components/EditScreenInfo';
-import { Text, View } from '../components/Themed';
+import TapGesture from '../components/TapGesture';
+import { Text } from 'react-native'
 
 export default function TabTwoScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Essa é a segunda aba, a principal</Text>
-    </View>
+    <>
+      <TapGesture/>
+      
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'white'
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#d3d3d3'
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
-});

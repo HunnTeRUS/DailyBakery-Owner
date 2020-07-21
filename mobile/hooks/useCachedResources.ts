@@ -16,6 +16,8 @@ export default function useCachedResources() {
         await Font.loadAsync({
           ...Ionicons.font,
           'space-mono': require('../assets/fonts/SpaceMono-Regular.ttf'),
+          'Poppins-Regular': require('../assets/fonts/Poppins-Regular.ttf'),
+          'Poppins-Bold': require('../assets/fonts/Poppins-Bold.ttf'),
         });
       } catch (e) {
         // We might want to provide this error information to an error reporting service
