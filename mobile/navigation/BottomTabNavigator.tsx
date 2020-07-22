@@ -5,6 +5,7 @@ import { FontAwesome5 } from '@expo/vector-icons'
 import TabOneScreen from '../screens/TabOneScreen/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen/TabTwoScreen';
 import TabThreeScreen from '../screens/TabThreeScreen/TabThreeScreen';
+import Walkthrough from '../screens/Walkthrough/Walkthrough'
 import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList } from '../types';
 import { Image, StyleSheet, View, Text } from 'react-native'
 
@@ -62,7 +63,7 @@ function TabOneNavigator() {
         name="TabOneScreen"
         component={TabOneScreen}
         options={{
-          headerTitle: () => (<><View style={style.container}><Image resizeMode="contain" style={style.imagem} source={require('../assets/images/owner1.png')} /><Text style={style.textHeader}>Meu Perfil</Text></View></>),
+          headerTitle: () => (<><View style={style.container}><Image resizeMode="contain" style={style.imagem} source={require('../assets/images/owner1.png')} /><Text style={style.textHeader}>Meu Perfil</Text><Walkthrough inicial={false}/></View></>),
           headerStyle: {
             backgroundColor: '#E8EDFF',
           },
@@ -98,7 +99,7 @@ function TabThreeNavigator() {
     <TabThreeStack.Navigator>
       <TabThreeStack.Screen
         name="TabThreeScreen"
-        component={TabThreeScreen}
+        component={Walkthrough}
         options={{
           headerTitle: () => (<><View style={style.container}><Image resizeMode="contain" style={style.imagem} source={require('../assets/images/owner1.png')} /><Text style={style.textHeader}>Minha padaria</Text></View></>),
           headerStyle: {

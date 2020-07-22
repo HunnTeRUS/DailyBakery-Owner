@@ -20,3 +20,8 @@ export type TabTwoParamList = {
 export type TabThreeParamList = {
   TabThreeScreen: undefined;
 };
+
+export type WalkthroughParamList = {
+  Walthrough: undefined,
+  incial?: boolean 
+}
