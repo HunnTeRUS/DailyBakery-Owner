@@ -1,6 +1,6 @@
 import * as React from 'react';
-import TapGesture from '../components/TapGesture';
-import { Text } from 'react-native'
+import TapGesture from '../../components/TapGesture';
+import styles from './styles'
 
 export default function TabTwoScreen() {
   return (

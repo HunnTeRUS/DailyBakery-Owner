@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, Alert } from "react-native";
 import { State, TapGestureHandler } from "react-native-gesture-handler";
 import Animated, { Value, cond, eq } from "react-native-reanimated";
 import { mix, onGestureEvent, withTransition } from "react-native-redash";
@@ -17,7 +17,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontFamily: 'Poppins-Bold',
     marginTop: '10%',
-    fontSize: 15,
+    fontSize: 17,
+  },
+
+  ultimaFornadaTextLabel: {
+    fontWeight: 'bold',
+    color: '#FEC044'
   },
 
   buttonHandler: {
@@ -26,26 +31,40 @@ const styles = StyleSheet.create({
     marginTop: '5%'
   },
 
-  novaFornadaTextDescription: {
+  novaFornadaTextDeion: {
     textAlign: "center",
     fontFamily: 'Poppins-Regular',
     marginTop: '5%',
-    color: '#BAA6A6'
+    color: '#BAA6A6',
+    fontSize: 16
   },
 
-  fornada: {
+  viewOfFornadas: {
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    alignContent: 'space-between',
+    alignSelf: 'center',
+    marginTop: 0
   },
 
-  iconClock: {
-    height: 80
+  viewOfFornadasAux: {
+    backgroundColor: '#c7c5c540',
+    marginTop: '15%',
+    padding: 20,
+    width: '50%',
+    alignSelf: 'center',
+    borderRadius: 10,
+  },
+
+  clockIcon: {
+    marginRight: '3%',
+    color: '#FEC044',
+    alignSelf: 'center'
   },
 
   ultimaFornadaText: {
     textAlign: "center",
     fontFamily: 'Poppins-Regular',
-    marginTop: '25%',
     color: '#BAA6A6'
   },
 
@@ -57,7 +76,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
-    marginTop: '15%'
+    marginTop: '15%',
+    
   },
 
   toCloseBakeryText: {
@@ -87,14 +107,18 @@ export default () => {
           </Animated.View>
         </TapGestureHandler>
       </View>
-      <Text style={styles.novaFornadaTextDescription}>
+      <Text style={styles.novaFornadaTextDeion}>
         Os clientes que pediram para {"\n"}serem notificados receberão o aviso!
       </Text>
-      
-        <Text style={styles.ultimaFornadaText}>
-          Ultima fornada: {"\n"}00:00:00
-        </Text>
-      <TouchableOpacity style={styles.toCloseBakery} onPress={() => {}}>
+      <View style={styles.viewOfFornadasAux}>
+        <View style={styles.viewOfFornadas}>
+            <FontAwesome5 style={styles.clockIcon} name="clock" size={35}/>
+            <Text style={styles.ultimaFornadaText}>
+              <Text style={styles.ultimaFornadaTextLabel}>Ultima fornada:</Text> {"\n"}HOJE{"\n"}13:15:30
+            </Text>
+        </View>
+      </View>
+      <TouchableOpacity style={styles.toCloseBakery} onPress={() => {Alert.alert('Botão clicado')}}>
         <Text style={styles.toCloseBakeryText}>Fechar Padaria</Text>
       </TouchableOpacity>
     </View>

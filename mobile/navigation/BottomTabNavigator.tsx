@@ -2,9 +2,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 import { FontAwesome5 } from '@expo/vector-icons'
-import TabOneScreen from '../screens/TabOneScreen';
-import TabTwoScreen from '../screens/TabTwoScreen';
-import TabThreeScreen from '../screens/TabThreeScreen';
+import TabOneScreen from '../screens/TabOneScreen/TabOneScreen';
+import TabTwoScreen from '../screens/TabTwoScreen/TabTwoScreen';
+import TabThreeScreen from '../screens/TabThreeScreen/TabThreeScreen';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList } from '../types';
 import { Image, StyleSheet, View, Text } from 'react-native'
 
@@ -22,7 +22,7 @@ export default function BottomTabNavigator() {
           showLabel: false,
           style: {
             borderTopColor: '#CDCCCE',
-            backgroundColor: '#CDCCCE'
+            backgroundColor: '#D6DCF3'
           }
         }
       }
@@ -64,7 +64,7 @@ function TabOneNavigator() {
         options={{
           headerTitle: () => (<><View style={style.container}><Image resizeMode="contain" style={style.imagem} source={require('../assets/images/owner1.png')} /><Text style={style.textHeader}>Meu Perfil</Text></View></>),
           headerStyle: {
-            backgroundColor: '#CDCCCE'
+            backgroundColor: '#E8EDFF',
           },
         }}
       />
@@ -83,7 +83,7 @@ function TabTwoNavigator() {
         options={{
           headerTitle: () => (<><View style={style.containerHome}><Image resizeMode="contain" style={style.imagemHome} source={require('../assets/images/owner1.png')} /></View></>),
           headerStyle: {
-            backgroundColor: '#CDCCCE'
+            backgroundColor: '#E8EDFF',
           },
         }}
       />
@@ -102,7 +102,7 @@ function TabThreeNavigator() {
         options={{
           headerTitle: () => (<><View style={style.container}><Image resizeMode="contain" style={style.imagem} source={require('../assets/images/owner1.png')} /><Text style={style.textHeader}>Minha padaria</Text></View></>),
           headerStyle: {
-            backgroundColor: '#CDCCCE'
+            backgroundColor: '#E8EDFF'
           },
         }}
       />
@@ -141,6 +141,6 @@ const style = StyleSheet.create({
     display: 'flex',
     fontWeight: 'bold',
     fontSize: 17,
-    color: 'white'
+    color: '#8A8986'
   }
 })
