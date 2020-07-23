@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
         height: 40,
         width: (width/3),
         backgroundColor: "#F4EEEE",
-        justifyContent: "center"
+        justifyContent: "center",
     },
     label:{
         fontSize: 20,

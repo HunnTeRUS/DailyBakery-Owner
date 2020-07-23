@@ -1,9 +1,10 @@
 import React from "react";
-import { View, Text, Dimensions, StyleSheet } from "react-native";
+import { View, Text, Dimensions, StyleSheet, Image } from "react-native";
 import { createStackNavigator } from '@react-navigation/stack';
 import { RootStackParamList } from '../../types';
 import BottomTabNavigator from '../../navigation/BottomTabNavigator'
 import NotFoundScreen from '../../screens/NotFoundScreen';
+import styles from "../TabOneScreen/styles";
 
 
 const { width, height } = Dimensions.get("window");
@@ -17,6 +18,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 const style = StyleSheet.create({
     container: {
         width,
+        overflow: "hidden",
     },
     titleContainer:{
         height: 200,
@@ -31,13 +33,26 @@ const style = StyleSheet.create({
         textAlign: "center",
         justifyContent: "center",
     },
+    underlay:{
+        ...StyleSheet.absoluteFillObject,
+        justifyContent:"flex-end",
+    },
+    picture:{
+        ...StyleSheet.absoluteFillObject,
+        
+        width: undefined,
+        height: undefined,
+        justifyContent: "flex-end",
+        borderBottomRightRadius: 75,
+
+    }
 })
 interface SlideProps {
-    label: string,
     last?: boolean,
+    picture: number
 }
 
-const Slide = ({ label, last}: SlideProps) => {
+const Slide = ({ last, picture}: SlideProps) => {
     if(last){
         return(
             <Stack.Navigator screenOptions={{headerShown: false}}>
@@ -48,8 +63,8 @@ const Slide = ({ label, last}: SlideProps) => {
     }
     return(
         <View style={style.container}>
-            <View style={style.titleContainer}>
-            <Text style={style.title}>{label}</Text>
+            <View style={style.underlay}>
+                <Image source={picture} style={style.picture}/>
             </View>
         </View>
     );
