@@ -1,6 +1,9 @@
 import React from "react";
-import { View, Text, StyleSheet, Dimensions } from "react-native";
+import { Text, StyleSheet, Dimensions } from "react-native";
 import { RectButton } from "react-native-gesture-handler";
+const font = {
+    "Poppins-Regular": require("../../../assets/fonts/Poppins-Regular.ttf"),
+    "Poppins-Bold": require("../../../assets/fonts/Poppins-Bold.ttf")};
 
 interface ComecarProps {
     label : string,
@@ -11,16 +14,18 @@ const { width } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
     container: {
-        borderRadius: 25,
+        borderRadius: 10,
         height: 40,
         width: (width/3),
-        backgroundColor: "#F4EEEE",
-        justifyContent: "center",
+        backgroundColor: "#ffbd59",
+        justifyContent: 'center',
     },
     label:{
         fontSize: 20,
         color: "black",
-        textAlign: "center"
+        textAlign: "center",
+        color: 'white',
+        fontFamily: "Poppins-Regular",
     },
 });
 

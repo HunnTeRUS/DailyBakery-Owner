@@ -2,10 +2,6 @@ import React from "react";
 import { View, Text, Dimensions, StyleSheet, Image } from "react-native";
 import { createStackNavigator } from '@react-navigation/stack';
 import { RootStackParamList } from '../../types';
-import BottomTabNavigator from '../../navigation/BottomTabNavigator'
-import NotFoundScreen from '../../screens/NotFoundScreen';
-import styles from "../TabOneScreen/styles";
-
 
 const { width, height } = Dimensions.get("window");
 
@@ -44,6 +40,7 @@ const style = StyleSheet.create({
         height: undefined,
         justifyContent: "flex-end",
         borderBottomRightRadius: 75,
+        resizeMode: "stretch"
 
     }
 })
@@ -55,10 +52,7 @@ interface SlideProps {
 const Slide = ({ last, picture}: SlideProps) => {
     if(last){
         return(
-            <Stack.Navigator screenOptions={{headerShown: false}}>
-                    <Stack.Screen name="Root" component={BottomTabNavigator}/>
-                    <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />                
-            </Stack.Navigator>
+            <View/>
         );
     }
     return(

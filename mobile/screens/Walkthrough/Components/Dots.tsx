@@ -21,7 +21,7 @@ const Dots = ({index, currentIndex}: DotsProps) => {
     return(
         <Animated.View style={{
         opacity,
-        backgroundColor: "#A0522D",
+        backgroundColor: "#ffbd59",
         borderRadius: 4,
         height: 8,
         width: 8,

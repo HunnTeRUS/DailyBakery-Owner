@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         paddingBottom: 25,
+        paddingHorizontal: 20
     },
     text:{
         fontFamily: "Poppins-Regular",
@@ -30,9 +31,13 @@ const styles = StyleSheet.create({
         paddingTop: 4,
         marginBottom: 7,
         },
-    button:{
-        flex:1,
-        flexDirection: "row",
+    dualButton: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+    },
+    dualButtonAux: {
+        width: '20%'
     }
 })
 
@@ -48,8 +53,13 @@ const Subslide = ({text, last, onPress, onPressSkip}: SubslideProps) => {
     return(
         <View style={styles.container}>
             <Text style={styles.text}>{text}</Text>
-            <Comecar label={last ? "Começar": "Próximo"} {...{onPress}}></Comecar>
-            <SkipButton enabled={last ? false : true} label={"Pular"} {...{onPressSkip}}></SkipButton>
+            <View style={styles.dualButton}>
+                <SkipButton enabled={last ? false : true} label={"Pular"} {...{onPressSkip}}></SkipButton>
+                
+                {last ? <View/>:<View style={styles.dualButtonAux}/> }
+            
+                <Comecar label={last ? "Começar": "Próximo"} {...{onPress}}></Comecar>
+            </View>
         </View>
 
     );

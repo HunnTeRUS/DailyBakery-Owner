@@ -5,20 +5,14 @@ import Animated, { multiply, divide } from "react-native-reanimated";
 import { onScrollEvent, useValue, interpolateColor, translate } from "react-native-redash";
 import Subslide from "./Subslide";
 import Dots from './Components/Dots';
-import NotFoundScreen from '../NotFoundScreen';
-import { RootStackParamList } from '../../types';
-import BottomTabNavigator from '../../navigation/BottomTabNavigator';
-import { createStackNavigator } from '@react-navigation/stack';
-
-
 
 const {width } = Dimensions.get("window");
 
 const Apresentacao = [
-    {picture: require("../../assets/images/1.png"),label: "Daily bakery",  text: "Este app tem o intuito de tornar a vida dos amantes de pão ainda melhor, informando quando tem pão quentinho em sua padaria.", color:"#FFCF6E"},
-    {picture: require("../../assets/images/2.png"),label: "Notificações em tempo real",  text: "O clinte pode selecionar a sua padaria para ser informado no momento em que sair o pão!", color:"#FFCF6E"},
-    {picture: require("../../assets/images/3.png"),label: "Pagamentos",  text: "DailyBakery é um app pago, mas para que você possa comprovar a qualidade nós disponibilizamos X meses grátis para aproveitar!!!", color:"#FFCF6E"},
-    {picture: require("../../assets/images/4.png"),label: "Informações",  text: "Para se cadastrar é super simples, basta informar alguns dados como o cnpj, email e endereço da sua padria, esses dados são para sua segurança e a nossa também!!!", color:"#FFCF6E"},
+    {picture: require("../../assets/images/4.png"),label: "Daily bakery",  text: "Este app tem o intuito de tornar a vida dos amantes de pão ainda melhor, informando quando tem pão quentinho em sua padaria.", color:"#FFCF6E"},
+    {picture: require("../../assets/images/1.png"),label: "Notificações em tempo real",  text: "O cliente pode selecionar a sua padaria para ser informado no momento em que sair o pão!", color:"#FFCF6E"},
+    {picture: require("../../assets/images/3.png"),label: "Pagamentos",  text: "DailyBakery é um app pago, mas para que você possa comprovar a qualidade nós disponibilizamos 1 mês grátis para você experimentar!", color:"#FFCF6E"},
+    {picture: require("../../assets/images/2.png"),label: "Informações",  text: "Para se cadastrar é super simples, basta informar alguns dados como o cnpj, email e endereço da sua padaria, esses dados são para sua segurança e a nossa também!", color:"#FFCF6E"},
     {picture: require("../../assets/images/5.png"),label: "Comece agora",  text: "Para começar basta clicar no botão abaixo! E bem-vindo a nova forma de fazer panificação!", color:"#FFCF6E"},
 ]
 
@@ -94,7 +88,7 @@ const WalkThrough = ({inicial}: WalkThroughProps) => {
 
 <View style={[styles.footerContent]}>
 <View style={styles.pagination}>
-    {slides.map((_, index) => (<Dots currentIndex={divide(x, width)} {...{index}}/>))}
+    {slides.map((_, index) => (<Dots key={index} currentIndex={divide(x, width)} {...{index}}/>))}
 </View>
 <Animated.View style={
     {flexDirection:"row", width: width * slides.length, flex: 1, transform: [{translateX: multiply(x, -1)}]}
