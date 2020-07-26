@@ -1,6 +1,8 @@
 import React from "react";
-import { Text, StyleSheet, Dimensions } from "react-native";
+import { Text, StyleSheet, Dimensions, AsyncStorage } from "react-native";
 import { RectButton } from "react-native-gesture-handler";
+import {useNavigation} from '@react-navigation/native'
+
 const font = {
     "Poppins-Regular": require("../../../assets/fonts/Poppins-Regular.ttf"),
     "Poppins-Bold": require("../../../assets/fonts/Poppins-Bold.ttf")};
@@ -22,14 +24,27 @@ const styles = StyleSheet.create({
     },
     label:{
         fontSize: 20,
-        color: "black",
         textAlign: "center",
         color: 'white',
         fontFamily: "Poppins-Regular",
     },
 });
 
+async function setFirstAcessToFalse(key:string){
+    await AsyncStorage.removeItem(key);
+    await AsyncStorage.setItem(key, 'false');
+}
+
 const Comecar = ({label, onPress}: ComecarProps) => {
+    const navigation = useNavigation();
+
+    if(label === 'Começar') {
+        onPress = () => { 
+            setFirstAcessToFalse('firstAccess');
+            navigation.navigate('Root')
+        }
+    }
+
     return (
         <RectButton style={styles.container} {...{onPress}}>
             <Text style={styles.label}>{label}</Text>

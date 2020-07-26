@@ -5,13 +5,23 @@ import { FontAwesome5 } from '@expo/vector-icons'
 import TabOneScreen from '../screens/TabOneScreen/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen/TabTwoScreen';
 import TabThreeScreen from '../screens/TabThreeScreen/TabThreeScreen';
-import Walkthrough from '../screens/Walkthrough/Walkthrough'
 import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList } from '../types';
-import { Image, StyleSheet, View, Text } from 'react-native'
+import { Image, StyleSheet, View, Text, AsyncStorage } from 'react-native'
+import {useNavigation} from '@react-navigation/native'
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
 export default function BottomTabNavigator() {
+  const navigation = useNavigation();
+
+  async () => {
+    var variavel = await AsyncStorage.getItem('firstAccess');
+
+    if(variavel === undefined || variavel === 'true') {
+      await AsyncStorage.setItem('firstAccess', 'true');
+      navigation.navigate('Walkthrough')
+    }
+  }
 
   return (
     <BottomTab.Navigator
@@ -63,7 +73,7 @@ function TabOneNavigator() {
         name="TabOneScreen"
         component={TabOneScreen}
         options={{
-          headerTitle: () => (<><View style={style.container}><Image resizeMode="contain" style={style.imagem} source={require('../assets/images/owner1.png')} /><Text style={style.textHeader}>Meu Perfil</Text><Walkthrough inicial={false}/></View></>),
+          headerTitle: () => (<><View style={style.container}><Image resizeMode="contain" style={style.imagem} source={require('../assets/images/owner1.png')} /><Text style={style.textHeader}>Meu Perfil</Text></View></>),
           headerStyle: {
             backgroundColor: '#E8EDFF',
           },
@@ -99,7 +109,7 @@ function TabThreeNavigator() {
     <TabThreeStack.Navigator>
       <TabThreeStack.Screen
         name="TabThreeScreen"
-        component={Walkthrough}
+        component={TabThreeScreen}
         options={{
           headerTitle: () => (<><View style={style.container}><Image resizeMode="contain" style={style.imagem} source={require('../assets/images/owner1.png')} /><Text style={style.textHeader}>Minha padaria</Text></View></>),
           headerStyle: {

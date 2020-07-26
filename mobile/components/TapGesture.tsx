@@ -5,6 +5,7 @@ import Animated, { Value, cond, eq } from "react-native-reanimated";
 import { mix, onGestureEvent, withTransition } from "react-native-redash";
 import Button from "./Button";
 import {FontAwesome5} from '@expo/vector-icons'
+import {useNavigation} from '@react-navigation/native'
 
 const styles = StyleSheet.create({
   container: {
@@ -89,6 +90,7 @@ const styles = StyleSheet.create({
 });
 
 export default () => {
+  const navigation = useNavigation();
   const state = new Value(State.UNDETERMINED);
   const gestureHandler = onGestureEvent({ state: state });
   const isActive = eq(state, State.BEGAN);
@@ -118,7 +120,7 @@ export default () => {
             </Text>
         </View>
       </View>
-      <TouchableOpacity style={styles.toCloseBakery} onPress={() => {Alert.alert('Botão clicado')}}>
+      <TouchableOpacity style={styles.toCloseBakery} onPress={() => {}}>
         <Text style={styles.toCloseBakeryText}>Fechar Padaria</Text>
       </TouchableOpacity>
     </View>
