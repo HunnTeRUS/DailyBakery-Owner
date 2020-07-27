@@ -34,8 +34,10 @@ function RootNavigator() {
           {
             headerShown: true,
             headerTitle: () => (<><View style={style.container}><Image resizeMode="contain" style={style.imagem} source={require('../assets/images/owner1.png')} /></View></>),
+            animationEnabled: true,
+            headerTintColor: '#FEC044',
             headerStyle: {
-              backgroundColor: '#E8EDFF'
+              backgroundColor: '#E8EDFF',
             }
           }
         }/>

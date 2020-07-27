@@ -37,6 +37,7 @@ export default StyleSheet.create({
       textCep: {
         marginTop: '15%',
         alignSelf: 'flex-start',
+        color: '#9C8F8F',
         fontFamily: 'Poppins-Regular',
       },
 
@@ -59,6 +60,7 @@ export default StyleSheet.create({
       textNumber: {
         marginTop: '10%',
         alignSelf: 'flex-start',
+        color: '#9C8F8F',
         fontFamily: 'Poppins-Regular',
       },
 

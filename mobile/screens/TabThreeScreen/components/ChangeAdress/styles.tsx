@@ -37,6 +37,7 @@ export default StyleSheet.create({
       textStreetName: {
         marginTop: '15%',
         alignSelf: 'flex-start',
+        color: '#9C8F8F',
         fontFamily: 'Poppins-Regular',
       },
 
@@ -59,6 +60,7 @@ export default StyleSheet.create({
       textBairro: {
         marginTop: '10%',
         alignSelf: 'flex-start',
+        color: '#9C8F8F',
         fontFamily: 'Poppins-Regular',
       },
 
@@ -81,6 +83,7 @@ export default StyleSheet.create({
       textCity: {
         marginTop: '10%',
         alignSelf: 'flex-start',
+        color: '#9C8F8F',
         fontFamily: 'Poppins-Regular',
       },
 
@@ -103,6 +106,7 @@ export default StyleSheet.create({
       textState: {
         marginTop: '10%',
         alignSelf: 'flex-start',
+        color: '#9C8F8F',
         fontFamily: 'Poppins-Regular',
       },
 
