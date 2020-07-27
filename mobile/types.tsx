@@ -2,6 +2,8 @@ export type RootStackParamList = {
   Root: any;
   NotFound: any;
   Walkthrough: any;
+  ChangeAdress: any;
+  InfoBakery:any;
 };
 
 export type BottomTabParamList = {

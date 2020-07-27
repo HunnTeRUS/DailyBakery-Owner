@@ -34,13 +34,13 @@ export default StyleSheet.create({
         fontFamily: 'Poppins-Regular',
       },
 
-      textCep: {
+      textStreetName: {
         marginTop: '15%',
         alignSelf: 'flex-start',
         fontFamily: 'Poppins-Regular',
       },
 
-      inputCep: {
+      inputStreet: {
         height: 45,
         color: '#333',
         borderRadius: 10,
@@ -56,13 +56,57 @@ export default StyleSheet.create({
         paddingHorizontal: 10
       },
 
-      textNumber: {
+      textBairro: {
         marginTop: '10%',
         alignSelf: 'flex-start',
         fontFamily: 'Poppins-Regular',
       },
 
-      inputNumber: {
+      inputBairro: {
+        height: 45,
+        color: '#333',
+        borderRadius: 10,
+        backgroundColor: 'white',
+        width: '100%',
+        fontFamily: 'Poppins-Regular',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 4,
+          height: 4
+        },
+        elevation: 2,
+        paddingHorizontal: 10
+      },
+
+      textCity: {
+        marginTop: '10%',
+        alignSelf: 'flex-start',
+        fontFamily: 'Poppins-Regular',
+      },
+
+      inputCity: {
+        height: 45,
+        color: '#333',
+        borderRadius: 10,
+        backgroundColor: 'white',
+        width: '100%',
+        fontFamily: 'Poppins-Regular',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 4,
+          height: 4
+        },
+        elevation: 2,
+        paddingHorizontal: 10
+      },
+
+      textState: {
+        marginTop: '10%',
+        alignSelf: 'flex-start',
+        fontFamily: 'Poppins-Regular',
+      },
+
+      inputState: {
         height: 45,
         color: '#333',
         borderRadius: 10,
@@ -85,7 +129,7 @@ export default StyleSheet.create({
         width: '55%',
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: '30%'
+        marginTop: '20%'
       },
 
       nextText: {
