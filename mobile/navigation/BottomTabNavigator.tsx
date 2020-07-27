@@ -14,15 +14,24 @@ const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 export default function BottomTabNavigator() {
   const navigation = useNavigation();
 
-  async () => {
+const verifyingStorage = async () => {
+  console.log(AsyncStorage.getAllKeys());
+  
     var variavel = await AsyncStorage.getItem('firstAccess');
+    console.log(variavel);
+    
 
-    if(variavel === undefined || variavel === 'true') {
-      await AsyncStorage.setItem('firstAccess', 'true');
-      navigation.navigate('Walkthrough')
+    if(variavel === null){
+      try{
+        await AsyncStorage.setItem('firstAccess', 'true');
+      }catch(err){
+        console.log(err);
+        
+      }
+      return navigation.navigate('Walkthrough');
     }
   }
-
+verifyingStorage();
   return (
     <BottomTab.Navigator
       initialRouteName="TabTwo"
