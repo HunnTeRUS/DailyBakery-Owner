@@ -1,6 +1,6 @@
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import * as React from 'react';
+import React from 'react';
 import { Image, StyleSheet, View, Text,ColorSchemeName, AsyncStorage } from 'react-native';
 
 import NotFoundScreen from '../screens/NotFoundScreen';
@@ -11,7 +11,7 @@ import BottomTabNavigator from './BottomTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
 import InfoBakery from '../screens/TabThreeScreen/components/Infos/InfoBakery';
 import Login from '../screens/Login/Login'
-import ForgotPassword from '../screens/Login/ForgotPassword'
+import ForgotPassword from '../screens/Login/ForgotPassword/ForgotPassword'
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -45,7 +45,18 @@ function RootNavigator() {
         }/>
       <Stack.Screen name="InfoBakery" component={InfoBakery} />
       <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+      <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{
+        headerShown: true,
+        headerTitle: () => (<><View style={{}}></View></>),
+        headerStyle: {
+          backgroundColor: '#F4EEEE',
+          elevation: 0,
+          shadowOpacity: 0,
+          borderBottomWidth: 0,
+        },
+        animationEnabled: true,
+        headerTintColor: '#FEC044',
+      }} />
     </Stack.Navigator>
   );
 }

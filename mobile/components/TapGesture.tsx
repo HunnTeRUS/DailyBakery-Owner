@@ -23,7 +23,8 @@ const styles = StyleSheet.create({
 
   ultimaFornadaTextLabel: {
     fontWeight: 'bold',
-    color: '#FEC044'
+    color: '#FEC044',
+    
   },
 
   buttonHandler: {
