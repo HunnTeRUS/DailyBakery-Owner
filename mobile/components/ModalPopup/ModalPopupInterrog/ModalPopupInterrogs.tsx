@@ -1,15 +1,18 @@
-import * as React from 'react';
+import React,{useState} from 'react';
 import styles from './styles'
 import { Text,  Modal, View, Image, TouchableOpacity} from 'react-native'
 import {useNavigation} from '@react-navigation/native'
 import Baker from '../../ImagesComponents/BakerInterrog' 
 
 interface ModalPopupInterface{
-    show: boolean;
-    text: string;
-}
+    showModal: boolean;
+    setShow(trueFalse: boolean): void;
+    textToShow: string;
+}   
 
-const ModalPopup = ({show, text} : ModalPopupInterface) => {
+const ModalPopup = (props: ModalPopupInterface) => {
+    const [show, setShow] = useState(props.showModal);
+
     const navigation = useNavigation();
     return (
         <Modal
@@ -28,10 +31,10 @@ const ModalPopup = ({show, text} : ModalPopupInterface) => {
                     </View>
                     <View style={styles.textContainer}>
                         <Text style={styles.title}>Atenção</Text>
-                        <Text style={styles.subtitle}>{text}</Text>
+                        <Text style={styles.subtitle}>{props.textToShow}</Text>
                     </View>
                     <View style={styles.buttonContainer}>  
-                        <TouchableOpacity style={styles.noButton}>
+                        <TouchableOpacity style={styles.noButton} onPress={() => {props.setShow(false)}}>
                             <Text style={styles.noText}>Não</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.yesButton}>
