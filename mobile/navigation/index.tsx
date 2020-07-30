@@ -10,6 +10,8 @@ import { RootStackParamList } from '../types';
 import BottomTabNavigator from './BottomTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
 import InfoBakery from '../screens/TabThreeScreen/components/Infos/InfoBakery';
+import Login from '../screens/Login/Login'
+import ForgotPassword from '../screens/Login/ForgotPassword'
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -42,6 +44,8 @@ function RootNavigator() {
           }
         }/>
       <Stack.Screen name="InfoBakery" component={InfoBakery} />
+      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
     </Stack.Navigator>
   );
 }

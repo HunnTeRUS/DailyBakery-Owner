@@ -30,6 +30,7 @@ const verifyingStorage = async () => {
       }
       return navigation.navigate('Walkthrough');
     }
+    return navigation.navigate('Login');
   }
 verifyingStorage();
   return (

@@ -4,6 +4,8 @@ export type RootStackParamList = {
   Walkthrough: any;
   ChangeAdress: any;
   InfoBakery:any;
+  Login: any;
+  ForgotPassword: any;
 };
 
 export type BottomTabParamList = {
@@ -28,3 +30,4 @@ export type WalkthroughParamList = {
   Walthrough: undefined,
   incial?: boolean 
 }
+
