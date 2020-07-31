@@ -6,6 +6,7 @@ export type RootStackParamList = {
   InfoBakery:any;
   Login: any;
   ForgotPassword: any;
+  ClosedBakery: any;
 };
 
 export type BottomTabParamList = {

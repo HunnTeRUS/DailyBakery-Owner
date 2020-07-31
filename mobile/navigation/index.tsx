@@ -12,6 +12,7 @@ import LinkingConfiguration from './LinkingConfiguration';
 import InfoBakery from '../screens/TabThreeScreen/components/Infos/InfoBakery';
 import Login from '../screens/Login/Login'
 import ForgotPassword from '../screens/Login/ForgotPassword/ForgotPassword'
+import ClosedBakery from '../screens/ClosedBakery/ClosedBakery'
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -54,6 +55,19 @@ function RootNavigator() {
           shadowOpacity: 0,
           borderBottomWidth: 0,
         },
+        animationEnabled: true,
+        headerTintColor: '#FEC044',
+      }} />
+      <Stack.Screen name="ClosedBakery" component={ClosedBakery} options={{
+        headerShown: true,
+        headerTitle: () => (<><View style={[style.container]}><Image resizeMode="contain" style={style.imagem} source={require('../assets/images/owner1.png')} /></View></>),
+        headerStyle: {
+          elevation: 0,
+          shadowOpacity: 0,
+          borderBottomWidth: 0,
+          backgroundColor: '#E8EDFF'
+        },
+        headerLeft: () => (<></>),
         animationEnabled: true,
         headerTintColor: '#FEC044',
       }} />
