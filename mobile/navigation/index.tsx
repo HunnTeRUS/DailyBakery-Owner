@@ -13,6 +13,8 @@ import InfoBakery from '../screens/TabThreeScreen/components/Infos/InfoBakery';
 import Login from '../screens/Login/Login'
 import ForgotPassword from '../screens/Login/ForgotPassword/ForgotPassword'
 import ClosedBakery from '../screens/ClosedBakery/ClosedBakery'
+import ChangePassword from '../screens/ChangePassword/ChangePassword'
+import ChangeContactInfo from '../screens/ChangeContactInfo/ChangeContactInfo'
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -71,6 +73,31 @@ function RootNavigator() {
         animationEnabled: true,
         headerTintColor: '#FEC044',
       }} />
+      <Stack.Screen name="ChangePassword" component={ChangePassword} options={{
+        headerShown: true,
+        headerTitle: () => (<><View style={[style.container]}><Image resizeMode="contain" style={style.imagem} source={require('../assets/images/owner1.png')} /></View></>),
+        headerStyle: {
+          elevation: 0,
+          shadowOpacity: 0,
+          borderBottomWidth: 0,
+          backgroundColor: '#E8EDFF'
+        },
+        animationEnabled: true,
+        headerTintColor: '#FEC044',
+      }} />
+      <Stack.Screen name="ChangeContactInfo" component={ChangeContactInfo} options={{
+        headerShown: true,
+        headerTitle: () => (<><View style={[style.container]}><Image resizeMode="contain" style={style.imagem} source={require('../assets/images/owner1.png')} /></View></>),
+        headerStyle: {
+          elevation: 0,
+          shadowOpacity: 0,
+          borderBottomWidth: 0,
+          backgroundColor: '#E8EDFF'
+        },
+        animationEnabled: true,
+        headerTintColor: '#FEC044',
+      }} />
+      
     </Stack.Navigator>
   );
 }

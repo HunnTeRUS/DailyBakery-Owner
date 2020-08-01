@@ -7,6 +7,8 @@ export type RootStackParamList = {
   Login: any;
   ForgotPassword: any;
   ClosedBakery: any;
+  ChangePassword: any;
+  ChangeContactInfo: any;
 };
 
 export type BottomTabParamList = {

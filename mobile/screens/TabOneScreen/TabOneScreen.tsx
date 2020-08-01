@@ -19,12 +19,12 @@ export default function TabOneScreen() {
           <Text style={styles.title}>Dados de sua conta</Text>
           <Text style={styles.subTitle}>Você pode alterar os dados de sua conta, como senha e numeros de telefone.</Text>
 
-          <TouchableOpacity disabled={false} style={styles.nextButton} onPress={() =>   navigation.navigate('ClosedBakery')}>
+          <TouchableOpacity disabled={false} style={styles.nextButton} onPress={() =>  navigation.navigate('ChangeContactInfo')}>
             <Feather size={16} name="phone" style={styles.iconUser}/>
             <Text style={styles.nextText}>Alterar dados de contato</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity disabled={false} style={styles.nextButton} onPress={() => {}}>
+          <TouchableOpacity disabled={false} style={styles.nextButton} onPress={() => navigation.navigate('ChangePassword')}>
             <Feather size={16} name="key" style={styles.iconUser}/>
             <Text style={styles.nextText}>Alterar minha senha</Text>
           </TouchableOpacity>

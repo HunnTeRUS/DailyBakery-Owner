@@ -8,6 +8,7 @@ interface ModalPopupInterface {
     showModal: boolean;
     setShow(trueFalse: boolean): void;
     textToShow: string;
+    onPressCloseButton(): void;
 }   
 
 const ModalPopupInfos = (props: ModalPopupInterface) => {
@@ -33,7 +34,13 @@ const ModalPopupInfos = (props: ModalPopupInterface) => {
                         <Text style={styles.subtitle}>{props.textToShow}</Text>
                     </View>
                     <View style={styles.buttonContainer}>
-                        <TouchableOpacity style={styles.nextButton} onPress={() => {props.setShow(false)}}>
+                        <TouchableOpacity style={styles.nextButton} 
+                            onPress={() => 
+                                {
+                                    props.setShow(false)
+                                    props.onPressCloseButton()
+                                }}>
+
                             <Text style={styles.nextText}>Fechar</Text>
                         </TouchableOpacity>
                     </View>

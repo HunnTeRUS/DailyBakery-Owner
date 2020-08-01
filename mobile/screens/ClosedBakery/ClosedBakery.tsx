@@ -3,9 +3,9 @@ import { TouchableOpacity, Modal, View, Text } from 'react-native';
 import styles from './styles'
 import { Feather } from '@expo/vector-icons'
 import ModalPopupWarn from '../../components/ModalPopup/ModalPopupInterrog/ModalPopupInterrogs';
-import ClosedBakery from '../../components/ImagesComponents/ClosedBakery'
+import ClosedBakeryImage from '../../components/ImagesComponents/ClosedBakery'
 
-export default function TabOneScreen() {
+export default function ClosedBakery() {
     const [show, setShow] = useState(false);
 
     return (
@@ -17,7 +17,7 @@ export default function TabOneScreen() {
                 <View style={styles.box}>
                     <Text style={styles.title}>Sua padaria está fechada.</Text>
                     <Text style={styles.subTitle}>Se quiser voltar ao funcionamento normal, basta clicar no botão logo abaixo.</Text>
-                    <ClosedBakery heightImage={200} widthImage={250}/>
+                    <ClosedBakeryImage heightImage={200} widthImage={250}/>
                 </View>
                 <View style={styles.button}>
                     <TouchableOpacity disabled={false} style={styles.nextButton} onPress={() => {}}>
