@@ -44,7 +44,7 @@ export default StyleSheet.create({
     },
     secondaryText: {
         alignItems: "center",
-        fontFamily: "Poppins-Bold",
+        fontFamily: "Poppins-Regular",
         fontSize: 20,
         marginBottom: '2%',
         marginTop: '2%',

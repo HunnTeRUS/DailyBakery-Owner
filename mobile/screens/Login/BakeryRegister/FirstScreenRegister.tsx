@@ -21,13 +21,13 @@ const FirstScreenRegister = () => {
             <KeyboardAvoidingView behavior="position">
                 <View style={styles.field}>
                     <Text style={styles.text}>E-mail</Text>
-                    <TextInput icon="mail" validator={emailValidator} />
+                    <TextInput icon="mail" validator={emailValidator} placeholder="Digite um email que você tenha acesso"/>
                     <Text style={styles.text}>Senha</Text>
-                    <TextInput icon="key" validator={passwordValidator} secureTextEntry={true} />
+                    <TextInput icon="key" validator={passwordValidator} secureTextEntry={true}  placeholder="Digite sua senha" />
                     <Text style={styles.text}>Confirmar Senha</Text>
-                    <TextInput icon="key" validator={passwordValidator} secureTextEntry={true} />
+                    <TextInput icon="key" validator={passwordValidator} secureTextEntry={true} placeholder="Digite novamente sua senha"/>
                     <Text style={styles.text}>CNPJ</Text>
-                    <TextInput icon="briefcase" validator={cnpjValidator} />
+                    <TextInput icon="briefcase" validator={cnpjValidator} placeholder="Digite o CNPJ da sua padaria"/>
                 </View>
                 <TouchableOpacity style={styles.button} disabled={false} onPress={() => { navigation.navigate('SecondScreenRegister') }}>
                     <Text style={styles.buttonText}>Próximo</Text>

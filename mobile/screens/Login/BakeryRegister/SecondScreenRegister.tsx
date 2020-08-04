@@ -22,11 +22,11 @@ const SecondScreenRegister = () => {
                 <View style={styles.field}>
                     <Text style={styles.secondaryText}>Precisamos saber alguns dados da sua padaria!</Text>
                     <Text style={styles.text}>Por qual nome sua padaria é conhecida?</Text>
-                    <TextInput icon="coffee" validator={nameValidator} />
+                    <TextInput icon="coffee" validator={nameValidator} placeholder="Digite o nome da sua padaria"/>
                     <Text style={styles.text}>CEP da sua padaria</Text>
-                    <TextInput icon="hash" validator={cepValidator} />
+                    <TextInput icon="hash" validator={cepValidator} placeholder="Digite o CEP da sua padaria"/>
                     <Text style={styles.text}>Número</Text>
-                    <TextInput icon="hash" validator={numberValidator} />
+                    <TextInput icon="hash" validator={numberValidator} placeholder="Digite o número onde fica a padaria"/>
                 </View>
                 <TouchableOpacity style={styles.button} disabled={false} onPress={() => { navigation.navigate('ThirdScreenRegister') }}>
                     <Text style={styles.buttonText}>Próximo</Text>

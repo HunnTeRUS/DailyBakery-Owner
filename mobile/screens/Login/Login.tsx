@@ -105,7 +105,6 @@ const Login = () => {
                         fontFamily: "Poppins-ExtraLight",
                         fontSize: 17,
                         marginTop: '20%',
-
                     }}>Esqueci minha senha</Text>
                 </TouchableOpacity>
             </View>

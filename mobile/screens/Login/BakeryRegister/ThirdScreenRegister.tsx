@@ -26,13 +26,13 @@ const ThirdScreenRegister = () => {
                     <Text style={styles.secondaryText}>Verifique os dados da sua padaria e altere os campos, se necessário!</Text>
                     <Text style={styles.secondaryText}>Não deixe nenhum campo vazio</Text>
                     <Text style={styles.text}>Nome da rua</Text>
-                    <TextInput icon="map-pin" validator={streetValidator} />
+                    <TextInput icon="map-pin" validator={streetValidator} placeholder="Digite o nome da Rua onde fica a padaria"/>
                     <Text style={styles.text}>Bairro</Text>
-                    <TextInput icon="map-pin" validator={neighborhoodValidator} />
+                    <TextInput icon="map-pin" validator={neighborhoodValidator} placeholder="Digite o nome do bairro onde fica a padaria"/>
                     <Text style={styles.text}>Cidade</Text>
-                    <TextInput icon="map-pin" validator={cityValidator} />
+                    <TextInput icon="map-pin" validator={cityValidator} placeholder="Digite a cidade onde a padaria está localizada"/>
                     <Text style={styles.text}>Estado</Text>
-                    <TextInput icon="map-pin" validator={stateValidator} />
+                    <TextInput icon="map-pin" validator={stateValidator} placeholder="Digite o estado onde a padaria está localizada"/>
                 </View>
                 <TouchableOpacity style={styles.button} disabled={false} onPress={() => { navigation.navigate('FourthScreenRegister') }}>
                     <Text style={styles.buttonText}>Próximo</Text>
