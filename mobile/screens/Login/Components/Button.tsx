@@ -1,8 +1,6 @@
 import React from "react";
 import { Text, StyleSheet, Dimensions, AsyncStorage } from "react-native";
 import { RectButton } from "react-native-gesture-handler";
-import {useNavigation} from '@react-navigation/native'
-import { color } from "react-native-reanimated";
 
 const font = {
     "Poppins-Regular": require("../../../assets/fonts/Poppins-Regular.ttf"),
@@ -32,7 +30,7 @@ const styles = StyleSheet.create({
     },
 });
 
-const Comecar = ({label, onPress}: ComecarProps) => {
+const Button = ({label, onPress}: ComecarProps) => {
     
     return (
         <RectButton style={styles.container} {...{onPress} }>
@@ -41,4 +39,4 @@ const Comecar = ({label, onPress}: ComecarProps) => {
     )
 }
  
-export default Comecar;
+export default Button;

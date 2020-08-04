@@ -1,8 +1,9 @@
 import React from 'react'
-import { View, StyleSheet, Image, Text, Dimensions, KeyboardAvoidingView } from 'react-native'
+import { View, StyleSheet, Image, Text, Dimensions, KeyboardAvoidingView, AsyncStorage } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import TextInput from './Components/Form/TextInput'
+import TextInput from '../../components/TextInput'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import FirstScreenRegister from './BakeryRegister/FirstScreenRegister'
 
 const { height, width } = Dimensions.get('window');
 const cnpjValidator = (cnpj: string) => cnpj.length === 14;
@@ -33,7 +34,7 @@ const styles = StyleSheet.create({
     },
     image: {
         marginTop: height / 8,
-        
+
     },
     divLinks: {
         flexDirection: "column",
@@ -52,10 +53,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         alignSelf: 'center'
-      },
+    },
     nextText: {
         color: '#FFF',
-        fontSize: 15, 
+        fontSize: 15,
         fontWeight: 'bold'
     },
 })
@@ -64,24 +65,36 @@ const Login = () => {
     const cnpj = true;
     const senha = true;
     const navigation = useNavigation();
-    //const Onbording = navigation.navigate('Onbording');
-    //const ForgotPassword = navigation.navigate('ForgotPassword');
+
+    const WalkthroughOrHome = async () => {
+        var variavel = await AsyncStorage.getItem('firstAccess');
+
+        if (variavel === null || variavel === 'true') {
+            try {
+                await AsyncStorage.setItem('firstAccess', 'false');
+            } catch (err) {
+                console.log(err);
+            }
+            return navigation.navigate('Walkthrough');
+        }
+    }
+    WalkthroughOrHome();
     return (
         <View style={styles.container}>
             <KeyboardAvoidingView behavior="position">
                 <Image source={require('../../assets/images/owner1.png')} style={styles.image} />
                 <View style={styles.inputs}>
                     <Text style={styles.text}>CNPJ</Text>
-                    <TextInput icon="user" placeholder="Digite seu CNPJ" validator={cnpjValidator} keyboardType="number-pad"/>
+                    <TextInput icon="user" placeholder="Digite seu CNPJ" validator={cnpjValidator} keyboardType="number-pad" />
                     <Text style={styles.text}>Senha</Text>
-                    <TextInput icon="lock" placeholder="Digite sua senha" validator={passwordValidator} secureTextEntry={true}/>
+                    <TextInput icon="lock" placeholder="Digite sua senha" validator={passwordValidator} secureTextEntry={true} />
                 </View>
             </KeyboardAvoidingView>
-            <TouchableOpacity onPress={() => {}} style={styles.nextButton}>
+            <TouchableOpacity onPress={() => navigation.navigate('BottomTabNavigator')} style={styles.nextButton}>
                 <Text style={styles.nextText}>Entrar</Text>
             </TouchableOpacity>
             <View style={styles.divLinks}>
-                <TouchableOpacity onPress={() => {}}>
+                <TouchableOpacity onPress={() => navigation.navigate('FirstScreenRegister')}>
                     <Text style={{
                         fontFamily: "Poppins-ExtraLight",
                         fontSize: 17,
@@ -89,11 +102,11 @@ const Login = () => {
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')} >
                     <Text style={{
-                            fontFamily: "Poppins-ExtraLight",
-                            fontSize: 17,
-                            marginTop: '20%',
-                            
-                        }}>Esqueci minha senha</Text>
+                        fontFamily: "Poppins-ExtraLight",
+                        fontSize: 17,
+                        marginTop: '20%',
+
+                    }}>Esqueci minha senha</Text>
                 </TouchableOpacity>
             </View>
         </View>

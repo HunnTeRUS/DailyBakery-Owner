@@ -6,27 +6,12 @@ import TabOneScreen from '../screens/TabOneScreen/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen/TabTwoScreen';
 import TabThreeScreen from '../screens/TabThreeScreen/TabThreeScreen';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList } from '../types';
-import { Image, StyleSheet, View, Text, AsyncStorage } from 'react-native'
-import {useNavigation} from '@react-navigation/native'
+import { Image, StyleSheet, View, Text, } from 'react-native'
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
 export default function BottomTabNavigator() {
-  const navigation = useNavigation();
-
-const verifyingStorage = async () => {
-    var variavel = await AsyncStorage.getItem('firstAccess');
-    
-    if(variavel === null){
-      try{
-        await AsyncStorage.setItem('firstAccess', 'true');
-      }catch(err){
-        console.log(err);
-      }
-      return navigation.navigate('Walkthrough');
-    }
-  }
-verifyingStorage();
+  
   return (
     <BottomTab.Navigator
       initialRouteName="TabTwo"

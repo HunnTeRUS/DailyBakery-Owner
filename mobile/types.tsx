@@ -9,6 +9,12 @@ export type RootStackParamList = {
   ClosedBakery: any;
   ChangePassword: any;
   ChangeContactInfo: any;
+  FirstScreenRegister: any;
+  SecondScreenRegister:any;
+  ThirdScreenRegister: any;
+  FourthScreenRegister:any;
+  FifthScreenRegister: any;
+  BottomTabNavigator: any
 };
 
 export type BottomTabParamList = {

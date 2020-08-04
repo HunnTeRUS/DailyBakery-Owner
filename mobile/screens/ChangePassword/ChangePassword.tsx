@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TouchableOpacity, Modal, View, Text } from 'react-native';
 import styles from './styles'
-import TextInput from '../Login/Components/Form/TextInput'
+import TextInput from '../../components/TextInput'
 import ModalPopupInfos from '../../components/ModalPopup/ModalPopupInfo/ModalPopupInfos'
 import {useNavigation} from '@react-navigation/native'
 

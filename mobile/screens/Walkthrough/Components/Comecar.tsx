@@ -41,7 +41,7 @@ const Comecar = ({label, onPress}: ComecarProps) => {
     if(label === 'Começar') {
         onPress = () => { 
             setFirstAcessToFalse('firstAccess');
-            navigation.navigate('Root')
+            navigation.navigate('BottomTabNavigator');
         }
     }
 

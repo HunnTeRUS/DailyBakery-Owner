@@ -51,19 +51,27 @@ const styles = StyleSheet.create({
         alignItems: "center",
     }
 });
-interface WalkThroughProps {
-    inicial?: boolean,
-}
-const WalkThrough = ({ inicial }: WalkThroughProps) => {
+
+const WalkThrough = () => {
     const scroll = useRef<Animated.ScrollView>(null);
     const x = useValue(0);
-    inicial = true;
+    let inicial;
+    const WalkthroughOrHome = async () => {
+        var variavel = await AsyncStorage.getItem('firstAccess');
+
+        if (variavel === null || variavel === 'true') {
+            try {
+                await AsyncStorage.setItem('firstAccess', 'false');
+            } catch (err) {
+                console.log(err);
+            }
+            inicial = true;
+        }
+        inicial = false;
+    }
+    WalkthroughOrHome();
     const slides = inicial ? Apresentacao : tutorial;
     const onScroll = onScrollEvent({ x });
-    const backgroundColor = interpolateColor(x, {
-        inputRange: slides.map((_, i) => i * width),
-        outputRange: slides.map(Slide => Slide.color),
-    })
     return (
         <View style={styles.container}>
             <Animated.View style={styles.slider}>

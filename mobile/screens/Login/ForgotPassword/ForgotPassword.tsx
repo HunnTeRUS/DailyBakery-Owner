@@ -3,7 +3,7 @@ import { View, StyleSheet, Image, Text, Dimensions, KeyboardAvoidingView } from 
 import Navigation from '../../../navigation';
 import { useNavigation } from '@react-navigation/native';
 import Button from '../Components/Button';
-import TextInput from '../Components/Form/TextInput';
+import TextInput from '../../../components/TextInput';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Feather as Icon } from '@expo/vector-icons';
 import styles from './styles'
