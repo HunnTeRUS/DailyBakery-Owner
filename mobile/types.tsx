@@ -14,7 +14,8 @@ export type RootStackParamList = {
   ThirdScreenRegister: any;
   FourthScreenRegister:any;
   FifthScreenRegister: any;
-  BottomTabNavigator: any
+  BottomTabNavigator: any;
+  CNPJScreen: any;
 };
 
 export type BottomTabParamList = {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, KeyboardAvoidingView, Image, Text } from 'react-native';
-import TextInput from '../../../components/TextInput';
+import TextInput from '../../../../components/TextInput';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
@@ -19,20 +19,24 @@ const FirstScreenRegister = () => {
     return (
         <View style={styles.container}>
             <KeyboardAvoidingView behavior="position">
-                <View style={styles.field}>
+
+                <View style={styles.secondContainer}>
+                    <Text style={styles.title}>Dados para acesso ao app</Text>
+                    <Text style={styles.subTitle}>Informe seu melhor email e crie uma senha segura para você</Text>
                     <Text style={styles.text}>E-mail</Text>
-                    <TextInput icon="mail" validator={emailValidator} placeholder="Digite um email que você tenha acesso"/>
+                    <TextInput icon="mail" validator={emailValidator} placeholder="Digite seu melhor email" />
                     <Text style={styles.text}>Senha</Text>
-                    <TextInput icon="key" validator={passwordValidator} secureTextEntry={true}  placeholder="Digite sua senha" />
+                    <TextInput icon="key" validator={passwordValidator} secureTextEntry={true} placeholder="Digite sua senha" />
                     <Text style={styles.text}>Confirmar Senha</Text>
-                    <TextInput icon="key" validator={passwordValidator} secureTextEntry={true} placeholder="Digite novamente sua senha"/>
-                    <Text style={styles.text}>CNPJ</Text>
-                    <TextInput icon="briefcase" validator={cnpjValidator} placeholder="Digite o CNPJ da sua padaria"/>
+                    <TextInput icon="key" validator={passwordValidator} secureTextEntry={true} placeholder="Digite novamente sua senha" />
+
+                    <TouchableOpacity style={styles.nextButton} disabled={false} onPress={() => { navigation.navigate('SecondScreenRegister') }}>
+                        <Text style={styles.nextText}>Próximo</Text>
+                    </TouchableOpacity>
+
                 </View>
-                <TouchableOpacity style={styles.button} disabled={false} onPress={() => { navigation.navigate('SecondScreenRegister') }}>
-                    <Text style={styles.buttonText}>Próximo</Text>
-                </TouchableOpacity>
             </KeyboardAvoidingView>
+
         </View>
     );
 }

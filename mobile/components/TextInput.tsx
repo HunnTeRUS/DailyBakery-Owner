@@ -41,7 +41,6 @@ const TextInput = ({icon, validator, ...props}: TextInputProps) =>{
         <View style={{flexDirection: "row",
         backgroundColor: "white",
         width: '100%',
-        marginLeft: 5,
         borderRadius: 5,
         height: 45,
         alignSelf: "center",

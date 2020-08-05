@@ -14,11 +14,11 @@ import ForgotPassword from '../screens/Login/ForgotPassword/ForgotPassword'
 import ClosedBakery from '../screens/ClosedBakery/ClosedBakery'
 import ChangePassword from '../screens/ChangePassword/ChangePassword'
 import ChangeContactInfo from '../screens/ChangeContactInfo/ChangeContactInfo';
-import FirstScreenRegister from "../screens/Login/BakeryRegister/FirstScreenRegister";
-import SecondScreenRegister from "../screens/Login/BakeryRegister/SecondScreenRegister";
-import ThirdScreenRegister from "../screens/Login/BakeryRegister/ThirdScreenRegister";
-import FourthScreenRegister from "../screens/Login/BakeryRegister/FourthScreenRegister";
-
+import FirstScreenRegister from "../screens/Login/BakeryRegister/FirstScreenRegister/FirstScreenRegister";
+import SecondScreenRegister from "../screens/Login/BakeryRegister/SecondScreenRegister/SecondScreenRegister";
+import ThirdScreenRegister from "../screens/Login/BakeryRegister/ThirdScreenRegister/ThirdScreenRegister";
+import FourthScreenRegister from "../screens/Login/BakeryRegister/FourthScreenRegister/FourthScreenRegister";
+import CNPJScreen from '../screens/Login/BakeryRegister/CNPJScreen/CNPJScreen'
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -36,7 +36,7 @@ function RootNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Root" component={Login} />
-      <Stack.Screen name="BottomTabNavigator" component={BottomTabNavigator} />
+      <Stack.Screen name="BottomTabNavigator" component={BottomTabNavigator}/>
       <Stack.Screen name="Walkthrough" component={Walkthrough} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Screen name="ChangeAdress" component={ChangeAdress} 
@@ -102,6 +102,20 @@ function RootNavigator() {
         animationEnabled: true,
         headerTintColor: '#FEC044',
       }} />
+
+      <Stack.Screen name="CNPJScreen" component={CNPJScreen} options={{
+        headerShown: true,
+        headerTitle: () => (<><View style={[style.container]}><Image resizeMode="contain" style={style.imagem} source={require('../assets/images/owner1.png')} /></View></>),
+        headerStyle: {
+          elevation: 0,
+          shadowOpacity: 0,
+          borderBottomWidth: 0,
+          backgroundColor: '#F4EEEE'
+        },
+        animationEnabled: true,
+        headerTintColor: '#FEC044',
+      }} />
+
       <Stack.Screen name="FirstScreenRegister" component={FirstScreenRegister} options={{
         headerShown: true,
         headerTitle: () => (<><View style={[style.container]}><Image resizeMode="contain" style={style.imagem} source={require('../assets/images/owner1.png')} /></View></>),
@@ -112,7 +126,7 @@ function RootNavigator() {
           backgroundColor: '#F4EEEE'
         },
         animationEnabled: true,
-        headerTintColor: '#000000',
+        headerTintColor: '#FEC044',
       }} />
 
       <Stack.Screen name="SecondScreenRegister" component={SecondScreenRegister} options={{
@@ -125,7 +139,7 @@ function RootNavigator() {
           backgroundColor: '#F4EEEE'
         },
         animationEnabled: true,
-        headerTintColor: '#000000',
+        headerTintColor: '#FEC044',
       }} />
 
 
@@ -139,7 +153,7 @@ function RootNavigator() {
           backgroundColor: '#F4EEEE'
         },
         animationEnabled: true,
-        headerTintColor: '#000000',
+        headerTintColor: '#FEC044',
       }} />
 
       <Stack.Screen name="FourthScreenRegister" component={FourthScreenRegister} options={{
@@ -151,8 +165,9 @@ function RootNavigator() {
           borderBottomWidth: 0,
           backgroundColor: '#F4EEEE'
         },
+        headerLeft: () => (<></>),
         animationEnabled: true,
-        headerTintColor: '#000000',
+        headerTintColor: '#FEC044',
       }} />
     </Stack.Navigator>
   );

@@ -32,7 +32,7 @@ export default function BottomTabNavigator() {
         component={TabOneNavigator}
         options={{
           tabBarIcon: ({ color, size }) => <FontAwesome5 size={size} name="user" color={color} />,
-
+          
         }}
       />
       <BottomTab.Screen
@@ -66,6 +66,7 @@ function TabOneNavigator() {
           headerStyle: {
             backgroundColor: '#E8EDFF',
           },
+          headerLeft: () => (<></>),
         }}
       />
     </TabOneStack.Navigator>
@@ -81,10 +82,11 @@ function TabTwoNavigator() {
         name="TabTwoScreen"
         component={TabTwoScreen}
         options={{
-          headerTitle: () => (<><View style={style.containerHome}><Image resizeMode="contain" style={style.imagemHome} source={require('../assets/images/owner1.png')} /></View></>),
+          headerTitle: () => (<View style={style.containerHome}><Image resizeMode="contain" style={style.imagemHome} source={require('../assets/images/owner1.png')} /></View>),
           headerStyle: {
             backgroundColor: '#E8EDFF',
           },
+          headerLeft: () => (<></>),
         }}
       />
     </TabTwoStack.Navigator>
@@ -104,6 +106,7 @@ function TabThreeNavigator() {
           headerStyle: {
             backgroundColor: '#E8EDFF'
           },
+          headerLeft: () => (<></>),
         }}
       />
     </TabThreeStack.Navigator>
@@ -122,6 +125,8 @@ const style = StyleSheet.create({
     display: 'flex',
     alignContent: 'center',
     flex: 1,
+    position: 'relative',
+    right: '60%',
   },
   imagemHome: {
     height: 50,
@@ -132,9 +137,10 @@ const style = StyleSheet.create({
   containerHome: {
     flexDirection: 'row',
     display: 'flex',
-    alignContent: 'center',
+    alignContent: 'flex-start',
     justifyContent: 'center',
-    flex: 1,
+    position: 'relative',
+    right: '60%',
   },
   textHeader: {
     alignSelf: 'center',

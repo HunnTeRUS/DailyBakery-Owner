@@ -3,7 +3,7 @@ import { View, StyleSheet, Image, Text, Dimensions, KeyboardAvoidingView, AsyncS
 import { useNavigation } from '@react-navigation/native'
 import TextInput from '../../components/TextInput'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import FirstScreenRegister from './BakeryRegister/FirstScreenRegister'
+import FirstScreenRegister from './BakeryRegister/FirstScreenRegister/FirstScreenRegister'
 
 const { height, width } = Dimensions.get('window');
 const cnpjValidator = (cnpj: string) => cnpj.length === 14;
@@ -94,7 +94,7 @@ const Login = () => {
                 <Text style={styles.nextText}>Entrar</Text>
             </TouchableOpacity>
             <View style={styles.divLinks}>
-                <TouchableOpacity onPress={() => navigation.navigate('FirstScreenRegister')}>
+                <TouchableOpacity onPress={() => navigation.navigate('CNPJScreen')}>
                     <Text style={{
                         fontFamily: "Poppins-ExtraLight",
                         fontSize: 17,
