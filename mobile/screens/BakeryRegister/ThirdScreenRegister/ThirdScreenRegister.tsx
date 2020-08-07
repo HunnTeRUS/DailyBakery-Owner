@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, KeyboardAvoidingView, Image, Text } from 'react-native';
-import TextInput from '../../../../components/TextInput';
+import TextInput from '../../../components/TextInput';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import styles from './styles';
 import { useNavigation } from '@react-navigation/native';

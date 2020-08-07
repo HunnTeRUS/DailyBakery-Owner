@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import { View, Image, Text, KeyboardAvoidingView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import TextInput from '../../../components/TextInput';
+import TextInput from '../../components/TextInput';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import styles from './styles'
-import ModalPopupInput from '../../../components/ModalPopup/ModalPopupInput/ModalPopupInput'
+import ModalPopupInput from '../../components/ModalPopup/ModalPopupInput/ModalPopupInput'
 
 const emailValidator = (email: string) =>
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
@@ -17,7 +17,7 @@ const ForgotPassword = () => {
         <View style={styles.container}>
             {!show ? <></> : <ModalPopupInput textToShow='Yuri gay' showModal={show} setShow={setShow}/>}	
             <KeyboardAvoidingView behavior="position">
-                <Image source={require('../../../assets/images/owner1.png')} style={styles.image} />
+                <Image source={require('../../assets/images/owner1.png')} style={styles.image} />
                 <Text style={styles.title}>Recuperação de Senha</Text>
 
                 <View style={styles.inputs}>

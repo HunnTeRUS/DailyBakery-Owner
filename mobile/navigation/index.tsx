@@ -10,15 +10,15 @@ import BottomTabNavigator from './BottomTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
 import InfoBakery from '../screens/TabThreeScreen/components/Infos/InfoBakery';
 import Login from '../screens/Login/Login'
-import ForgotPassword from '../screens/Login/ForgotPassword/ForgotPassword'
+import ForgotPassword from '../screens/ForgotPassword/ForgotPassword'
 import ClosedBakery from '../screens/ClosedBakery/ClosedBakery'
 import ChangePassword from '../screens/ChangePassword/ChangePassword'
 import ChangeContactInfo from '../screens/ChangeContactInfo/ChangeContactInfo';
-import FirstScreenRegister from "../screens/Login/BakeryRegister/FirstScreenRegister/FirstScreenRegister";
-import SecondScreenRegister from "../screens/Login/BakeryRegister/SecondScreenRegister/SecondScreenRegister";
-import ThirdScreenRegister from "../screens/Login/BakeryRegister/ThirdScreenRegister/ThirdScreenRegister";
-import FourthScreenRegister from "../screens/Login/BakeryRegister/FourthScreenRegister/FourthScreenRegister";
-import CNPJScreen from '../screens/Login/BakeryRegister/CNPJScreen/CNPJScreen'
+import FirstScreenRegister from "../screens/BakeryRegister/FirstScreenRegister/FirstScreenRegister";
+import SecondScreenRegister from "../screens/BakeryRegister/SecondScreenRegister/SecondScreenRegister";
+import ThirdScreenRegister from "../screens/BakeryRegister/ThirdScreenRegister/ThirdScreenRegister";
+import FourthScreenRegister from "../screens/BakeryRegister/FourthScreenRegister/FourthScreenRegister";
+import CNPJScreen from '../screens/BakeryRegister/CNPJScreen/CNPJScreen'
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -48,7 +48,10 @@ function RootNavigator() {
             headerTintColor: '#FEC044',
             headerStyle: {
               backgroundColor: '#E8EDFF',
-            }
+              elevation: 0,
+              shadowOpacity: 0,
+              borderBottomWidth: 0,
+            },
           }
         }/>
       <Stack.Screen name="InfoBakery" component={InfoBakery} /> 
@@ -158,7 +161,7 @@ function RootNavigator() {
 
       <Stack.Screen name="FourthScreenRegister" component={FourthScreenRegister} options={{
         headerShown: true,
-        headerTitle: () => (<><View style={[style.container]}><Image resizeMode="contain" style={style.imagem} source={require('../assets/images/owner1.png')} /></View></>),
+        headerTitle: () => (<></>),
         headerStyle: {
           elevation: 0,
           shadowOpacity: 0,

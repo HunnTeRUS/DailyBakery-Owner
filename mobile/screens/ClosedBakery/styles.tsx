@@ -43,7 +43,7 @@ export default StyleSheet.create({
     nextButton: {
         backgroundColor: '#FEC044',
         borderRadius: 6,
-        height: 50,
+        height: 45,
         width: '80%',
         alignItems: 'center',
         justifyContent: 'center',

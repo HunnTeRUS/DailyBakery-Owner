@@ -1,8 +1,8 @@
 import * as React from 'react';
 import styles from './styles'
 import { TextInput, TouchableOpacity, Image } from 'react-native'
-import { Text, View } from '../../../../components/Themed';
-import Baker from '../../../../components/ImagesComponents/Baker'
+import { Text, View } from '../../../components/Themed';
+import Baker from '../../../components/ImagesComponents/Baker'
 import {useNavigation} from '@react-navigation/native'
 
 const FouthScreenRegister = () => {

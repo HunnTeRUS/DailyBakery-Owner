@@ -19,7 +19,6 @@ export default function BottomTabNavigator() {
         {
           activeTintColor: '#FFCF6E',
           inactiveTintColor: 'white',
-          showLabel: false,
           style: {
             borderTopColor: '#CDCCCE',
             backgroundColor: '#D6DCF3'
@@ -31,14 +30,16 @@ export default function BottomTabNavigator() {
         name="TabOne"
         component={TabOneNavigator}
         options={{
-          tabBarIcon: ({ color, size }) => <FontAwesome5 size={size} name="user" color={color} />,
-          
+          title: 'Perfil',
+          tabBarIcon: ({ color, size }) => <FontAwesome5 size={size} name="user" color={color} />,  
         }}
+        
       />
       <BottomTab.Screen
         name="TabTwo"
         component={TabTwoNavigator}
         options={{
+          title: 'Inicio',
           tabBarIcon: ({ color, size }) => <FontAwesome5 size={size} name="home" color={color} />,
         }}
       />
@@ -46,6 +47,7 @@ export default function BottomTabNavigator() {
         name="TabThree"
         component={TabThreeNavigator}
         options={{
+          title: 'Padaria',
           tabBarIcon: ({ color, size }) => <FontAwesome5 size={size} name="industry" color={color} />,
         }}
       />

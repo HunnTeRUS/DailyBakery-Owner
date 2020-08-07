@@ -4,9 +4,11 @@ import styles from './styles'
 import { Feather } from '@expo/vector-icons'
 import ModalPopupWarn from '../../components/ModalPopup/ModalPopupInterrog/ModalPopupInterrogs';
 import ClosedBakeryImage from '../../components/ImagesComponents/ClosedBakery'
+import { useNavigation } from '@react-navigation/native';
 
 export default function ClosedBakery() {
     const [show, setShow] = useState(false);
+    const navigation = useNavigation();
 
     return (
         <View style={styles.container}>
@@ -20,7 +22,7 @@ export default function ClosedBakery() {
                     <ClosedBakeryImage heightImage={200} widthImage={250}/>
                 </View>
                 <View style={styles.button}>
-                    <TouchableOpacity disabled={false} style={styles.nextButton} onPress={() => {}}>
+                    <TouchableOpacity disabled={false} style={styles.nextButton} onPress={() => navigation.navigate('BottomTabNavigator')}>
                         <Text style={styles.nextText}>Abrir padaria novamente</Text>
                     </TouchableOpacity>
                 </View>

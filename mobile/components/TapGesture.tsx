@@ -121,7 +121,7 @@ export default () => {
             </Text>
         </View>
       </View>
-      <TouchableOpacity style={styles.toCloseBakery} onPress={() => {}}>
+      <TouchableOpacity style={styles.toCloseBakery} onPress={() => navigation.navigate('ClosedBakery')}>
         <Text style={styles.toCloseBakeryText}>Fechar Padaria</Text>
       </TouchableOpacity>
     </View>

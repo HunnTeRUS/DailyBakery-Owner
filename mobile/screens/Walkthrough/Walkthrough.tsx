@@ -2,12 +2,13 @@ import React, { useRef } from "react";
 import { View, ScrollView, StyleSheet, Dimensions, AsyncStorage, Text } from "react-native";
 import Slide, { SLIDE_HEIGHT } from "./Slide";
 import Animated, { multiply, divide } from "react-native-reanimated";
-import { onScrollEvent, useValue, interpolateColor, translate } from "react-native-redash";
+import { onScrollEvent, useValue } from "react-native-redash";
 import Subslide from "./Subslide";
 import Dots from './Components/Dots';
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 const { width } = Dimensions.get("window");
+var inicial : boolean = false;
 
 const Apresentacao = [
     { picture: require("../../assets/images/4.png"), label: "Daily bakery", text: "Este app tem o intuito de tornar a vida dos amantes de pão ainda melhor, informando quando tem pão quentinho em sua padaria.", color: "#FFCF6E" },
@@ -55,19 +56,17 @@ const styles = StyleSheet.create({
 const WalkThrough = () => {
     const scroll = useRef<Animated.ScrollView>(null);
     const x = useValue(0);
-    let inicial;
     const WalkthroughOrHome = async () => {
         var variavel = await AsyncStorage.getItem('firstAccess');
 
-        if (variavel === null || variavel === 'true') {
+        if (variavel === null) {
             try {
                 await AsyncStorage.setItem('firstAccess', 'false');
+                inicial = true;
             } catch (err) {
                 console.log(err);
             }
-            inicial = true;
-        }
-        inicial = false;
+        } else inicial = false;
     }
     WalkthroughOrHome();
     const slides = inicial ? Apresentacao : tutorial;
