@@ -69,7 +69,6 @@ const Login = () => {
 
     const WalkthroughOrHome = async () => {
         var variavel = await AsyncStorage.getItem('firstAccess');
-        console.log(variavel+" login");
         if (variavel === null) {
             return navigation.navigate('Walkthrough');
         }

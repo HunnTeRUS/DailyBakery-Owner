@@ -39,17 +39,9 @@ async function setFirstAcessToFalse(key: string) {
 const Comecar = ({ label, onPress }: ComecarProps) => {
     const navigation = useNavigation();
 
-
     if (label === 'Começar') {
         onPress = async () => {
-            var firstAccess = await AsyncStorage.getItem('firstAccess');
-
-            if (firstAccess === null || firstAccess === undefined) {
-                await setFirstAcessToFalse('firstAccess');
-                navigation.navigate('Login');
-            } else {
-                navigation.navigate('BottomTabNavigator');
-            }
+            navigation.navigate('BottomTabNavigator');
         }
     }
 

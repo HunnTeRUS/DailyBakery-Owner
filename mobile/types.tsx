@@ -16,6 +16,7 @@ export type RootStackParamList = {
   FifthScreenRegister: any;
   BottomTabNavigator: any;
   CNPJScreen: any;
+  WalkthroughTutorial: any;
 };
 
 export type BottomTabParamList = {

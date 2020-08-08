@@ -19,7 +19,7 @@ import SecondScreenRegister from "../screens/BakeryRegister/SecondScreenRegister
 import ThirdScreenRegister from "../screens/BakeryRegister/ThirdScreenRegister/ThirdScreenRegister";
 import FourthScreenRegister from "../screens/BakeryRegister/FourthScreenRegister/FourthScreenRegister";
 import CNPJScreen from '../screens/BakeryRegister/CNPJScreen/CNPJScreen'
-
+import WalkThroughTutorial from '../screens/WalkthroughTutorial/WalkthroughTutorial'
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
     <NavigationContainer
@@ -172,6 +172,7 @@ function RootNavigator() {
         animationEnabled: true,
         headerTintColor: '#FEC044',
       }} />
+      <Stack.Screen name="WalkthroughTutorial" component={WalkThroughTutorial} />
     </Stack.Navigator>
   );
 }
