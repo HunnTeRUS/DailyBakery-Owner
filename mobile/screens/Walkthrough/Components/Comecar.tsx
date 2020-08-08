@@ -1,14 +1,15 @@
 import React from "react";
 import { Text, StyleSheet, Dimensions, AsyncStorage } from "react-native";
 import { RectButton } from "react-native-gesture-handler";
-import {useNavigation} from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 
 const font = {
     "Poppins-Regular": require("../../../assets/fonts/Poppins-Regular.ttf"),
-    "Poppins-Bold": require("../../../assets/fonts/Poppins-Bold.ttf")};
+    "Poppins-Bold": require("../../../assets/fonts/Poppins-Bold.ttf")
+};
 
 interface ComecarProps {
-    label : string,
+    label: string,
     onPress: () => void;
 }
 
@@ -18,11 +19,11 @@ const styles = StyleSheet.create({
     container: {
         borderRadius: 10,
         height: 40,
-        width: (width/3),
+        width: (width / 3),
         backgroundColor: "#ffbd59",
         justifyContent: 'center',
     },
-    label:{
+    label: {
         fontSize: 20,
         textAlign: "center",
         color: 'white',
@@ -30,26 +31,34 @@ const styles = StyleSheet.create({
     },
 });
 
-async function setFirstAcessToFalse(key:string){
+async function setFirstAcessToFalse(key: string) {
     await AsyncStorage.removeItem(key);
     await AsyncStorage.setItem(key, 'false');
 }
 
-const Comecar = ({label, onPress}: ComecarProps) => {
+const Comecar = ({ label, onPress }: ComecarProps) => {
     const navigation = useNavigation();
 
-    if(label === 'Começar') {
-        onPress = () => { 
-            setFirstAcessToFalse('firstAccess');
-            navigation.navigate('BottomTabNavigator');
+
+    if (label === 'Começar') {
+        onPress = async () => {
+            var firstAccess = await AsyncStorage.getItem('firstAccess');
+            console.log(firstAccess + " botão");
+
+            if (firstAccess === null || firstAccess === undefined) {
+                await setFirstAcessToFalse('firstAccess');
+                navigation.navigate('Login');
+            } else {
+                navigation.navigate('BottomTabNavigator');
+            }
         }
     }
 
     return (
-        <RectButton style={styles.container} {...{onPress}}>
+        <RectButton style={styles.container} {...{ onPress }}>
             <Text style={styles.label}>{label}</Text>
         </RectButton>
     )
 }
- 
+
 export default Comecar;

@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native'
 import TextInput from '../../components/TextInput'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import FirstScreenRegister from '../BakeryRegister/FirstScreenRegister/FirstScreenRegister'
+import WalkThrough from '../Walkthrough/Walkthrough'
 
 const { height, width } = Dimensions.get('window');
 const cnpjValidator = (cnpj: string) => cnpj.length === 14;
@@ -68,7 +69,7 @@ const Login = () => {
 
     const WalkthroughOrHome = async () => {
         var variavel = await AsyncStorage.getItem('firstAccess');
-
+        console.log(variavel+" login");
         if (variavel === null) {
             return navigation.navigate('Walkthrough');
         }

@@ -1,14 +1,14 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { View, ScrollView, StyleSheet, Dimensions, AsyncStorage, Text } from "react-native";
 import Slide, { SLIDE_HEIGHT } from "./Slide";
-import Animated, { multiply, divide } from "react-native-reanimated";
+import Animated, { multiply, divide, Value } from "react-native-reanimated";
 import { onScrollEvent, useValue } from "react-native-redash";
 import Subslide from "./Subslide";
 import Dots from './Components/Dots';
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 const { width } = Dimensions.get("window");
-var inicial : boolean = false;
+
 
 const Apresentacao = [
     { picture: require("../../assets/images/4.png"), label: "Daily bakery", text: "Este app tem o intuito de tornar a vida dos amantes de pão ainda melhor, informando quando tem pão quentinho em sua padaria.", color: "#FFCF6E" },
@@ -53,23 +53,39 @@ const styles = StyleSheet.create({
     }
 });
 
+
+
+
+
 const WalkThrough = () => {
+
+    const valid = true
+    const invalid = false
+    const [state, setState] = useState(valid);
+
     const scroll = useRef<Animated.ScrollView>(null);
     const x = useValue(0);
-    const WalkthroughOrHome = async () => {
-        var variavel = await AsyncStorage.getItem('firstAccess');
 
-        if (variavel === null) {
-            try {
-                await AsyncStorage.setItem('firstAccess', 'false');
-                inicial = true;
-            } catch (err) {
-                console.log(err);
-            }
-        } else inicial = false;
+    async function WalkthroughOrHome() {
+        var variavel = await AsyncStorage.getItem('firstAccess');
+        console.log(variavel + " walk")
+        if (variavel === 'false') {
+            setState(invalid);
+            return;
+        } else if (variavel === null || variavel === undefined) {
+            setState(valid);
+            return;
+        } else {
+            return;
+        }
+
     }
-    WalkthroughOrHome();
-    const slides = inicial ? Apresentacao : tutorial;
+    async () =>
+    await WalkthroughOrHome()
+
+    console.log(state + " valor inicial");
+
+    const slides = state ? Apresentacao : tutorial;
     const onScroll = onScrollEvent({ x });
     return (
         <View style={styles.container}>
@@ -92,7 +108,7 @@ const WalkThrough = () => {
                 </Animated.ScrollView>
             </Animated.View>
             <View style={styles.footer}>
-                <Animated.View style={{ ...StyleSheet.absoluteFillObject, borderTopLeftRadius: 75, backgroundColor: "#DCDCDC" }}/>
+                <Animated.View style={{ ...StyleSheet.absoluteFillObject, borderTopLeftRadius: 75, backgroundColor: "#DCDCDC" }} />
 
                 <View style={[styles.footerContent]}>
                     <View style={styles.pagination}>
