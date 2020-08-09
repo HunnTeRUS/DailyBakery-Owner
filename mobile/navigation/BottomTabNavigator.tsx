@@ -1,12 +1,13 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
-import { FontAwesome5 } from '@expo/vector-icons'
+import { FontAwesome5, Feather } from '@expo/vector-icons'
 import TabOneScreen from '../screens/TabOneScreen/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen/TabTwoScreen';
 import TabThreeScreen from '../screens/TabThreeScreen/TabThreeScreen';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList } from '../types';
-import { Image, StyleSheet, View, Text, } from 'react-native'
+import { Image, StyleSheet, View, Text} from 'react-native'
+import { useNavigation } from '@react-navigation/native';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -64,7 +65,12 @@ function TabOneNavigator() {
         name="TabOneScreen"
         component={TabOneScreen}
         options={{
-          headerTitle: () => (<><View style={style.container}><Image resizeMode="contain" style={style.imagem} source={require('../assets/images/owner1.png')} /><Text style={style.textHeader}>Meu Perfil</Text></View></>),
+          headerTitle: () => (
+              <>
+                <View style={style.container}><Image resizeMode="contain" style={style.imagem} source={require('../assets/images/owner1.png')} />
+                <Text style={style.textHeader}>Meu Perfil</Text></View>
+              </>
+            ),
           headerStyle: {
             backgroundColor: '#E8EDFF',
           },
@@ -78,13 +84,20 @@ function TabOneNavigator() {
 const TabTwoStack = createStackNavigator<TabTwoParamList>();
 
 function TabTwoNavigator() {
+  const navigation = useNavigation();
+
   return (
     <TabTwoStack.Navigator>
       <TabTwoStack.Screen
         name="TabTwoScreen"
         component={TabTwoScreen}
         options={{
-          headerTitle: () => (<View style={style.containerHome}><Image resizeMode="contain" style={style.imagemHome} source={require('../assets/images/owner1.png')} /></View>),
+          headerTitle: () => (
+            <View style={style.containerHome}>
+              <Image resizeMode="contain" style={style.imagemHome} source={require('../assets/images/owner1.png')} />
+              <Feather onPress={() => navigation.navigate('WalkthroughTutorial')} style={style.helpIcon} name="help-circle" size={25} />
+            </View>
+          ),
           headerStyle: {
             backgroundColor: '#E8EDFF',
           },
@@ -132,17 +145,16 @@ const style = StyleSheet.create({
   },
   imagemHome: {
     height: 50,
-    display: 'flex',
     alignSelf: 'center',
     width: 130,
+    marginLeft: '20%'
   },
   containerHome: {
-    flexDirection: 'row',
     display: 'flex',
-    alignContent: 'flex-start',
-    justifyContent: 'center',
-    position: 'relative',
-    right: '60%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    alignContent: 'center'
   },
   textHeader: {
     alignSelf: 'center',
@@ -150,5 +162,7 @@ const style = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 17,
     color: '#8A8986'
+  },
+  helpIcon: {
   }
 })

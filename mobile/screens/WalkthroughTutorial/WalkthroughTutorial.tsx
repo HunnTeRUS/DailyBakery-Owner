@@ -13,7 +13,7 @@ const tutorial = [
     { picture: require("../../assets/images/9.png"), label: "Minha Padaria", title: "Posso alterar informações da minha padaria?", text: "Você consegue alterar informações de endereço de sua padaria, basta clicar no terceiro botão abaixo dentro do app para isso!", color: "#FFCF6E" },
     { picture: require("../../assets/images/7.png"), label: "Meu Perfil", title: "Onde Posso alterar meus dados?", text: "Você pode alterar alguns dados como por exemplo, endereço, senha... na tela \"Meu perfil\" (ícone do bonequinho), basta digitar os novos dados e envia-los.", color: "#FFCF6E" },
     { picture: require("../../assets/images/6.png"), label: "Home", title: "Como notifico meus clientes?", text: "A tela principal de nosso aplicativo tem um botão com um icone em formato de um pão, no qual ao você segurar por 1 segundo você irá notificar todos os seus clientes sobre nova fornada.", color: "#FFCF6E" },
-    { picture: require("../../assets/images/8.png"), label: "Ainda tenho dúvidas", title: "Sem problemas", text: "Você pode acessar esse tutorial quantas vezes quiser, basta clicar no ícone de interrogação no canto superior direito em qualquer tela.", color: "#FFCF6E" },
+    { picture: require("../../assets/images/8.png"), label: "Ainda tenho dúvidas", title: "Sem problemas", text: "Você pode acessar esse tutorial quantas vezes quiser, basta clicar no ícone de interrogação no canto superior direito na tela inicial.", color: "#FFCF6E" },
 ]
 const styles = StyleSheet.create({
     container: {
