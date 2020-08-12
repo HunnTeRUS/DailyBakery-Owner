@@ -8,6 +8,7 @@ interface ModalPopupInterface {
     showModal: boolean;
     setShow(trueFalse: boolean): void;
     textToShow: string;
+    
 }
 
 const ModalPopup = (props: ModalPopupInterface) => {
@@ -36,7 +37,10 @@ const ModalPopup = (props: ModalPopupInterface) => {
                             <TextInput style={styles.inputNumber} autoCapitalize="none" placeholder='Digite seu codigo' />
                         </View>
                         <View style={styles.buttonContainer}>
-                            <TouchableOpacity style={styles.nextButton} onPress={() => { props.setShow(false) }}>
+                            <TouchableOpacity style={styles.nextButton} onPress={() => { 
+                                props.setShow(false) 
+                                if(props.functionForButton) props.functionForButton(); 
+                                }}>
                                 <Text style={styles.nextText}>Validar</Text>
                             </TouchableOpacity>
                         </View>

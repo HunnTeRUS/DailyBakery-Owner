@@ -37,8 +37,8 @@ const ModalPopupInfos = (props: ModalPopupInterface) => {
                         <TouchableOpacity style={styles.nextButton} 
                             onPress={() => 
                                 {
-                                    props.setShow(false)
-                                    props.onPressCloseButton()
+                                    props.setShow(false);
+                                    if(props.onPressCloseButton) props.onPressCloseButton();
                                 }}>
 
                             <Text style={styles.nextText}>Fechar</Text>

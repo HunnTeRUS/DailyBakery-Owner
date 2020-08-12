@@ -14,10 +14,20 @@ const ForgotPassword = () => {
     const [show, setShow] = useState(false);
     const navigation = useNavigation();
     const [email, setEmail] = useState("")
+    const [codeReceivedFromApi, setCodeReceivedFromApi] = useState('')
+
+    function verifyCodeAndNavigate(codeReceivedFromAPI: string, codeTypedByUser?: string ){
+        if(codeReceivedFromAPI === codeTypedByUser) {
+            navigation.navigate('ChangePasswordForgot')
+        }
+        else {
+            navigation.navigate('ForgotPassword')
+        }
+    }
 
     return (
         <View style={styles.container}>
-            {!show ? <></> : <ModalPopupInput textToShow='Yuri gay' showModal={show} setShow={setShow}/>}	
+            {!show ? <></> : <ModalPopupInput functionForButton={() => navigation.navigate('ChangePasswordForgot')} textToShow='Yuri gay' showModal={show} setShow={setShow}/>}	
             <KeyboardAvoidingView behavior="position">
                 <Image source={require('../../../assets/images/owner1.png')} style={styles.image} />
                 <Text style={styles.title}>Recuperação de Senha</Text>
@@ -31,7 +41,7 @@ const ForgotPassword = () => {
             <TouchableOpacity 
                 onPress={() => {
                     setShow(!show)
-                    sendVerificationEmailServices(email)
+                    setCodeReceivedFromApi(sendVerificationEmailServices(email));
                 }}
                 style={styles.nextButton}>
 
@@ -41,6 +51,5 @@ const ForgotPassword = () => {
         </View>
     )
 }
-
 
 export default ForgotPassword;

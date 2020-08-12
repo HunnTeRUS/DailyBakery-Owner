@@ -20,6 +20,8 @@ import ThirdScreenRegister from "../screens/BakeryRegister/ThirdScreenRegister/T
 import FourthScreenRegister from "../screens/BakeryRegister/FourthScreenRegister/FourthScreenRegister";
 import CNPJScreen from '../screens/BakeryRegister/CNPJScreen/CNPJScreen'
 import WalkThroughTutorial from '../screens/WalkthroughTutorial/WalkthroughTutorial'
+import ChangePasswordForgot from '../screens/ForgotPassword/ChangePassword/ChangePassword'
+
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
     <NavigationContainer
@@ -173,6 +175,19 @@ function RootNavigator() {
         headerTintColor: '#FEC044',
       }} />
       <Stack.Screen name="WalkthroughTutorial" component={WalkThroughTutorial} />
+      <Stack.Screen name="ChangePasswordForgot" component={ChangePasswordForgot} options={{
+        headerShown: true,
+        headerTitle: () => (<><View style={[style.container]}><Image resizeMode="contain" style={style.imagem} source={require('../../assets/images/owner1.png')} /></View></>),
+        headerStyle: {
+          elevation: 0,
+          shadowOpacity: 0,
+          borderBottomWidth: 0,
+          backgroundColor: "#F4EEEE",
+        },
+        headerLeft: () => (<></>),
+        animationEnabled: true,
+        headerTintColor: '#FEC044',
+      }} />
     </Stack.Navigator>
   );
 }

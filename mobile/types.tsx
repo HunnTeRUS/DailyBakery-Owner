@@ -17,6 +17,7 @@ export type RootStackParamList = {
   BottomTabNavigator: any;
   CNPJScreen: any;
   WalkthroughTutorial: any;
+  ChangePasswordForgot: any;
 };
 
 export type BottomTabParamList = {
