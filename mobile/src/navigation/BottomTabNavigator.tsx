@@ -5,7 +5,7 @@ import { FontAwesome5, Feather } from '@expo/vector-icons'
 import TabOneScreen from '../screens/TabOneScreen/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen/TabTwoScreen';
 import TabThreeScreen from '../screens/TabThreeScreen/TabThreeScreen';
-import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList } from '../types';
+import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList } from '../../types';
 import { Image, StyleSheet, View, Text} from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 
@@ -67,7 +67,7 @@ function TabOneNavigator() {
         options={{
           headerTitle: () => (
               <>
-                <View style={style.container}><Image resizeMode="contain" style={style.imagem} source={require('../assets/images/owner1.png')} />
+                <View style={style.container}><Image resizeMode="contain" style={style.imagem} source={require('../../assets/images/owner1.png')} />
                 <Text style={style.textHeader}>Meu Perfil</Text></View>
               </>
             ),
@@ -94,7 +94,7 @@ function TabTwoNavigator() {
         options={{
           headerTitle: () => (
             <View style={style.containerHome}>
-              <Image resizeMode="contain" style={style.imagemHome} source={require('../assets/images/owner1.png')} />
+              <Image resizeMode="contain" style={style.imagemHome} source={require('../../assets/images/owner1.png')} />
               <Feather onPress={() => navigation.navigate('WalkthroughTutorial')} style={style.helpIcon} name="help-circle" size={25} />
             </View>
           ),
@@ -117,7 +117,7 @@ function TabThreeNavigator() {
         name="TabThreeScreen"
         component={TabThreeScreen}
         options={{
-          headerTitle: () => (<><View style={style.container}><Image resizeMode="contain" style={style.imagem} source={require('../assets/images/owner1.png')} /><Text style={style.textHeader}>Minha padaria</Text></View></>),
+          headerTitle: () => (<><View style={style.container}><Image resizeMode="contain" style={style.imagem} source={require('../../assets/images/owner1.png')} /><Text style={style.textHeader}>Minha padaria</Text></View></>),
           headerStyle: {
             backgroundColor: '#E8EDFF'
           },

@@ -5,7 +5,7 @@ import { Image, StyleSheet, View ,ColorSchemeName } from 'react-native';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import ChangeAdress from '../screens/TabThreeScreen/components/ChangeAdress/ChangeAdress';
 import Walkthrough from '../screens/Walkthrough/Walkthrough'
-import { RootStackParamList } from '../types';
+import { RootStackParamList } from '../../types';
 import BottomTabNavigator from './BottomTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
 import InfoBakery from '../screens/TabThreeScreen/components/Infos/InfoBakery';
@@ -43,7 +43,7 @@ function RootNavigator() {
         options={
           {
             headerShown: true,
-            headerTitle: () => (<><View style={style.container}><Image resizeMode="contain" style={style.imagem} source={require('../assets/images/owner1.png')} /></View></>),
+            headerTitle: () => (<><View style={style.container}><Image resizeMode="contain" style={style.imagem} source={require('../../assets/images/owner1.png')} /></View></>),
             animationEnabled: true,
             headerTintColor: '#FEC044',
             headerStyle: {
@@ -70,7 +70,7 @@ function RootNavigator() {
       }} />
       <Stack.Screen name="ClosedBakery" component={ClosedBakery} options={{
         headerShown: true,
-        headerTitle: () => (<><View style={[style.container]}><Image resizeMode="contain" style={style.imagem} source={require('../assets/images/owner1.png')} /></View></>),
+        headerTitle: () => (<><View style={[style.container]}><Image resizeMode="contain" style={style.imagem} source={require('../../assets/images/owner1.png')} /></View></>),
         headerStyle: {
           elevation: 0,
           shadowOpacity: 0,
@@ -83,7 +83,7 @@ function RootNavigator() {
       }} />
       <Stack.Screen name="ChangePassword" component={ChangePassword} options={{
         headerShown: true,
-        headerTitle: () => (<><View style={[style.container]}><Image resizeMode="contain" style={style.imagem} source={require('../assets/images/owner1.png')} /></View></>),
+        headerTitle: () => (<><View style={[style.container]}><Image resizeMode="contain" style={style.imagem} source={require('../../assets/images/owner1.png')} /></View></>),
         headerStyle: {
           elevation: 0,
           shadowOpacity: 0,
@@ -95,7 +95,7 @@ function RootNavigator() {
       }} />
       <Stack.Screen name="ChangeContactInfo" component={ChangeContactInfo} options={{
         headerShown: true,
-        headerTitle: () => (<><View style={[style.container]}><Image resizeMode="contain" style={style.imagem} source={require('../assets/images/owner1.png')} /></View></>),
+        headerTitle: () => (<><View style={[style.container]}><Image resizeMode="contain" style={style.imagem} source={require('../../assets/images/owner1.png')} /></View></>),
         headerStyle: {
           elevation: 0,
           shadowOpacity: 0,
@@ -108,7 +108,7 @@ function RootNavigator() {
 
       <Stack.Screen name="CNPJScreen" component={CNPJScreen} options={{
         headerShown: true,
-        headerTitle: () => (<><View style={[style.container]}><Image resizeMode="contain" style={style.imagem} source={require('../assets/images/owner1.png')} /></View></>),
+        headerTitle: () => (<><View style={[style.container]}><Image resizeMode="contain" style={style.imagem} source={require('../../assets/images/owner1.png')} /></View></>),
         headerStyle: {
           elevation: 0,
           shadowOpacity: 0,
@@ -121,7 +121,7 @@ function RootNavigator() {
 
       <Stack.Screen name="FirstScreenRegister" component={FirstScreenRegister} options={{
         headerShown: true,
-        headerTitle: () => (<><View style={[style.container]}><Image resizeMode="contain" style={style.imagem} source={require('../assets/images/owner1.png')} /></View></>),
+        headerTitle: () => (<><View style={[style.container]}><Image resizeMode="contain" style={style.imagem} source={require('../../assets/images/owner1.png')} /></View></>),
         headerStyle: {
           elevation: 0,
           shadowOpacity: 0,
@@ -134,7 +134,7 @@ function RootNavigator() {
 
       <Stack.Screen name="SecondScreenRegister" component={SecondScreenRegister} options={{
         headerShown: true,
-        headerTitle: () => (<><View style={[style.container]}><Image resizeMode="contain" style={style.imagem} source={require('../assets/images/owner1.png')} /></View></>),
+        headerTitle: () => (<><View style={[style.container]}><Image resizeMode="contain" style={style.imagem} source={require('../../assets/images/owner1.png')} /></View></>),
         headerStyle: {
           elevation: 0,
           shadowOpacity: 0,
@@ -148,7 +148,7 @@ function RootNavigator() {
 
       <Stack.Screen name="ThirdScreenRegister" component={ThirdScreenRegister} options={{
         headerShown: true,
-        headerTitle: () => (<><View style={[style.container]}><Image resizeMode="contain" style={style.imagem} source={require('../assets/images/owner1.png')} /></View></>),
+        headerTitle: () => (<><View style={[style.container]}><Image resizeMode="contain" style={style.imagem} source={require('../../assets/images/owner1.png')} /></View></>),
         headerStyle: {
           elevation: 0,
           shadowOpacity: 0,

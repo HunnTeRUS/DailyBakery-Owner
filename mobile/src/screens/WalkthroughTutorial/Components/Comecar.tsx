@@ -3,11 +3,6 @@ import { Text, StyleSheet, Dimensions, AsyncStorage } from "react-native";
 import { RectButton } from "react-native-gesture-handler";
 import { useNavigation } from '@react-navigation/native'
 
-const font = {
-    "Poppins-Regular": require("../../../assets/fonts/Poppins-Regular.ttf"),
-    "Poppins-Bold": require("../../../assets/fonts/Poppins-Bold.ttf")
-};
-
 interface ComecarProps {
     label: string,
     onPress: () => void;

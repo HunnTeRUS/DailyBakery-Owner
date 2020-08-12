@@ -53,7 +53,6 @@ module.exports = {
             remetente.sendMail(mailOptions, function (error, response) {
                 if (error) {
                     console.log(error);
-                    callback(error);
                 }
             });
             

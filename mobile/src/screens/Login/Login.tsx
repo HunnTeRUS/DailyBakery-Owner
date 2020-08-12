@@ -77,7 +77,7 @@ const Login = () => {
     return (
         <View style={styles.container}>
             <KeyboardAvoidingView behavior="position">
-                <Image source={require('../../assets/images/owner1.png')} style={styles.image} />
+                <Image source={require('../../../assets/images/owner1.png')} style={styles.image} />
                 <View style={styles.inputs}>
                     <Text style={styles.text}>CNPJ</Text>
                     <TextInput icon="user" placeholder="Digite seu CNPJ" validator={cnpjValidator} keyboardType="number-pad" />

@@ -2,10 +2,6 @@ import React from 'react';
 import { StyleSheet, Text, Dimensions } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 
-const font = {
-    "Poppins-Regular": require("../../../assets/fonts/Poppins-Regular.ttf"),
-    "Poppins-Bold": require("../../../assets/fonts/Poppins-Bold.ttf")};
-
 const { width } = Dimensions.get("window");
 const style = StyleSheet.create({
     container:{
@@ -17,7 +13,6 @@ const style = StyleSheet.create({
     },
     label:{
         fontSize: 20,
-        color: 'black',
         justifyContent: 'center',
         textAlign: 'center',
         color: 'white',

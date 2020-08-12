@@ -4,8 +4,6 @@ let PadariaDTO = require('../models/dto/PadariaDTO');
 let Mailer = require('./utils/Mailer');
 const CNPJValidation = require('./utils/CNPJValidation');
 const axios = require('axios');
-const CNPJUpdate = require('./utils/CNPJUpdate');
-
 
 module.exports = {
 

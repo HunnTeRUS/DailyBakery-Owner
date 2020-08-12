@@ -1,16 +1,10 @@
 import React from "react";
 import { View, Text, Dimensions, StyleSheet, Image } from "react-native";
-import { createStackNavigator } from '@react-navigation/stack';
-import { RootStackParamList } from '../../types';
 
 const { width, height } = Dimensions.get("window");
 
 export const SLIDE_HEIGHT = height * 0.61
 
-const font = {
-    "Poppins-Regular": require("../../assets/fonts/Poppins-Regular.ttf"),
-    "Poppins-Bold": require("../../assets/fonts/Poppins-Bold.ttf")};
-const Stack = createStackNavigator<RootStackParamList>();
 const style = StyleSheet.create({
     container: {
         width,

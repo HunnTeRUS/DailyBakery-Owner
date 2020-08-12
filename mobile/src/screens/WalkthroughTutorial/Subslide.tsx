@@ -3,11 +3,6 @@ import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import Comecar from './Components/Comecar'
 import { SLIDE_HEIGHT } from './Slide';
 import SkipButton from './Components/SkipButton';
-const font = {
-    "Poppins-Regular": require("../../assets/fonts/Poppins-Regular.ttf"),
-    "Poppins-Bold": require("../../assets/fonts/Poppins-Bold.ttf")};
-
-const { width, height } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
     container:{
