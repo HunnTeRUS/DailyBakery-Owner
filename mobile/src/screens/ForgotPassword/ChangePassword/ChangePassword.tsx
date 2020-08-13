@@ -3,7 +3,13 @@ import { TouchableOpacity, Modal, View, Text } from 'react-native';
 import styles from './styles'
 import TextInput from '../../../components/TextInput'
 import ModalPopupInfos from '../../../components/ModalPopup/ModalPopupInfo/ModalPopupInfos'
-import {useNavigation} from '@react-navigation/native'
+import {useNavigation, useRoute} from '@react-navigation/native'
+import sendVerificationEmailServices from '../../../services/ChangePassword/ChangePasswordServices'
+
+interface ChangePassword{
+    email: string,
+    cnpj: string
+}
 
 export default function ChangePassword() {
     const [show, setShow] = useState(false);
@@ -11,6 +17,12 @@ export default function ChangePassword() {
     const navigation = useNavigation();
     const [password, setPassword] = useState('');
     const [confirmationPassword, setConfirmationPassword] = useState('');
+    const routes = useRoute();
+    const yurigay = routes.params as ChangePassword;
+    //83340511000180
+    async function changePassword(){
+        sendVerificationEmailServices(yurigay.email, yurigay.cnpj, confirmationPassword);
+    }
 
     return (
         <View style={styles.container}>
@@ -26,11 +38,14 @@ export default function ChangePassword() {
                     <Text style={styles.textNumber}>Confirme sua nova senha</Text>
                     <TextInput icon="lock" value={confirmationPassword} onChangeText={text => setConfirmationPassword(text)} placeholder="Digite sua nova senha novamente" validator={passwordValidator} secureTextEntry={true}/>
 
-                    <TouchableOpacity disabled={false} style={styles.nextButton} onPress={() => {setShow(!show)}}>
+                    <TouchableOpacity disabled={false} style={styles.nextButton} 
+                        onPress={() => {
+                            setShow(!show)
+                            changePassword()}}>
                         <Text style={styles.nextText}>Trocar senha</Text>
                     </TouchableOpacity>
 
                 </View>
-            </View>
+        </View>
     );
 }

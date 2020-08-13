@@ -97,7 +97,7 @@ module.exports = {
     forgotPassword() {
         return celebrate({
             [Segments.BODY]: Joi.object().keys({
-                email: Joi.string().email().required(),
+                cnpj: Joi.string().required().length(14),
             }),
         })
     },

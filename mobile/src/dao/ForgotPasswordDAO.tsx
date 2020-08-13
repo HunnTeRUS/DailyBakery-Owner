@@ -1,15 +1,16 @@
 import api from '../services/api'
 
-export default async function sendVerificationEmail(email: string) {
-    if (!email) {
+export default async function sendVerificationEmail(cnpj: string) {
+    if (!cnpj) {
         throw "Email não pode ser vazio";
     }
 
     const response = await api.post('/forgotPassword', {
-        email: email,
+        cnpj: cnpj,
     });
 
     const obj = {
+        cnpj: response.data.cnpj,
         email: response.data.email,
         codigoEnviado: response.data.codigoEnviado,
     }

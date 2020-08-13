@@ -1,10 +1,19 @@
 import api from '../api'
 import sendVerificationEmail from '../../dao/ForgotPasswordDAO'
+import { useState } from 'react';
 
-export default async function sendVerificationEmailServices(emails: string): string{
-    if(!emails) {
-        throw "Email não pode ser vazio";
+export default async function sendVerificationEmailServices(cnpj: string) {
+    if(!cnpj) {
+        throw "CNPJ não pode ser vazio";
     }
-   
-    return String((await sendVerificationEmail(emails)).codigoEnviado);
+
+    const response = await sendVerificationEmail(cnpj);
+
+    const obj = {
+        email: response.email,
+        cnpj: response.cnpj,
+        codigoEnviado: response.codigoEnviado,
+    }
+
+    return obj;
 }

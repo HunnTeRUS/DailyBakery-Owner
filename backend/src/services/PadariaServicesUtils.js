@@ -63,27 +63,33 @@ module.exports = {
             return response.status(400).json({ Erro: "CNPJ inválido" });
 
         try {
-            const novaSenhaCrypt = String(cryp.encrypt(novaSenha));
-            await Padaria.updateOne({ "cnpj": cnpj, "email": email }, { "senha": novaSenhaCrypt });
+            const user = await Padaria.findOne({ cnpj: cnpj, email: email });
 
-            return response.status(200).json();
+            if(user) {
+                const novaSenhaCrypt = String(cryp.encrypt(novaSenha));
+                await Padaria.updateOne({ "cnpj": cnpj, "email": email }, { "senha": novaSenhaCrypt });
+                return response.status(200).json();
+            }
+
+            return response.status(404).json({ Error: "Email/CNPJ não encontrado" });
         } catch (e) {
             return response.status(400).json(e);
         }
     },
 
     async forgotPassword(request, response) {
-        const { email } = request.body;
+        const { cnpj } = request.body;
         let code;
 
         try {
-            const user = await Padaria.findOne({ email: email });
+            const user = await Padaria.findOne({ cnpj: cnpj });
 
             if (user) {
-                code = Mailer.sendNewPasswordCodeByEmail(email);
+                code = Mailer.sendNewPasswordCodeByEmail(user.email);
 
                 return response.status(200).json({
-                    email: email,
+                    email: user.email,
+                    cnpj: user.cnpj,
                     codigoEnviado: code,
                 });
             } else {
