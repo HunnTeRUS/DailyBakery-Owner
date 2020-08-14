@@ -11,19 +11,34 @@ interface ModalPopupInterface {
     textToShow: string;
     codeReceivedFromAPI: string;
     emailReceivedFromAPI: string;
-    cnpjReceivedFromAPI:string;
+    cnpjReceivedFromAPI: string;
 }
 
 const ModalPopup = (props: ModalPopupInterface) => {
     const [show, setShow] = useState(props.showModal);
-
     const navigation = useNavigation();
+    const [tries, setTries] = useState(0);
     const [code, setCode] = useState('');
 
-    function verifyCode(codeTypedByUser: string){
-        return props.codeReceivedFromAPI === codeTypedByUser 
-            ?  navigation.navigate('ChangePasswordForgot', {email: props.emailReceivedFromAPI, cnpj: props.cnpjReceivedFromAPI}) 
-            :  navigation.navigate('ForgotPassword') 
+    const errorMessage = <View style={styles.textContainerError}>
+                            <Text style={styles.titleError}>Código incorreto, tente novamente</Text>
+                         </View>;
+
+    function verifyCode(codeTypedByUser: string) {
+        if (props.codeReceivedFromAPI === codeTypedByUser) {
+            props.setShow(false) 
+            setTries(0)
+            navigation.navigate('ChangePasswordForgot', { email: props.emailReceivedFromAPI, cnpj: props.cnpjReceivedFromAPI });
+        }
+        else {
+            if (tries <= 2) {
+                setTries(1 + tries);
+            }
+            else {
+                props.setShow(false) 
+                navigation.navigate('ForgotPassword');
+            }
+        }
     }
 
     return (
@@ -45,13 +60,13 @@ const ModalPopup = (props: ModalPopupInterface) => {
                         </View>
                         <View style={styles.textContainer}>
                             <Text style={styles.title}>Digite o codigo recebido em seu email</Text>
-                            <TextInput onChangeText={text => setCode(text)} style={styles.inputNumber} autoCapitalize="none" placeholder='Digite seu codigo' />
+                            <TextInput selectionColor='#FEC044' onChangeText={text => setCode(text)} style={styles.inputNumber} autoCapitalize="none" placeholder='Digite seu codigo' />
                         </View>
+                        {tries < 4 && tries !== 0 ? errorMessage : <></>}
                         <View style={styles.buttonContainer}>
-                            <TouchableOpacity style={styles.nextButton} onPress={() => { 
+                            <TouchableOpacity style={styles.nextButton} onPress={() => {
                                 verifyCode(code)
-                                props.setShow(false) 
-                                }}>
+                            }}>
                                 <Text style={styles.nextText}>Validar</Text>
                             </TouchableOpacity>
                         </View>

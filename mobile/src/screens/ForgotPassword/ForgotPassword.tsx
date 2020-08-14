@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { View, Image, Text, KeyboardAvoidingView } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native'
 import TextInput from '../../components/TextInput';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import styles from './styles'
@@ -8,9 +8,8 @@ import ModalPopupInput from './ModalPopupInput/ModalPopupInput'
 import sendVerificationEmailServices from '../../services/ForgotPasswordServices/ForgotPasswordServices'
 import sendVerificationEmail from '../../dao/ForgotPasswordDAO'
 
-const emailValidator = (email: string) =>
-/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
-
+const cnpjValidator = (cnpj: string) =>
+/[0-9]{2}\.?[0-9]{3}\.?[0-9]{3}\/?[0-9]{4}\-?[0-9]{2}/.test(cnpj);
 
 const ForgotPassword = () => {
 
@@ -44,7 +43,9 @@ const ForgotPassword = () => {
 
                 <View style={styles.inputs}>
                     <Text style={styles.text}>CNPJ</Text>
-                    <TextInput keyboardType="number-pad" value={typedcnpj} onChangeText={text => setTypedcnpj(text)} icon="hash" autoCapitalize="none" placeholder='Digite seu CNPJ' validator={emailValidator} />
+                    <TextInput selectionColor='#FEC044' keyboardType="number-pad" value={typedcnpj} 
+                        onChangeText={text => setTypedcnpj(text)} 
+                        icon="hash" autoCapitalize="none" placeholder='Digite seu CNPJ' validator={cnpjValidator} />
                     <Text style={styles.infos}>Você receberá um e-mail com um codigo para prosseguir com a {'\n'}alteração de sua senha</Text>
                 </View>
             </KeyboardAvoidingView>

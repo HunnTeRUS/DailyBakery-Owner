@@ -43,6 +43,23 @@ export default StyleSheet.create({
         width: '100%',
     },
 
+    titleError: {
+        fontSize: 14,
+        color: 'red',
+        textAlign: 'center',
+        fontFamily: 'Poppins-Regular',
+    },
+
+    textContainerError: {
+        alignItems: 'center',
+        alignSelf: 'center',
+        justifyContent: 'center',
+        position: 'relative',
+        top: '-5%',
+        width: '100%',
+        marginBottom: '5%'
+    },
+
     subtitle: {
         fontSize: 14,
         color: '#BAA6A6',

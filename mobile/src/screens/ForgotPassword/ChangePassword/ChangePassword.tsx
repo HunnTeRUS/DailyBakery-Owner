@@ -10,10 +10,10 @@ interface ChangePassword{
     email: string,
     cnpj: string
 }
+const passwordValidator = (password: string) => password.length >= 6;
 
 export default function ChangePassword() {
     const [show, setShow] = useState(false);
-    const passwordValidator = (password: string) => password.length >= 6;
     const navigation = useNavigation();
     const [password, setPassword] = useState('');
     const [confirmationPassword, setConfirmationPassword] = useState('');
@@ -33,10 +33,10 @@ export default function ChangePassword() {
                     <Text style={styles.subTitle}>Informe uma senha segura e de sua segurança para ser a nova senha de acesso a sua conta</Text>
 
                     <Text style={styles.textNumber}>Nova Senha</Text>
-                    <TextInput icon="lock" value={password} onChangeText={text => setPassword(text)} placeholder="Digite sua nova senha" validator={passwordValidator} secureTextEntry={true}/>
+                    <TextInput icon="lock" selectionColor='#FEC044' value={password} onChangeText={text => setPassword(text)} placeholder="Digite sua nova senha" validator={passwordValidator} secureTextEntry={true}/>
 
                     <Text style={styles.textNumber}>Confirme sua nova senha</Text>
-                    <TextInput icon="lock" value={confirmationPassword} onChangeText={text => setConfirmationPassword(text)} placeholder="Digite sua nova senha novamente" validator={passwordValidator} secureTextEntry={true}/>
+                    <TextInput icon="lock" selectionColor='#FEC044' value={confirmationPassword} onChangeText={text => setConfirmationPassword(text)} placeholder="Digite sua nova senha novamente" validator={passwordValidator} secureTextEntry={true}/>
 
                     <TouchableOpacity disabled={false} style={styles.nextButton} 
                         onPress={() => {
