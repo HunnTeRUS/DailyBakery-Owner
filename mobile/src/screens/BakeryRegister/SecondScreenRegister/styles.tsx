@@ -9,6 +9,7 @@ export default StyleSheet.create({
         display: 'flex',
         justifyContent: 'center',
         alignContent: 'center',
+        
     },
 
     secondContainer: {
@@ -17,6 +18,7 @@ export default StyleSheet.create({
         alignSelf: 'center',
         display: 'flex',
         backgroundColor: "#F4EEEE",
+        paddingBottom: "2%",
     },
     title: {
         fontSize: 17,
@@ -53,11 +55,11 @@ export default StyleSheet.create({
         justifyContent: 'center',
         alignSelf: 'center',
         marginTop: '20%'
-      },
+    },
 
-      nextText: {
+    nextText: {
         color: '#FFF',
-        fontSize: 15, 
+        fontSize: 15,
         fontWeight: 'bold'
-      }     
+    }
 });

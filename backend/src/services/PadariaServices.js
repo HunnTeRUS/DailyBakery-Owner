@@ -12,26 +12,26 @@ module.exports = {
         const { latitude, longitude } = request.body;
         PadariaDTO = request.body;
 
-        if(!CNPJValidation.validarCNPJ(PadariaDTO.cnpj))
+        if (!CNPJValidation.validarCNPJ(PadariaDTO.cnpj))
             return response.status(400).json({ Erro: "CNPJ inválido" });
 
-        if( (!( -90 < latitude) || !( latitude < 90)) || (!( -180 < longitude) || !( longitude < 180)))
-            return response.status(400).json({error: 'Latitude e/ou longitude incorretos!'});    
+        if ((!(-90 < latitude) || !(latitude < 90)) || (!(-180 < longitude) || !(longitude < 180)))
+            return response.status(400).json({ error: 'Latitude e/ou longitude incorretos!' });
 
         const validationOfCnpjDuplicates = await Padaria.findOne({ "cnpj": PadariaDTO.cnpj });
 
-        if(validationOfCnpjDuplicates)
-            return response.status(400).json({error: 'Já existe uma padaria cadastrada com este CNPJ!'});
+        if (validationOfCnpjDuplicates)
+            return response.status(400).json({ error: 'Já existe uma padaria cadastrada com este CNPJ!' });
 
         const validationOfEmailDuplicates = await Padaria.findOne({ "email": PadariaDTO.email });
-       
-        if(validationOfEmailDuplicates)
-            return response.status(400).json({error: 'Já existe uma padaria cadastrada com este email!'});
+
+        if (validationOfEmailDuplicates)
+            return response.status(400).json({ error: 'Já existe uma padaria cadastrada com este email!' });
 
         const validationOfAdressDuplicates = await Padaria.findOne({ "latitude": PadariaDTO.cep, "numero": PadariaDTO.numero });
 
-        if(validationOfAdressDuplicates)
-            return response.status(400).json({error: 'Já existe uma padaria cadastrada neste endereço!'});
+        if (validationOfAdressDuplicates)
+            return response.status(400).json({ error: 'Já existe uma padaria cadastrada neste endereço!' });
 
         const location = {
             type: 'Point',
@@ -72,11 +72,11 @@ module.exports = {
         const padarias = await Padaria.find({ "nome": nome });
 
         if (padarias) {
-            for (var i = 0; i < padarias.length; i++){
+            for (var i = 0; i < padarias.length; i++) {
                 padarias[i].email = null;
                 padarias[i].cnpj = null;
                 padarias[i].senha = null;
-           }
+            }
         }
 
         res.json({ padarias });
@@ -86,17 +86,17 @@ module.exports = {
         //Pega variavel pela query: localhost:3333/listBakeryByName?nome=PadariaDoZé
         const cnpj = req.query.cnpj;
 
-        if(!CNPJValidation.validarCNPJ(cnpj))
+        if (!CNPJValidation.validarCNPJ(cnpj))
             return response.status(400).json({ Erro: "CNPJ inválido" });
 
         const padarias = await Padaria.find({ "cnpj": cnpj });
 
         if (padarias) {
-            for (var i = 0; i < padarias.length; i++){
+            for (var i = 0; i < padarias.length; i++) {
                 padarias[i].email = null;
                 padarias[i].cnpj = null;
                 padarias[i].senha = null;
-           }
+            }
         }
 
         res.json({ padarias });
@@ -106,8 +106,8 @@ module.exports = {
         //Buscar todos as padarias num raio de 10KM
         const { latitude, longitude } = request.query;
 
-        if( (!( -90 < latitude) || !( latitude < 90)) || (!( -180 < longitude) || !( longitude < 180)))
-            return response.status(400).json({error: 'Latitude e/ou longitude incorretos!'});    
+        if ((!(-90 < latitude) || !(latitude < 90)) || (!(-180 < longitude) || !(longitude < 180)))
+            return response.status(400).json({ error: 'Latitude e/ou longitude incorretos!' });
 
         const padarias = await Padaria.find({
             location: {
@@ -135,34 +135,32 @@ module.exports = {
     async bakeryLogin(request, response, options) {
         const { cnpj, senha } = request.body;
 
-        if(CNPJValidation.validarCNPJ(cnpj)) {
+        if (CNPJValidation.validarCNPJ(cnpj)) {
             const result = await Padaria.findOne({ "cnpj": cnpj });
-                if (result) {
-                    let senhaalterada = cryp.decrypt(result.senha);
+            if (result) {
+                let senhaalterada = cryp.decrypt(result.senha);
 
-                    if (senha == senhaalterada) {
-                        result.senha = cryp.decrypt(result.senha);
-                        const user = {
-                            "cnpj": this.cnpj,
-                            "senha": this.senha
-                        }
-
-                        const token = Auth.generateToken(user);
-
-                        response.header('x-access-token', token);
-                        response.json(result);
-
-                    } else {
-                        return response.status(404).json({error: 'CNPJ ou senha incorretos!'});    
+                if (senha == senhaalterada) {
+                    result.senha = cryp.decrypt(result.senha);
+                    const user = {
+                        "cnpj": this.cnpj,
+                        "senha": this.senha
                     }
+
+                    const token = Auth.generateToken(user);
+
+                    response.header('x-access-token', token);
+                    response.json(result);
+
+                } else {
+                    return response.status(404).json({ error: 'CNPJ ou senha incorretos!' });
                 }
-                else {
-                    return response.status(400).json({error: 'CNPJ ou senha incorretos!'});    
-                }
+            } else {
+                return response.status(400).json({ error: 'CNPJ ou senha incorretos!' });
+            }
         } else {
-            return response.status(400).json({error: 'CNPJ invalido!'});    
+            return response.status(400).json({ error: 'CNPJ invalido!' });
         }
 
     }
-
 };

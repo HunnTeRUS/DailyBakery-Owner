@@ -7,11 +7,13 @@ import ModalPopupWarns from '../../../components/ModalPopup/ModalPopupWarn/Modal
 import {useNavigation, useRoute} from '@react-navigation/native'
 import sendVerificationEmailServices from '../../../services/ChangePassword/ChangePasswordServices'
 
+const passwordValidator = (password: string) => password.length >= 6;
+const secondPasswordValidator = (password: string) => password.length >= 6;
+
 interface ChangePassword{
     email: string,
     cnpj: string
 }
-const passwordValidator = (password: string) => password.length >= 6;
 
 export default function ChangePassword() {
     const [show, setShow] = useState(false);
@@ -21,7 +23,7 @@ export default function ChangePassword() {
     const [password, setPassword] = useState('');
     const [confirmationPassword, setConfirmationPassword] = useState('');
     const routes = useRoute();
-    const yurigay = routes.params as ChangePassword;
+    const params = routes.params as ChangePassword;
     //83340511000180
     async function changePassword(){
         if(password !== confirmationPassword) {
@@ -29,7 +31,7 @@ export default function ChangePassword() {
             return;
         }
         else {
-            sendVerificationEmailServices(yurigay.email, yurigay.cnpj, confirmationPassword);
+            sendVerificationEmailServices(params.email, params.cnpj, confirmationPassword);
             setShow(!show);
         }
     }
@@ -47,7 +49,7 @@ export default function ChangePassword() {
                     <TextInput icon="lock" selectionColor='#FEC044' value={password} onChangeText={text => setPassword(text)} placeholder="Digite sua nova senha" validator={passwordValidator} secureTextEntry={true}/>
 
                     <Text style={styles.textNumber}>Confirme sua nova senha</Text>
-                    <TextInput icon="lock" selectionColor='#FEC044' value={confirmationPassword} onChangeText={text => setConfirmationPassword(text)} placeholder="Digite sua nova senha novamente" validator={passwordValidator} secureTextEntry={true}/>
+                    <TextInput icon="lock" selectionColor='#FEC044' value={confirmationPassword} onChangeText={text => setConfirmationPassword(text)} placeholder="Digite sua nova senha novamente" validator={secondPasswordValidator} secureTextEntry={true}/>
 
                     <TouchableOpacity disabled={false} style={styles.nextButton} 
                         onPress={() => {

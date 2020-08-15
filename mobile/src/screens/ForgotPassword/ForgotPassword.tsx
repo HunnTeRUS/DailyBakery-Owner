@@ -22,6 +22,7 @@ const ForgotPassword = () => {
     const [showWarn, setShowWarn] = useState(false);
 
     async function pressButton(){
+
         if(validate(format(typedcnpj))) {
             setShow(!show)
             const {codigoEnviado, cnpj, email} = await sendVerificationEmailServices(typedcnpj);
@@ -42,7 +43,7 @@ const ForgotPassword = () => {
                                               codeReceivedFromAPI={codeReceivedFromApi}
                                               textToShow='Digite o codigo que foi enviado em seu email'
                                               showModal={show}
-                                              setShow={setShow}/>}
+    setShow={setShow}/>}
 
             {!showWarn ? <></> : <ModalPopupWarns textToShow='CNPJ inválido, tente novamente'
                                                   showModal={showWarn}

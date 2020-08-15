@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, KeyboardAvoidingView, Image, Text } from 'react-native';
+import { View, Text } from 'react-native';
 import TextInput from '../../../components/TextInput';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
 import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
 
@@ -18,13 +18,14 @@ const FirstScreenRegister = () => {
     const navigation = useNavigation();
     return (
         <View style={styles.container}>
+            <ScrollView>
                 <View style={styles.secondContainer}>
                     <View style={styles.firstContainer}>
                         <Text style={styles.title}>Seja bem vindo ao nosso app!</Text>
                         <Text style={styles.subTitle}>Para começar seu cadastro, informe o CNPJ da sua padaria.</Text>
                         <Text style={styles.text}>CNPJ</Text>
                         <TextInput icon="briefcase" validator={cnpjValidator} placeholder="Digite o CNPJ da sua padaria" keyboardType="number-pad" />
-                        <Text style={[styles.subTitle, {marginTop: '5%'}]}>Seu CNPJ será usado apenas para validação de sua padaria e para acesso ao app</Text>
+                        <Text style={[styles.subTitle, { marginTop: '5%' }]}>Seu CNPJ será usado apenas para validação de sua padaria e para acesso ao app</Text>
                     </View>
                     <View style={styles.thirdContainer}>
                         <TouchableOpacity style={styles.nextButton} disabled={false} onPress={() => { navigation.navigate('FirstScreenRegister') }}>
@@ -32,6 +33,7 @@ const FirstScreenRegister = () => {
                         </TouchableOpacity>
                     </View>
                 </View>
+            </ScrollView>
         </View>
     );
 }
