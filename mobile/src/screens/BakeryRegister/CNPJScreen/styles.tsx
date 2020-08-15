@@ -25,7 +25,7 @@ export default StyleSheet.create({
     },
 
     thirdContainer: {
-        height: '30%',
+        height: 250,
         width: '100%',
         alignSelf: "flex-end",
         justifyContent: 'center'
