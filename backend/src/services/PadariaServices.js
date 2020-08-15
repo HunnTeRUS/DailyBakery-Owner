@@ -135,28 +135,33 @@ module.exports = {
     async bakeryLogin(request, response, options) {
         const { cnpj, senha } = request.body;
 
-        Padaria.findOne({ "cnpj": cnpj }, (err, result) => {
-            if (result) {
-                let senhaalterada = cryp.decrypt(result.senha);
+        if(CNPJValidation.validarCNPJ(cnpj)) {
+            const result = await Padaria.findOne({ "cnpj": cnpj });
+                if (result) {
+                    let senhaalterada = cryp.decrypt(result.senha);
 
-                if (senha == senhaalterada) {
-                    result.senha = cryp.decrypt(result.senha);
-                    const user = {
-                        "cnpj": this.cnpj,
-                        "senha": this.senha
+                    if (senha == senhaalterada) {
+                        result.senha = cryp.decrypt(result.senha);
+                        const user = {
+                            "cnpj": this.cnpj,
+                            "senha": this.senha
+                        }
+
+                        const token = Auth.generateToken(user);
+
+                        response.header('x-access-token', token);
+                        response.json(result);
+
+                    } else {
+                        return response.status(404).json({error: 'CNPJ ou senha incorretos!'});    
                     }
-
-                    const token = Auth.generateToken(user);
-
-                    console.log(token);
-                    response.header('x-access-token', token);
-                    response.json(result);
-
-                } else {
-                    response.json({ Erro: "CNPJ ou senha incorretos" })
                 }
-            }
-        });
+                else {
+                    return response.status(400).json({error: 'CNPJ ou senha incorretos!'});    
+                }
+        } else {
+            return response.status(400).json({error: 'CNPJ invalido!'});    
+        }
 
     }
 

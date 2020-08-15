@@ -81,6 +81,8 @@ module.exports = {
         const { cnpj } = request.body;
         let code;
 
+        console.log(cnpj)
+        //57499861000183
         try {
             const user = await Padaria.findOne({ cnpj: cnpj });
 
