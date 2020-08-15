@@ -31,7 +31,6 @@ const TextInput = ({ icon, validator, ...props }: TextInputProps) => {
     };
     const onChangeText = (text: string) => {
         setInput(text);
-        console.log(text);
         if (validator(text)) {
             setState(validator(text));
         }

@@ -7,21 +7,19 @@ import Baker from '../../ImagesComponents/Baker'
 interface ModalPopupLoadingInterface {
     showModal: boolean;
     setShow(trueFalse: boolean): void;
-    textToShow: string;
-    // onPressCloseButton(): void;
 }   
 
 const ModalPopupLoading = (props: ModalPopupLoadingInterface) => {
     const [show, setShow] = useState(props.showModal);
-
+    
     return (
         <Modal
             animated={true}
             animationType="fade"
             visible={show}
             transparent={true}
-            statusBarTranslucent={true}
-        >
+            statusBarTranslucent={true}>
+
             <View style={styles.container}>
                 <View style={styles.subcontainer}>
                     <View style={styles.imageContainer}>
@@ -32,6 +30,9 @@ const ModalPopupLoading = (props: ModalPopupLoadingInterface) => {
                     </View>
                     <View style={styles.textContainer}>
                         <Text style={styles.title}>Aguarde...</Text>
+                        <TouchableOpacity style={styles.nextButton} onPress={() => {}}>
+                            <Text style={styles.nextText}>Fechar</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </View>

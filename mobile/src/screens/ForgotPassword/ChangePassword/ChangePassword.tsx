@@ -46,10 +46,14 @@ export default function ChangePassword() {
                     <Text style={styles.subTitle}>Informe uma senha segura e de sua segurança para ser a nova senha de acesso a sua conta</Text>
 
                     <Text style={styles.textNumber}>Nova Senha</Text>
-                    <TextInput icon="lock" selectionColor='#FEC044' value={password} onChangeText={text => setPassword(text)} placeholder="Digite sua nova senha" validator={passwordValidator} secureTextEntry={true}/>
+                    <TextInput icon="lock" selectionColor='#FEC044' value={password}
+                     validator={text => {setPassword(text); return text.length >= 6;}} placeholder="Digite sua nova senha"
+                     secureTextEntry={true}/>
 
                     <Text style={styles.textNumber}>Confirme sua nova senha</Text>
-                    <TextInput icon="lock" selectionColor='#FEC044' value={confirmationPassword} onChangeText={text => setConfirmationPassword(text)} placeholder="Digite sua nova senha novamente" validator={secondPasswordValidator} secureTextEntry={true}/>
+                    <TextInput icon="lock" selectionColor='#FEC044' 
+                        value={confirmationPassword} validator={text => {setConfirmationPassword(text); return text.length >= 6;}} 
+                        placeholder="Digite sua nova senha novamente" secureTextEntry={true}/>
 
                     <TouchableOpacity disabled={false} style={styles.nextButton} 
                         onPress={() => {

@@ -24,7 +24,7 @@ const FirstScreenRegister = () => {
                         <Text style={styles.title}>Seja bem vindo ao nosso app!</Text>
                         <Text style={styles.subTitle}>Para começar seu cadastro, informe o CNPJ da sua padaria.</Text>
                         <Text style={styles.text}>CNPJ</Text>
-                        <TextInput icon="briefcase" validator={cnpjValidator} placeholder="Digite o CNPJ da sua padaria" keyboardType="number-pad" />
+                        <TextInput icon="briefcase" validator={text => {return text.length === 14;}} placeholder="Digite o CNPJ da sua padaria" keyboardType="number-pad" />
                         <Text style={[styles.subTitle, { marginTop: '5%' }]}>Seu CNPJ será usado apenas para validação de sua padaria e para acesso ao app</Text>
                     </View>
                     <View style={styles.thirdContainer}>

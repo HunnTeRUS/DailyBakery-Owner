@@ -8,12 +8,12 @@ interface ModalPopupInterface{
     showModal: boolean;
     setShow(trueFalse: boolean): void;
     textToShow: string;
+    functionToButton?(): void;
 }   
 
 const ModalPopup = (props: ModalPopupInterface) => {
     const [show, setShow] = useState(props.showModal);
 
-    const navigation = useNavigation();
     return (
         <Modal
             animated={true}
@@ -34,7 +34,9 @@ const ModalPopup = (props: ModalPopupInterface) => {
                         <Text style={styles.subtitle}>{props.textToShow}</Text>
                     </View>
                     <View style={styles.buttonContainer}>  
-                        <TouchableOpacity style={styles.nextButton} onPress={() => {props.setShow(false)}}>
+                        <TouchableOpacity style={styles.nextButton} onPress={() => {
+                                if(props.functionToButton) props.functionToButton();
+                                props.setShow(false)}}>
                             <Text style={styles.nextText}>Fechar</Text>
                         </TouchableOpacity>
                     </View>

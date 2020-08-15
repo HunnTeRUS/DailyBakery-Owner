@@ -101,9 +101,13 @@ const Login = () => {
                 <Image source={require('../../../assets/images/owner1.png')} style={styles.image} />
                 <View style={styles.inputs}>
                     <Text style={styles.text}>CNPJ</Text>
-                    <TextInput icon="user" placeholder="Digite seu CNPJ" validator={cnpjValidator} keyboardType="number-pad" value={typedcnpj} onChangeText={cnpj => setCnpj(cnpj)} />
+                    <TextInput icon="user" placeholder="Digite seu CNPJ" 
+                        keyboardType="number-pad" value={typedcnpj}
+                        validator={text => {setCnpj(text); return text.length === 14;}} />
                     <Text style={styles.text}>Senha</Text>
-                    <TextInput icon="lock" placeholder="Digite sua senha" validator={passwordValidator} secureTextEntry={true} value={password} onChangeText={password => setPassword(password)} />
+                    <TextInput icon="lock" placeholder="Digite sua senha" 
+                        secureTextEntry={true} value={password}
+                        validator={text => {setPassword(text); return text.length >= 6;}}  />
                 </View>
             </KeyboardAvoidingView>
             <TouchableOpacity onPress={() => pressButton()} style={styles.nextButton}>
