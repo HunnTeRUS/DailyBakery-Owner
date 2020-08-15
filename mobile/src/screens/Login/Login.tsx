@@ -78,9 +78,9 @@ const Login = () => {
     }
 
     async function pressButton() {
-        const { status } = await verifyLoginCredentialsService(typedcnpj, password);
-
-        if (status === 200) {
+        const { cnpj, senha, email } = await verifyLoginCredentialsService(typedcnpj, password);
+       
+        if (cnpj && senha && email) {
             console.log("aqui");
             navigation.navigate('BottomTabNavigator')
         }
