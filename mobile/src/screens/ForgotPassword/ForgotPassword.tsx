@@ -5,7 +5,9 @@ import TextInput from '../../components/TextInput';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import styles from './styles'
 import ModalPopupInput from './ModalPopupInput/ModalPopupInput'
+import ModalPopupWarns from '../../components/ModalPopup/ModalPopupWarn/ModalPopupWarns'
 import sendVerificationEmailServices from '../../services/ForgotPasswordServices/ForgotPasswordServices'
+import { validate, format } from 'cnpj';
 
 const cnpjValidator = (cnpj: string) =>
 /[0-9]{2}\.?[0-9]{3}\.?[0-9]{3}\/?[0-9]{4}\-?[0-9]{2}/.test(cnpj);
@@ -17,14 +19,20 @@ const ForgotPassword = () => {
     const [cnpjReceivedFromApi, setCnpjReceivedFromApi] = useState('')
     const [emailReceivedFromApi, setEmailReceivedFromApi] = useState('')
     const [show, setShow] = useState(false);
-    const navigation = useNavigation();
+    const [showWarn, setShowWarn] = useState(false);
 
     async function pressButton(){
-        setShow(!show)
-        const {codigoEnviado, cnpj, email} = await sendVerificationEmailServices(typedcnpj);
-        setCodeReceivedFromApi(codigoEnviado)
-        setCnpjReceivedFromApi(cnpj)
-        setEmailReceivedFromApi(email)
+        if(validate(format(typedcnpj))) {
+            setShow(!show)
+            const {codigoEnviado, cnpj, email} = await sendVerificationEmailServices(typedcnpj);
+            setCodeReceivedFromApi(codigoEnviado)
+            setCnpjReceivedFromApi(cnpj)
+            setEmailReceivedFromApi(email)
+        }
+        else {
+            setShowWarn(!showWarn)
+            return;
+        }
     }
 
     return (
@@ -35,6 +43,10 @@ const ForgotPassword = () => {
                                               textToShow='Digite o codigo que foi enviado em seu email'
                                               showModal={show}
                                               setShow={setShow}/>}
+
+            {!showWarn ? <></> : <ModalPopupWarns textToShow='CNPJ inválido, tente novamente'
+                                                  showModal={showWarn}
+                                                  setShow={setShowWarn}/>}
 
             <KeyboardAvoidingView behavior="position">
                 <Image source={require('../../../assets/images/owner1.png')} style={styles.image} />
