@@ -6,7 +6,6 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import styles from './styles'
 import ModalPopupInput from './ModalPopupInput/ModalPopupInput'
 import sendVerificationEmailServices from '../../services/ForgotPasswordServices/ForgotPasswordServices'
-import sendVerificationEmail from '../../dao/ForgotPasswordDAO'
 
 const cnpjValidator = (cnpj: string) =>
 /[0-9]{2}\.?[0-9]{3}\.?[0-9]{3}\/?[0-9]{4}\-?[0-9]{2}/.test(cnpj);
