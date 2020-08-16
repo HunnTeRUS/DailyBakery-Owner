@@ -6,7 +6,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import FirstScreenRegister from '../BakeryRegister/FirstScreenRegister/FirstScreenRegister'
 import WalkThrough from '../Walkthrough/Walkthrough'
 import verifyLoginCredentialsService from '../../services/Login/LoginService'
-import ModalPopupInfos from '../../components/ModalPopup/ModalPopupInfo/ModalPopupInfos'
+import ModalPopupWarns from '../../components/ModalPopup/ModalPopupWarn/ModalPopupWarns'
 
 const { height, width } = Dimensions.get('window');
 const cnpjValidator = (cnpj: string) => cnpj.length === 14;
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
 const Login = () => {
     const [typedcnpj, setCnpj] = useState("");
     const [password, setPassword] = useState("");
-    const [show, setShow] = useState(true);
+    const [show, setShow] = useState(false);
     const navigation = useNavigation();
 
     const WalkthroughOrHome = async () => {
@@ -79,35 +79,31 @@ const Login = () => {
 
     async function pressButton() {
         const { cnpj, senha, email } = await verifyLoginCredentialsService(typedcnpj, password);
-       
+        console.log(cnpj, senha, email);
+
         if (cnpj && senha && email) {
-            console.log("aqui");
             navigation.navigate('BottomTabNavigator')
         }
         else {
-            return (
-                <View style={ styles.container }>
-                    <ModalPopupInfos textToShow='CNPJ e/ou senha incorretos' onPressCloseButton={() => {}}
-                        showModal={show}
-                        setShow={setShow} />
-                </View>
-            );
+            setShow(true);
         }
     }
     WalkthroughOrHome();
     return (
+
         <View style={styles.container}>
+            {!show ? <></> : <View style={styles.container}><ModalPopupWarns textToShow='CNPJ e/ou senha incorretos'showModal={show}setShow={setShow} /></View>}
             <KeyboardAvoidingView behavior="position">
                 <Image source={require('../../../assets/images/owner1.png')} style={styles.image} />
                 <View style={styles.inputs}>
                     <Text style={styles.text}>CNPJ</Text>
-                    <TextInput icon="user" placeholder="Digite seu CNPJ" 
+                    <TextInput icon="user" placeholder="Digite seu CNPJ"
                         keyboardType="number-pad" value={typedcnpj}
-                        validator={text => {setCnpj(text); return text.length === 14;}} />
+                        validator={text => { setCnpj(text); return text.length === 14; }} />
                     <Text style={styles.text}>Senha</Text>
-                    <TextInput icon="lock" placeholder="Digite sua senha" 
+                    <TextInput icon="lock" placeholder="Digite sua senha"
                         secureTextEntry={true} value={password}
-                        validator={text => {setPassword(text); return text.length >= 6;}}  />
+                        validator={text => { setPassword(text); return text.length >= 6; }} />
                 </View>
             </KeyboardAvoidingView>
             <TouchableOpacity onPress={() => pressButton()} style={styles.nextButton}>
