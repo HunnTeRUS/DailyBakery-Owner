@@ -20,9 +20,12 @@ const FirstScreenRegister = () => {
                         <Text style={[styles.subTitle, { marginTop: '5%' }]}>Seu CNPJ será usado apenas para validação de sua padaria e para acesso ao app</Text>
                     </View>
                     <View style={styles.thirdContainer}>
-                        <TouchableOpacity style={[styles.nextButton, {backgroundColor: typedCnpj.length === 14 ? '#FEC044' : '#D3D3D3'}]}
+                        <TouchableOpacity style={styles.nextButton}
+                            containerStyle={{
+                                opacity: (typedCnpj.length === 14) ? 1 : .4,
+                            }}
                             disabled={typedCnpj.length === 14 ? false : true} onPress={() => { navigation.navigate('FirstScreenRegister') }}>
-                            <Text style={[styles.nextText, {color: typedCnpj.length === 14 ? 'white' : '#C8C8C8'}]}>Próximo</Text>
+                            <Text style={styles.nextText}>Próximo</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

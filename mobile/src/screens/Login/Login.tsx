@@ -69,6 +69,7 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [show, setShow] = useState(false);
     const navigation = useNavigation();
+    const [opacityState, setOpacityState] = useState(1)
 
     const WalkthroughOrHome = async () => {
         var variavel = await AsyncStorage.getItem('firstAccess');
@@ -85,7 +86,7 @@ const Login = () => {
             navigation.navigate('BottomTabNavigator')
         }
         else {
-            setShow(true);
+            setShow(!show);
         }
     }
     WalkthroughOrHome();
@@ -98,7 +99,7 @@ const Login = () => {
                 <View style={styles.inputs}>
                     <Text style={styles.text}>CNPJ</Text>
                     <TextInput icon="user" placeholder="Digite seu CNPJ"
-                        keyboardType="number-pad" value={typedcnpj}
+                        keyboardType="number-pad" blurOnSubmit={true} value={typedcnpj}
                         validator={text => { setCnpj(text); return text.length === 14; }} />
                     <Text style={styles.text}>Senha</Text>
                     <TextInput icon="lock" placeholder="Digite sua senha"
@@ -106,9 +107,24 @@ const Login = () => {
                         validator={text => { setPassword(text); return text.length >= 6; }} />
                 </View>
             </KeyboardAvoidingView>
-            <TouchableOpacity onPress={() => pressButton()} disabled={(typedcnpj.length === 14) && (password.length >= 6) ? false : true} 
-                style={[styles.nextButton, {backgroundColor: (typedcnpj.length === 14) && (password.length >= 6) ? '#FEC044' : '#DCDCDC'}]}>
-                <Text style={[styles.nextText, {color: (typedcnpj.length === 14) && (password.length >= 6) ? 'white' : '#C8C8C8'}]}>Entrar</Text>
+            <TouchableOpacity onPress={() => pressButton()} 
+                disabled={(typedcnpj.length === 14) && (password.length >= 6) ? false : true} 
+                containerStyle={{
+                    opacity: (typedcnpj.length === 14) && (password.length >= 6) ? 1 : .4,
+                }}
+                style={
+                    [styles.nextButton, 
+                        {
+                            backgroundColor: (typedcnpj.length === 14) && (password.length >= 6) ? '#FEC044' : '#FEC044',
+                        }
+                    ]}>
+                <Text style={
+                    [styles.nextText, 
+                        {
+                            color: (typedcnpj.length === 14) && (password.length >= 6) ? 'white' : 'white',
+                        }
+                    ]
+                }>Entrar</Text>
             </TouchableOpacity>
             <View style={styles.divLinks}>
                 <TouchableOpacity onPress={() => navigation.navigate('CNPJScreen')}>

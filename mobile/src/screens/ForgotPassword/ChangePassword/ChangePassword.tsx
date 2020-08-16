@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { TouchableOpacity, Modal, View, Text } from 'react-native';
+import {  Modal, View, Text } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import styles from './styles'
 import TextInput from '../../../components/TextInput'
 import ModalPopupInfos from '../../../components/ModalPopup/ModalPopupInfo/ModalPopupInfos'
@@ -59,7 +60,10 @@ export default function ChangePassword() {
                     onPress={() => {
                         changePassword()
                     }}
-                    style={[styles.nextButton, { backgroundColor: (password.length >= 6) && (confirmationPassword.length >= 6) && (confirmationPassword === password) ? '#FEC044' : '#D3D3D3' }]}>
+                    containerStyle={{
+                        opacity: (password.length >= 6) && (confirmationPassword.length >= 6) && (confirmationPassword === password) ? 1 : .4,
+                    }}
+                    style={styles.nextButton}>
 
                     <Text style={styles.nextText}>Trocar senha</Text>
                 </TouchableOpacity>

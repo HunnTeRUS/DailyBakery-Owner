@@ -44,8 +44,13 @@ const ThirdScreenRegister = () => {
                         <TextInput icon="map-pin" validator={text => {setCity(text); return cityValidator(text)}} value={city} placeholder="Cidade onde a padaria está localizada" />
                         <Text style={styles.text}>Estado</Text>
                         <TextInput icon="map-pin" validator={text => {setState(text); return stateValidator(text)}} value={state} placeholder="Estado onde a padaria está localizada" />
-                        <TouchableOpacity style={[styles.nextButton, {backgroundColor: submitValidator() ? '#FEC044' : '#D3D3D3'}]} disabled={submitValidator() ? false : true} onPress={() => { navigation.navigate('FourthScreenRegister') }}>
-                            <Text style={[styles.nextText, {color: submitValidator() ? 'white' : '#C8C8C8'}]}>Próximo</Text>
+                        <TouchableOpacity style={styles.nextButton} 
+                            disabled={submitValidator() ? false : true} 
+                            onPress={() => { navigation.navigate('FourthScreenRegister') }}
+                            containerStyle={{
+                                opacity: submitValidator() ? 1 : .4,
+                            }}>
+                            <Text style={styles.nextText}>Próximo</Text>
                         </TouchableOpacity>
                     </View>
                 </KeyboardAvoidingView>

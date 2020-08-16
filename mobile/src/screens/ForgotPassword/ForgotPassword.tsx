@@ -21,10 +21,7 @@ const ForgotPassword = () => {
     const [textToShowError, setTextToShowError] = useState('CNPJ invalido, tente novamente')
     let functionToWarnButton = () => {};
 
-    const cnpjValidator = (text:string) => text.length === 14;
-
     async function pressButton(){
-
         if(validate(format(typedcnpj))) {
             try {
 
@@ -60,7 +57,7 @@ const ForgotPassword = () => {
         <View style={styles.container}>
             {!show ? <></> : <ModalPopupInput cnpjReceivedFromAPI={cnpjReceivedFromApi} emailReceivedFromAPI={emailReceivedFromApi} codeReceivedFromAPI={codeReceivedFromApi} textToShow='Digite o codigo que foi enviado em seu email' showModal={show} setShow={setShow}/>}
             {!showWarn ? <></> : <ModalPopupWarns functionToButton={functionToWarnButton} textToShow={textToShowError} showModal={showWarn} setShow={setShowWarn}/>}
-            {!showLoading ? <></> : <ModalPopupLoading showModal={showLoading} setShow={setShowLoading}/>}
+            {!showLoading ? <></> : <ModalPopupLoading functionToExecuteWhileIsLoading={pressButton} showModal={showLoading}/>}
 
             <KeyboardAvoidingView behavior="position">
                 <Image source={require('../../../assets/images/owner1.png')} style={styles.image} />
@@ -71,16 +68,17 @@ const ForgotPassword = () => {
                     <TextInput selectionColor='#FEC044' 
                         icon="briefcase" placeholder="Digite o CNPJ da sua padaria" keyboardType="number-pad" 
                         validator={text => {setTypedcnpj(text); return text.length === 14;}} value={typedcnpj} autoCapitalize="none"/>
-                    <Text style={styles.infos}>Você receberá um e-mail com um codigo para pross4eguir com a {'\n'}alteração de sua senha</Text>
+                    <Text style={styles.infos}>Você receberá um e-mail com um codigo para prosseguir com a {'\n'}alteração de sua senha</Text>
                 </View>
             </KeyboardAvoidingView>
             <TouchableOpacity 
                 disabled={typedcnpj.length === 14 ? false : true}
-                onPress={() => {         
-                    pressButton()
+                containerStyle={{
+                    opacity: (typedcnpj.length === 14) ? 1 : .4,
                 }}
-                style={[styles.nextButton, {backgroundColor: typedcnpj.length === 14 ? '#FEC044' : '#D3D3D3'}]}>
-                    <Text style={[styles.nextText, {color: typedcnpj.length === 14 ? 'white' : '#C8C8C8'}]}>Enviar</Text>
+                onPress={() => {setShowLoading(true)}}
+                style={styles.nextButton}>
+                    <Text style={styles.nextText}>Enviar</Text>
             </TouchableOpacity>
 
         </View>

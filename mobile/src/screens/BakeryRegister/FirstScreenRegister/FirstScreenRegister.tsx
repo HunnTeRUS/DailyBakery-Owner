@@ -39,9 +39,12 @@ const FirstScreenRegister = () => {
                         <TextInput icon="key" validator={text => {setConfirmationPassword(text); return passwordConfirmationValidator(text);}} value={confirmationPassword} secureTextEntry={true} 
                             placeholder="Digite novamente sua senha" />
 
-                        <TouchableOpacity style={[styles.nextButton, {backgroundColor: submitButtonValidator() ? '#FEC044' : '#D3D3D3'}]} disabled={submitButtonValidator() ? false : true}
-                            onPress={() => { navigation.navigate('SecondScreenRegister') }}>
-                            <Text style={[styles.nextText, {color: submitButtonValidator() ? 'white' : '#C8C8C8'}]}>Próximo</Text>
+                        <TouchableOpacity style={styles.nextButton} disabled={submitButtonValidator() ? false : true}
+                            onPress={() => { navigation.navigate('SecondScreenRegister') }}
+                            containerStyle={{
+                                opacity: submitButtonValidator() ? 1 : .4,
+                            }}>
+                            <Text style={styles.nextText}>Próximo</Text>
                         </TouchableOpacity>
 
                     </View>

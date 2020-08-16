@@ -38,8 +38,13 @@ const SecondScreenRegister = () => {
                         <TextInput icon="hash" validator={text => {setCep(text); return cepValidator(text)}} placeholder="Digite o CEP da sua padaria" keyboardType="number-pad" />
                         <Text style={styles.text}>Número</Text>
                         <TextInput icon="hash" validator={text => {setNumber(text); return numberValidator(text)}} placeholder="Digite o número onde fica a padaria" keyboardType="number-pad" />
-                        <TouchableOpacity style={[styles.nextButton, {backgroundColor: submitButtonValidator() ? '#FEC044' : '#D3D3D3'}]} disabled={submitButtonValidator() ? false : true} onPress={() => { navigation.navigate('ThirdScreenRegister') }}>
-                            <Text style={[styles.nextText, {color: submitButtonValidator() ? 'white' : '#C8C8C8'}]}>Próximo</Text>
+                        <TouchableOpacity style={styles.nextButton} 
+                            disabled={submitButtonValidator() ? false : true}
+                            onPress={() => { navigation.navigate('ThirdScreenRegister') }}
+                            containerStyle={{
+                                opacity: submitButtonValidator() ? 1 : .4,
+                            }}>
+                            <Text style={styles.nextText}>Próximo</Text>
                         </TouchableOpacity>
                     </View>
                 </KeyboardAvoidingView>
