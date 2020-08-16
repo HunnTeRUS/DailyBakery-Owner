@@ -106,8 +106,9 @@ const Login = () => {
                         validator={text => { setPassword(text); return text.length >= 6; }} />
                 </View>
             </KeyboardAvoidingView>
-            <TouchableOpacity onPress={() => pressButton()} style={styles.nextButton}>
-                <Text style={styles.nextText}>Entrar</Text>
+            <TouchableOpacity onPress={() => pressButton()} disabled={(typedcnpj.length === 14) && (password.length >= 6) ? false : true} 
+                style={[styles.nextButton, {backgroundColor: (typedcnpj.length === 14) && (password.length >= 6) ? '#FEC044' : '#DCDCDC'}]}>
+                <Text style={[styles.nextText, {color: (typedcnpj.length === 14) && (password.length >= 6) ? 'white' : '#C8C8C8'}]}>Entrar</Text>
             </TouchableOpacity>
             <View style={styles.divLinks}>
                 <TouchableOpacity onPress={() => navigation.navigate('CNPJScreen')}>
