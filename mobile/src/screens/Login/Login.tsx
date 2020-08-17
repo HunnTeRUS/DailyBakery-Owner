@@ -1,74 +1,19 @@
 import React, { useState } from 'react'
-import { View, StyleSheet, Image, Text, Dimensions, KeyboardAvoidingView, AsyncStorage } from 'react-native'
+import { View, Image, Text, KeyboardAvoidingView, AsyncStorage } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import TextInput from '../../components/TextInput'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import FirstScreenRegister from '../BakeryRegister/FirstScreenRegister/FirstScreenRegister'
-import WalkThrough from '../Walkthrough/Walkthrough'
 import verifyLoginCredentialsService from '../../services/Login/LoginService'
 import ModalPopupWarns from '../../components/ModalPopup/ModalPopupWarn/ModalPopupWarns'
 import ModalPopupLoading from '../../components/ModalPopup/ModalPopupLoading/ModalPopupLoading'
-
-const { height, width } = Dimensions.get('window');
-
-const styles = StyleSheet.create({
-    container: {
-        height: height,
-        width: width,
-        backgroundColor: "#F4EEEE",
-        alignItems: "center"
-    },
-    text: {
-        marginTop: 25,
-        marginBottom: 5,
-        marginLeft: 10,
-        fontSize: 15,
-        fontFamily: "Poppins-Bold",
-        textAlign: "center",
-        flexDirection: "row",
-    },
-    inputs: {
-        margin: 4,
-        alignItems: "baseline",
-        width: '90%',
-        alignSelf: 'center',
-        marginBottom: 20,
-    },
-    image: {
-        marginTop: height / 8,
-
-    },
-    divLinks: {
-        flexDirection: "column",
-        textAlign: "center",
-        alignContent: "center",
-        textDecorationLine: "none",
-        marginTop: 40,
-        alignItems: 'center',
-    },
-    nextButton: {
-        backgroundColor: '#FEC044',
-        borderRadius: 6,
-        height: 45,
-        width: 150,
-        marginTop: '1%',
-        alignItems: 'center',
-        justifyContent: 'center',
-        alignSelf: 'center'
-    },
-    nextText: {
-        color: '#FFF',
-        fontSize: 15,
-        fontWeight: 'bold'
-    },
-})
+import UserInterface from '../../services/UserInterface'
+import styles from './styles'
 
 const Login = () => {
     const [typedcnpj, setCnpj] = useState("");
     const [password, setPassword] = useState("");
     const [show, setShow] = useState(false);
     const navigation = useNavigation();
-    const [opacityState, setOpacityState] = useState(1)
     const [showLoading, setShowLoading] = useState(false)
 
     const WalkthroughOrHome = async () => {
@@ -78,12 +23,37 @@ const Login = () => {
         }
     }
 
+    const setLoggedUserInLocalStorage = async (obj: UserInterface) => {
+        await AsyncStorage.setItem('loggedUser', JSON.stringify(obj));
+    }
+
     async function pressButton() {
-        const { cnpj, senha, email } = await verifyLoginCredentialsService(typedcnpj, password);
-        console.log(cnpj, senha, email);
+
+        const { nome, cnpj, senha, email, numero_celular, 
+        numero_telefone, aberto_fechado, ultima_fornada, 
+        cep, rua, numero, bairro, cidade, estado, tempo_espera } = await verifyLoginCredentialsService(typedcnpj, password);
+
+        const objUser = {
+            nome: nome,
+            email: email,
+            senha: senha,
+            numero_celular: numero_celular,
+            numero_telefone: numero_telefone,
+            cnpj: cnpj,
+            aberto_fechado: aberto_fechado,
+            ultima_fornada: ultima_fornada,
+            cep: cep,
+            rua: rua,
+            numero: numero,
+            bairro: bairro,
+            cidade: cidade,
+            estado: estado,
+            tempo_espera: tempo_espera,
+        }
 
         if (cnpj && senha && email) {
             setShowLoading(false)
+            setLoggedUserInLocalStorage(objUser);
             navigation.navigate('BottomTabNavigator')
         }
         else {
@@ -98,7 +68,7 @@ const Login = () => {
 
         <View style={styles.container}>
             {!show ? <></> : <ModalPopupWarns textToShow='CNPJ e/ou senha incorretos' showModal={show} setShow={setShow} />}
-            {!showLoading ? <></> : <ModalPopupLoading functionToExecuteWhileIsLoading={pressButton} showModal={showLoading} />}
+            {!showLoading ? <></> : <ModalPopupLoading showModal={showLoading} />}
             <KeyboardAvoidingView behavior="position">
                 <Image source={require('../../../assets/images/owner1.png')} style={styles.image} />
                 <View style={styles.inputs}>
@@ -114,26 +84,14 @@ const Login = () => {
             </KeyboardAvoidingView>
             <TouchableOpacity onPress={() => {
                 setShowLoading(true);
-                pressButton()
-            }
-            }
+                pressButton()}
+                }
                 disabled={(typedcnpj.length === 14) && (password.length >= 6) ? false : true}
                 containerStyle={{
                     opacity: (typedcnpj.length === 14) && (password.length >= 6) ? 1 : .4,
                 }}
-                style={
-                    [styles.nextButton,
-                    {
-                        backgroundColor: (typedcnpj.length === 14) && (password.length >= 6) ? '#FEC044' : '#FEC044',
-                    }
-                    ]}>
-                <Text style={
-                    [styles.nextText,
-                    {
-                        color: (typedcnpj.length === 14) && (password.length >= 6) ? 'white' : 'white',
-                    }
-                    ]
-                }>Entrar</Text>
+                style={[styles.nextButton,{backgroundColor: (typedcnpj.length === 14) && (password.length >= 6) ? '#FEC044' : '#FEC044',}]}>
+                <Text style={[styles.nextText, {color: (typedcnpj.length === 14) && (password.length >= 6) ? 'white' : 'white', }]}>Entrar</Text>
             </TouchableOpacity>
             <View style={styles.divLinks}>
                 <TouchableOpacity onPress={() => navigation.navigate('CNPJScreen')}>
