@@ -8,6 +8,9 @@ interface ModalPopupInterface{
     showModal: boolean;
     setShow(trueFalse: boolean): void;
     textToShow: string;
+    functionToYesButton?() : void;
+    functionToNoButton?() : void;
+    textToTitle?: string;
 }   
 
 const ModalPopup = (props: ModalPopupInterface) => {
@@ -30,14 +33,20 @@ const ModalPopup = (props: ModalPopupInterface) => {
                         </View>    
                     </View>
                     <View style={styles.textContainer}>
-                        <Text style={styles.title}>Atenção</Text>
+                        <Text style={styles.title}>{props.textToTitle ? props.textToTitle : 'Atenção'}</Text>
                         <Text style={styles.subtitle}>{props.textToShow}</Text>
                     </View>
                     <View style={styles.buttonContainer}>  
-                        <TouchableOpacity style={styles.noButton} onPress={() => {props.setShow(false)}}>
+                        <TouchableOpacity style={styles.noButton} onPress={() => {
+                            if(props.functionToNoButton) props.functionToNoButton()
+                                props.setShow(false)
+                            }}>
                             <Text style={styles.noText}>Não</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.yesButton}>
+                        <TouchableOpacity style={styles.yesButton} onPress={()=>{
+                            if(props.functionToYesButton) props.functionToYesButton()
+                            props.setShow(false)
+                            }}>
                             <Text style={styles.yesText}>Sim</Text>
                         </TouchableOpacity>
                     </View>

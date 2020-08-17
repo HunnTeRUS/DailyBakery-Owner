@@ -1,19 +1,23 @@
 import React, {useState} from 'react';
-import { StyleSheet, TouchableOpacity, Modal } from 'react-native';
+import { StyleSheet, TouchableOpacity, Modal, AsyncStorage } from 'react-native';
 import styles from './styles'
 import {Feather} from '@expo/vector-icons'
 import { Text, View } from '../../components/Themed';
-import ModalPopupWarn from '../../components/ModalPopup/ModalPopupInterrog/ModalPopupInterrogs';
+import ModalPopupInterrogs from '../../components/ModalPopup/ModalPopupInterrog/ModalPopupInterrogs';
 import {useNavigation} from '@react-navigation/native'
 
 export default function TabOneScreen() {
-  const [show, setShow] = useState(false);
+  const [showWarn, setShowWarn] = useState(false);
   const navigation = useNavigation();
   
+  async function logout() {
+    await AsyncStorage.removeItem('loggedUser');
+    navigation.navigate('Login');
+  }
+
   return (
     <View style={styles.container}>
-      {/* {!show ? <></> : <ModalPopupWarn textToShow='Yuri gay' showModal={show} setShow={setShow}/>}
-      <TouchableOpacity onPress={() => {setShow(!show)}}><Text>SLLSALSLA</Text></TouchableOpacity> */}
+      {!showWarn ? <></> : <ModalPopupInterrogs functionToYesButton={logout} textToTitle='Logout' textToShow='Deseja sair do app?' showModal={showWarn} setShow={setShowWarn}/>}
 
       <View style={styles.secondContainer}>
           <Text style={styles.title}>Dados de sua conta</Text>
@@ -30,7 +34,7 @@ export default function TabOneScreen() {
           </TouchableOpacity>
 
           <View style={{justifyContent: 'flex-end', width: '100%', alignItems: 'center', flex: 1, backgroundColor: '#E8EDFF', marginBottom: '15%'}}>
-            <TouchableOpacity disabled={false} style={[styles.nextButton, styles.logoutButton]} onPress={() => {}}>
+            <TouchableOpacity disabled={false} style={[styles.nextButton, styles.logoutButton]} onPress={() => {setShowWarn(true)}}>
               <Feather size={16} name="log-out" style={styles.iconUser}/>
               <Text style={styles.nextText}>Sair</Text>
             </TouchableOpacity>
