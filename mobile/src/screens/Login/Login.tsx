@@ -7,10 +7,9 @@ import FirstScreenRegister from '../BakeryRegister/FirstScreenRegister/FirstScre
 import WalkThrough from '../Walkthrough/Walkthrough'
 import verifyLoginCredentialsService from '../../services/Login/LoginService'
 import ModalPopupWarns from '../../components/ModalPopup/ModalPopupWarn/ModalPopupWarns'
+import ModalPopupLoading from '../../components/ModalPopup/ModalPopupLoading/ModalPopupLoading'
 
 const { height, width } = Dimensions.get('window');
-const cnpjValidator = (cnpj: string) => cnpj.length === 14;
-const passwordValidator = (password: string) => password.length >= 6;
 
 const styles = StyleSheet.create({
     container: {
@@ -70,6 +69,7 @@ const Login = () => {
     const [show, setShow] = useState(false);
     const navigation = useNavigation();
     const [opacityState, setOpacityState] = useState(1)
+    const [showLoading, setShowLoading] = useState(false)
 
     const WalkthroughOrHome = async () => {
         var variavel = await AsyncStorage.getItem('firstAccess');
@@ -83,17 +83,22 @@ const Login = () => {
         console.log(cnpj, senha, email);
 
         if (cnpj && senha && email) {
+            setShowLoading(false)
             navigation.navigate('BottomTabNavigator')
         }
         else {
+            setShowLoading(false)
             setShow(!show);
         }
     }
+
     WalkthroughOrHome();
+    
     return (
 
         <View style={styles.container}>
-            {!show ? <></> : <View style={styles.container}><ModalPopupWarns textToShow='CNPJ e/ou senha incorretos'showModal={show}setShow={setShow} /></View>}
+            {!show ? <></> : <ModalPopupWarns textToShow='CNPJ e/ou senha incorretos' showModal={show} setShow={setShow} />}
+            {!showLoading ? <></> : <ModalPopupLoading functionToExecuteWhileIsLoading={pressButton} showModal={showLoading} />}
             <KeyboardAvoidingView behavior="position">
                 <Image source={require('../../../assets/images/owner1.png')} style={styles.image} />
                 <View style={styles.inputs}>
@@ -107,22 +112,26 @@ const Login = () => {
                         validator={text => { setPassword(text); return text.length >= 6; }} />
                 </View>
             </KeyboardAvoidingView>
-            <TouchableOpacity onPress={() => pressButton()} 
-                disabled={(typedcnpj.length === 14) && (password.length >= 6) ? false : true} 
+            <TouchableOpacity onPress={() => {
+                setShowLoading(true);
+                pressButton()
+            }
+            }
+                disabled={(typedcnpj.length === 14) && (password.length >= 6) ? false : true}
                 containerStyle={{
                     opacity: (typedcnpj.length === 14) && (password.length >= 6) ? 1 : .4,
                 }}
                 style={
-                    [styles.nextButton, 
-                        {
-                            backgroundColor: (typedcnpj.length === 14) && (password.length >= 6) ? '#FEC044' : '#FEC044',
-                        }
+                    [styles.nextButton,
+                    {
+                        backgroundColor: (typedcnpj.length === 14) && (password.length >= 6) ? '#FEC044' : '#FEC044',
+                    }
                     ]}>
                 <Text style={
-                    [styles.nextText, 
-                        {
-                            color: (typedcnpj.length === 14) && (password.length >= 6) ? 'white' : 'white',
-                        }
+                    [styles.nextText,
+                    {
+                        color: (typedcnpj.length === 14) && (password.length >= 6) ? 'white' : 'white',
+                    }
                     ]
                 }>Entrar</Text>
             </TouchableOpacity>

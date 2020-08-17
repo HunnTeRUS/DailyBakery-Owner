@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { View, Image, Text, KeyboardAvoidingView } from 'react-native';
 import TextInput from '../../components/TextInput';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -19,45 +19,44 @@ const ForgotPassword = () => {
     const [showWarn, setShowWarn] = useState(false);
     const [showLoading, setShowLoading] = useState(false);
     const [textToShowError, setTextToShowError] = useState('CNPJ invalido, tente novamente')
-    let functionToWarnButton = () => {};
+    let functionToWarnButton = () => { };
 
-    async function pressButton(){
-        if(validate(format(typedcnpj))) {
-            try {
+    async function pressButton() {
+        try {
+            const { codigoEnviado, cnpj, email } = await sendVerificationEmailServices(typedcnpj);
 
-                const {codigoEnviado, cnpj, email} = await sendVerificationEmailServices(typedcnpj);                
-
-                if(codigoEnviado && cnpj && email) {
-                    setCodeReceivedFromApi(codigoEnviado)
-                    setCnpjReceivedFromApi(cnpj)
-                    setEmailReceivedFromApi(email)
-                    setShow(!show)
-                }
-
-                else {
-                    setTextToShowError('Não existe nenhum registro com este CNPJ.')
-                    setShowWarn(!showWarn)
-                }
-
-            } catch(e){
-                setTextToShowError('Ocorreu um erro, tente novamente mais tarde.')
-                setShowWarn(!showWarn)
-                console.log(e)
+            if (codigoEnviado && cnpj && email) {
+                setCodeReceivedFromApi(codigoEnviado)
+                setCnpjReceivedFromApi(cnpj)
+                setEmailReceivedFromApi(email)
+                setShow(!show)
+                setShowLoading(false)
                 return;
             }
-        }
-        else {
-            setTextToShowError('CNPJ incorreto.')
+
+            else {
+                setTextToShowError('Não existe nenhum registro com este CNPJ.')
+                setShowWarn(!showWarn)
+                setShowLoading(false)
+                console.log('Não existe nenhum registro com este CNPJ')
+            }
+
+        } catch (e) {
+            setShowLoading(false)
+            setTextToShowError('Ocorreu um erro, tente novamente mais tarde.')
             setShowWarn(!showWarn)
+            setShowLoading(false)
+            console.log("CAIU NO CATCH: " + e)
             return;
         }
+
     }
 
     return (
         <View style={styles.container}>
-            {!show ? <></> : <ModalPopupInput cnpjReceivedFromAPI={cnpjReceivedFromApi} emailReceivedFromAPI={emailReceivedFromApi} codeReceivedFromAPI={codeReceivedFromApi} textToShow='Digite o codigo que foi enviado em seu email' showModal={show} setShow={setShow}/>}
-            {!showWarn ? <></> : <ModalPopupWarns functionToButton={functionToWarnButton} textToShow={textToShowError} showModal={showWarn} setShow={setShowWarn}/>}
-            {!showLoading ? <></> : <ModalPopupLoading functionToExecuteWhileIsLoading={pressButton} showModal={showLoading}/>}
+            {!show ? <></> : <ModalPopupInput cnpjReceivedFromAPI={cnpjReceivedFromApi} emailReceivedFromAPI={emailReceivedFromApi} codeReceivedFromAPI={codeReceivedFromApi} textToShow='Digite o codigo que foi enviado em seu email' showModal={show} setShow={setShow} />}
+            {!showWarn ? <></> : <ModalPopupWarns functionToButton={functionToWarnButton} textToShow={textToShowError} showModal={showWarn} setShow={setShowWarn} />}
+            {!showLoading ? <></> : <ModalPopupLoading functionToExecuteWhileIsLoading={pressButton} showModal={showLoading} />}
 
             <KeyboardAvoidingView behavior="position">
                 <Image source={require('../../../assets/images/owner1.png')} style={styles.image} />
@@ -65,20 +64,23 @@ const ForgotPassword = () => {
 
                 <View style={styles.inputs}>
                     <Text style={styles.text}>CNPJ</Text>
-                    <TextInput selectionColor='#FEC044' 
-                        icon="briefcase" placeholder="Digite o CNPJ da sua padaria" keyboardType="number-pad" 
-                        validator={text => {setTypedcnpj(text); return text.length === 14;}} value={typedcnpj} autoCapitalize="none"/>
+                    <TextInput selectionColor='#FEC044'
+                        icon="briefcase" placeholder="Digite o CNPJ da sua padaria" keyboardType="number-pad"
+                        validator={text => { setTypedcnpj(text); return text.length === 14; }} value={typedcnpj} autoCapitalize="none" />
                     <Text style={styles.infos}>Você receberá um e-mail com um codigo para prosseguir com a {'\n'}alteração de sua senha</Text>
                 </View>
             </KeyboardAvoidingView>
-            <TouchableOpacity 
+            <TouchableOpacity
                 disabled={typedcnpj.length === 14 ? false : true}
                 containerStyle={{
                     opacity: (typedcnpj.length === 14) ? 1 : .4,
                 }}
-                onPress={() => {setShowLoading(true)}}
+                onPress={() => {
+                    setShowLoading(true)
+                    pressButton();
+                }}
                 style={styles.nextButton}>
-                    <Text style={styles.nextText}>Enviar</Text>
+                <Text style={styles.nextText}>Enviar</Text>
             </TouchableOpacity>
 
         </View>

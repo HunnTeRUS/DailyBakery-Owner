@@ -6,16 +6,10 @@ import Baker from '../../ImagesComponents/Baker'
 
 interface ModalPopupLoadingInterface {
     showModal: boolean;
-    functionToExecuteWhileIsLoading(): void
 }
 
 const ModalPopupLoading = (props: ModalPopupLoadingInterface) => {
     const [show, setShow] = useState(props.showModal);
-
-    if (props.functionToExecuteWhileIsLoading) {
-        props.functionToExecuteWhileIsLoading();
-        setShow(false)
-    }
 
     return (
         <Modal

@@ -7,6 +7,7 @@ import ModalPopupInfos from '../../../components/ModalPopup/ModalPopupInfo/Modal
 import ModalPopupWarns from '../../../components/ModalPopup/ModalPopupWarn/ModalPopupWarns'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import sendVerificationEmailServices from '../../../services/ChangePassword/ChangePasswordServices'
+import ModalPopupLoading from '../../../components/ModalPopup/ModalPopupLoading/ModalPopupLoading';
 
 const passwordValidator = (password: string) => password.length >= 6;
 const secondPasswordValidator = (password: string) => password.length >= 6;
@@ -25,14 +26,18 @@ export default function ChangePassword() {
     const [confirmationPassword, setConfirmationPassword] = useState('');
     const routes = useRoute();
     const params = routes.params as ChangePassword;
+    const [showLoading, setShowLoading] = useState(false);
+
     //83340511000180
     async function changePassword() {
         if (password !== confirmationPassword) {
+            setShowLoading(false);
             setShowWarn(!showWarn)
             return;
         }
         else {
             sendVerificationEmailServices(params.email, params.cnpj, confirmationPassword);
+            setShowLoading(false);
             setShow(!show);
         }
     }
@@ -41,6 +46,7 @@ export default function ChangePassword() {
         <View style={styles.container}>
             {!show ? <></> : <ModalPopupInfos onPressCloseButton={() => { navigation.navigate('Login') }} textToShow='Sua senha foi alterada com sucesso!' showModal={show} setShow={setShow} />}
             {!showWarn ? <></> : <ModalPopupWarns textToShow='O campo senha não pode ser diferente do campo de Confirmar Senha' showModal={showWarn} setShow={setShowWarn} />}
+            {!showLoading ? <></> : <ModalPopupLoading showModal={showLoading} />}
 
             <View style={styles.secondContainer}>
                 <Text style={styles.title}>Alterar senha da conta</Text>
@@ -58,6 +64,7 @@ export default function ChangePassword() {
 
                 <TouchableOpacity disabled={(password.length >= 6) && (confirmationPassword.length >= 6) ? false : true}
                     onPress={() => {
+                        setShowLoading(true)
                         changePassword()
                     }}
                     containerStyle={{
