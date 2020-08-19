@@ -56,7 +56,7 @@ const ForgotPassword = () => {
         <View style={styles.container}>
             {!show ? <></> : <ModalPopupInput cnpjReceivedFromAPI={cnpjReceivedFromApi} emailReceivedFromAPI={emailReceivedFromApi} codeReceivedFromAPI={codeReceivedFromApi} textToShow='Digite o codigo que foi enviado em seu email' showModal={show} setShow={setShow} />}
             {!showWarn ? <></> : <ModalPopupWarns functionToButton={functionToWarnButton} textToShow={textToShowError} showModal={showWarn} setShow={setShowWarn} />}
-            {!showLoading ? <></> : <ModalPopupLoading functionToExecuteWhileIsLoading={pressButton} showModal={showLoading} />}
+            {!showLoading ? <></> : <ModalPopupLoading showModal={showLoading} />}
 
             <KeyboardAvoidingView behavior="position">
                 <Image source={require('../../../assets/images/owner1.png')} style={styles.image} />

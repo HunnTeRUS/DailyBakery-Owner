@@ -32,6 +32,7 @@ export default async function verifyLoginCredentialsService(cnpj: string, passwo
 
     return obj;
   } catch (error) {
+    console.log(error)
     return error
   }
 }

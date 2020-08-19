@@ -15,6 +15,7 @@ const Login = () => {
     const [show, setShow] = useState(false);
     const navigation = useNavigation();
     const [showLoading, setShowLoading] = useState(false)
+    const [textToShow, setTextToShow] = useState('CNPJ ou senha inválidos!')
 
     const WalkthroughOrHome = async () => {
         var variavel = await AsyncStorage.getItem('firstAccess');
@@ -29,36 +30,42 @@ const Login = () => {
 
     async function pressButton() {
 
-        const { nome, cnpj, senha, email, numero_celular, 
-        numero_telefone, aberto_fechado, ultima_fornada, 
-        cep, rua, numero, bairro, cidade, estado, tempo_espera } = await verifyLoginCredentialsService(typedcnpj, password);
+        try {
+            const { nome, cnpj, senha, email, numero_celular, 
+            numero_telefone, aberto_fechado, ultima_fornada, 
+            cep, rua, numero, bairro, cidade, estado, tempo_espera, token } = await verifyLoginCredentialsService(typedcnpj, password);
 
-        const objUser = {
-            nome: nome,
-            email: email,
-            senha: senha,
-            numero_celular: numero_celular,
-            numero_telefone: numero_telefone,
-            cnpj: cnpj,
-            aberto_fechado: aberto_fechado,
-            ultima_fornada: ultima_fornada,
-            cep: cep,
-            rua: rua,
-            numero: numero,
-            bairro: bairro,
-            cidade: cidade,
-            estado: estado,
-            tempo_espera: tempo_espera,
-        }
+            const objUser = {
+                nome: nome,
+                email: email,
+                senha: senha,
+                numero_celular: numero_celular,
+                numero_telefone: numero_telefone,
+                cnpj: cnpj,
+                aberto_fechado: aberto_fechado,
+                ultima_fornada: ultima_fornada,
+                cep: cep,
+                rua: rua,
+                numero: numero,
+                bairro: bairro,
+                cidade: cidade,
+                estado: estado,
+                tempo_espera: tempo_espera,
+                token: token
+            }
 
-        if (cnpj && senha && email) {
-            setShowLoading(false)
-            setLoggedUserInLocalStorage(objUser);
-            navigation.navigate('BottomTabNavigator')
-        }
-        else {
-            setShowLoading(false)
-            setShow(!show);
+            if (cnpj && senha && email) {
+                setShowLoading(false)
+                setLoggedUserInLocalStorage(objUser);
+                navigation.navigate('BottomTabNavigator')
+            }
+            else {
+                setShowLoading(false)
+                setShow(!show);
+            }
+        } catch(e){
+            setTextToShow('Ocorreu um erro no seu login, tente novamente mais tarde')
+            console.log(e)
         }
     }
 
@@ -67,7 +74,7 @@ const Login = () => {
     return (
 
         <View style={styles.container}>
-            {!show ? <></> : <ModalPopupWarns textToShow='CNPJ e/ou senha incorretos' showModal={show} setShow={setShow} />}
+            {!show ? <></> : <ModalPopupWarns textToShow={textToShow} showModal={show} setShow={setShow} />}
             {!showLoading ? <></> : <ModalPopupLoading showModal={showLoading} />}
             <KeyboardAvoidingView behavior="position">
                 <Image source={require('../../../assets/images/owner1.png')} style={styles.image} />

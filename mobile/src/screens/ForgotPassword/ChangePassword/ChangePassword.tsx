@@ -54,12 +54,13 @@ export default function ChangePassword() {
 
                 <Text style={styles.textNumber}>Nova Senha</Text>
                 <TextInput icon="lock" selectionColor='#FEC044' value={password}
-                    validator={text => { setPassword(text); return text.length >= 6; }} placeholder="Digite sua nova senha"
+                    validator={text => {setPassword(text); return text.length >= 6}} placeholder="Digite sua nova senha"
                     secureTextEntry={true} />
 
                 <Text style={styles.textNumber}>Confirme sua nova senha</Text>
                 <TextInput icon="lock" selectionColor='#FEC044'
-                    value={confirmationPassword} validator={text => { setConfirmationPassword(text); return (text.length >= 6 && text === password); }}
+                    value={confirmationPassword} 
+                    validator={text => { setConfirmationPassword(text); return (text.length >= 6 && text === password); }}
                     placeholder="Digite sua nova senha novamente" secureTextEntry={true} />
 
                 <TouchableOpacity disabled={(password.length >= 6) && (confirmationPassword.length >= 6) ? false : true}

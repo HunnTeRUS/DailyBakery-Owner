@@ -14,4 +14,5 @@ export default interface UserInterface{
     cidade: String,
     estado: String,
     tempo_espera: Date,
+    token: string,
 }

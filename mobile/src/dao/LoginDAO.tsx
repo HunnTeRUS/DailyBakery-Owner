@@ -1,8 +1,4 @@
 import api from '../services/api'
-import { View } from '../components/Themed';
-import ModalPopupInfos from '../components/ModalPopup/ModalPopupInfo/ModalPopupInfos';
-import { useState } from 'react';
-
 export default async function verifyLoginCredentials(cnpj: string, password: string) {
   if (!cnpj) {
     throw "CNPJ dever ser preenchido";
@@ -33,11 +29,12 @@ export default async function verifyLoginCredentials(cnpj: string, password: str
       ibge: response.data?.ibge,
       gia: response.data?.gia,
       tempo_espera: response.data?.tempo_espera,
+      token: response.headers['x-acess-token']
     }
-
 
     return obj;
   } catch (error) {
+    console.log(error)
     return error
   }
 
