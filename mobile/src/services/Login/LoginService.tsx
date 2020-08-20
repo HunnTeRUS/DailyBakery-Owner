@@ -28,6 +28,7 @@ export default async function verifyLoginCredentialsService(cnpj: string, passwo
       ibge: response?.ibge,
       gia: response?.gia,
       tempo_espera: response?.tempo_espera,
+      token: response.token
     }
 
     return obj;

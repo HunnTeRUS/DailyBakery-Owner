@@ -25,7 +25,9 @@ routes.post('/updatePassword', ApiValidations.updatePassword(), PadariaServicesU
 
 routes.post('/forgotPassword', ApiValidations.forgotPassword(), PadariaServicesUtils.forgotPassword);
 
-routes.put('/updatePhoneNumber', VerifyToken, ApiValidations.updatePhoneNumber(), PadariaServicesUtils.updatePhoneNumber);
+routes.post('/updatePhoneNumber', VerifyToken, ApiValidations.updatePhoneNumber(), PadariaServicesUtils.updatePhoneNumber);
+
+routes.post('/verifyToken', VerifyToken, PadariaServicesUtils.verifyToken);
 
 routes.put('/updateBakeryAddress', VerifyToken, ApiValidations.updateBakeryAddress(), PadariaServicesUtils.updateAddress);
 

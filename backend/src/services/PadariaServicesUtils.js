@@ -191,6 +191,10 @@ module.exports = {
             .catch((erro) => {
                 return response.json({ Error: erro });
             });
+    },
+
+    async verifyToken(request, response) {
+        return response.status(200);
     }
 
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Image, Text, KeyboardAvoidingView, AsyncStorage } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import TextInput from '../../components/TextInput'
@@ -8,6 +8,7 @@ import ModalPopupWarns from '../../components/ModalPopup/ModalPopupWarn/ModalPop
 import ModalPopupLoading from '../../components/ModalPopup/ModalPopupLoading/ModalPopupLoading'
 import UserInterface from '../../services/UserInterface'
 import styles from './styles'
+import verifyToken from '../../services/AuthServices/AuthServices'
 
 const Login = () => {
     const [typedcnpj, setCnpj] = useState("");
@@ -23,6 +24,16 @@ const Login = () => {
             return navigation.navigate('Walkthrough');
         }
     }
+
+    useEffect(() => {
+            const isValid = async() => {
+                const response = await verifyToken(); 
+                if(response) {
+                    navigation.navigate('BottomTabNavigator')
+                }
+            }
+            isValid();
+    },[])
 
     const setLoggedUserInLocalStorage = async (obj: UserInterface) => {
         await AsyncStorage.setItem('loggedUser', JSON.stringify(obj));

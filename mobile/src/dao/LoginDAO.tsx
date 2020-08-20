@@ -29,7 +29,7 @@ export default async function verifyLoginCredentials(cnpj: string, password: str
       ibge: response.data?.ibge,
       gia: response.data?.gia,
       tempo_espera: response.data?.tempo_espera,
-      token: response.headers['x-acess-token']
+      token: response.headers['x-access-token']
     }
 
     return obj;
