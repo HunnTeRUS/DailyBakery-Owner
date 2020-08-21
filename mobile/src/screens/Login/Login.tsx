@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
-import { View, Image, Text, KeyboardAvoidingView, AsyncStorage } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
+import React, { useState, useEffect, useCallback } from 'react'
+import { View, Image, Text, KeyboardAvoidingView, AsyncStorage, BackHandler } from 'react-native'
+import { useNavigation, useFocusEffect } from '@react-navigation/native'
 import TextInput from '../../components/TextInput'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import verifyLoginCredentialsService from '../../services/Login/LoginService'
@@ -25,18 +25,23 @@ const Login = () => {
         }
     }
 
-    useEffect(() => {
-            const isValid = async() => {
-                const response = await verifyToken(); 
-                if(response) {
-                    navigation.navigate('BottomTabNavigator')
-                }
+    useFocusEffect(() => {
+        const isValid = async() => {
+            const response = await verifyToken(); 
+            if(response) {
+                navigation.navigate('BottomTabNavigator')
             }
-            isValid();
-    },[])
+        }
+        isValid();
+    })
 
     const setLoggedUserInLocalStorage = async (obj: UserInterface) => {
-        await AsyncStorage.setItem('loggedUser', JSON.stringify(obj));
+        const objResponse = await AsyncStorage.getItem('loggedUser'); 
+
+        if(!objResponse) {
+            await AsyncStorage.removeItem('loggedUser')
+            await AsyncStorage.setItem('loggedUser', JSON.stringify(obj));
+        }
     }
 
     async function pressButton() {

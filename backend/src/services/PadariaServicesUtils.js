@@ -4,6 +4,7 @@ let PadariaDTO = require('../models/dto/PadariaDTO');
 let Mailer = require('./utils/Mailer');
 const CNPJValidation = require('./utils/CNPJValidation');
 const axios = require('axios');
+const { numero } = require('../models/dto/PadariaDTO');
 
 module.exports = {
 
@@ -121,7 +122,7 @@ module.exports = {
     },
 
     async updatePhoneNumber(request, response) {
-        const { cnpj } = request.query;
+        const cnpj = request.query.cnpj;
         const { numero_celular, numero_telefone } = request.body;
 
         if (!CNPJValidation.validarCNPJ(cnpj))
