@@ -1,11 +1,11 @@
 import React from "react";
-import { StyleSheet, View, Text, TouchableOpacity, Alert } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, Alert, BackHandler } from "react-native";
 import { State, TapGestureHandler } from "react-native-gesture-handler";
 import Animated, { Value, cond, eq } from "react-native-reanimated";
 import { mix, onGestureEvent, withTransition } from "react-native-redash";
 import Button from "./Button";
 import {FontAwesome5} from '@expo/vector-icons'
-import {useNavigation} from '@react-navigation/native'
+import {useNavigation, useFocusEffect} from '@react-navigation/native'
 
 const styles = StyleSheet.create({
   container: {
@@ -98,6 +98,20 @@ export default () => {
   const duration = cond(isActive, 250, 500);
   const progress = withTransition(isActive, { duration });
   const scale = mix(progress, 1, 1.2);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        return true;
+      };
+  
+      BackHandler.addEventListener('hardwareBackPress', onBackPress);
+  
+      return () =>
+        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    }, [])
+  );
+
   return (
     <View style={styles.container}>
       <Text style={styles.novaFornadaText}>
