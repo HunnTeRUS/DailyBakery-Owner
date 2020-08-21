@@ -5,8 +5,6 @@ export default async function changeContactInfoDAO(cnpj: string, token: string, 
         throw "CNPJ não pode ser vazio"
 
     try {
-
-
         await api({
             method: 'put', //you can set what request you want to be
             url: '/updatePhoneNumber',
