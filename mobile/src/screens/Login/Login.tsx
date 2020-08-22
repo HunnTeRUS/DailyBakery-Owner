@@ -6,7 +6,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import verifyLoginCredentialsService from '../../services/Login/LoginService'
 import ModalPopupWarns from '../../components/ModalPopup/ModalPopupWarn/ModalPopupWarns'
 import ModalPopupLoading from '../../components/ModalPopup/ModalPopupLoading/ModalPopupLoading'
-import UserInterface from '../../services/UserInterface'
+import UserInterface from '../../services/Utils/UserInterface'
 import styles from './styles'
 import verifyToken from '../../services/AuthServices/AuthServices'
 

@@ -4,9 +4,11 @@ import styles from './styles'
 import TextInput from '../../components/TextInput'
 import ModalPopupInfos from '../../components/ModalPopup/ModalPopupInfo/ModalPopupInfos'
 import {useNavigation} from '@react-navigation/native'
-import UserInterface from '../../services/UserInterface'
+import UserInterface from '../../services/Utils/UserInterface'
 import changeContactInfoServices from '../../services/ChangeContactInfoServices/ChangeContactInfoServices'
 import ModalPopupLoading from '../../components/ModalPopup/ModalPopupLoading/ModalPopupLoading';
+import changeLoggedUserInfo from '../../services/Utils/ChangeLoggedUserInfos'
+import getLoggedUser, {setAndChangeLoggedUser} from '../../services/Utils/LoggedUser';
 
 export default function ChangeContactInfo() {
     const [show, setShow] = useState(false);
@@ -20,16 +22,11 @@ export default function ChangeContactInfo() {
     const [showLoading, setShowLoading] = useState(false)
     const [textToShow, setTextToShow] = useState('Suas informações de contato foram alteradas com sucesso!')
 
-    async function getLoggedUser() {
-        const objUser = await AsyncStorage.getItem('loggedUser');
-        return JSON.parse(objUser ? objUser : "") as UserInterface;
-    }
-
     useEffect(() => {
         const num = async () => {
-            const {numero_celular, numero_telefone, token} = await getLoggedUser();
-            setPhone(numero_telefone);
-            setCelPhone(numero_celular);
+            const {numero_celular, numero_telefone} = await getLoggedUser();
+            setPhone(numero_telefone ? numero_telefone : "");
+            setCelPhone(numero_celular ? numero_celular : "");
         }
         num();
     }, [])
@@ -37,6 +34,10 @@ export default function ChangeContactInfo() {
     async function pressButtonAndChangeContactInfo(){
         const response = await changeContactInfoServices(celPhone, phone);
         if(response){
+            var user = await getLoggedUser();
+            user.numero_celular = celPhone ? celPhone : user.numero_celular;
+            user.numero_telefone = phone ? phone : user.numero_telefone;
+            await setAndChangeLoggedUser(user);
             setShowLoading(false)
             setShow(!show)
         }
@@ -49,7 +50,7 @@ export default function ChangeContactInfo() {
 
     return (
         <View style={styles.container}>
-            {!show ? <></> : <ModalPopupInfos onPressCloseButton={() => {}} textToShow={textToShow} showModal={show} setShow={setShow}/>}
+            {!show ? <></> : <ModalPopupInfos onPressCloseButton={() => {navigation.navigate('BottomTabNavigator')}} textToShow={textToShow} showModal={show} setShow={setShow}/>}
             {!showLoading ? <></> : <ModalPopupLoading showModal={showLoading} />}
 
                 <View style={styles.secondContainer}>

@@ -1,7 +1,7 @@
 import api from '../api'
 import changeContactInfoDAO from '../../dao/ChangeContactInfoDAO'
 import { AsyncStorage } from 'react-native';
-import UserInterface from '../UserInterface';
+import UserInterface from '../Utils/UserInterface';
 import { useState } from 'react';
 
 export default async function changeContactInfoServices(numero_celular?: string, numero_telefone?: string) {

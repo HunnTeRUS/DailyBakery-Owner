@@ -1,7 +1,7 @@
 import api from '../api'
 import verifyTokenDAO from '../../dao/AuthDAO'
 import { AsyncStorage } from 'react-native';
-import UserInterface from '../UserInterface';
+import UserInterface from '../Utils/UserInterface';
 import { useState } from 'react';
 
 export default function verifyToken() {
