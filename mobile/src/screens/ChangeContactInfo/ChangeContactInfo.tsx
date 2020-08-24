@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { TouchableOpacity, Modal, View, Text, AsyncStorage } from 'react-native';
+import {  Modal, View, Text, AsyncStorage } from 'react-native';
 import styles from './styles'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 import TextInput from '../../components/TextInput'
 import ModalPopupInfos from '../../components/ModalPopup/ModalPopupInfo/ModalPopupInfos'
 import {useNavigation} from '@react-navigation/native'
@@ -12,8 +13,8 @@ import getLoggedUser, {setAndChangeLoggedUser} from '../../services/Utils/Logged
 
 export default function ChangeContactInfo() {
     const [show, setShow] = useState(false);
-    const phoneValidator = (phone: string) => phone.length === 11;
-    const telValidator = (phone: string) => phone.length === 10;
+    const phoneValidator = (phone: string) => {return phone.length === 11 ? true : false};
+    const telValidator = (phone: string) => {if(phone) return phone.length === 10; else return true;}
     const navigation = useNavigation();
     const [phone, setPhone] = useState('')
     const [celPhone, setCelPhone] = useState('')
@@ -21,36 +22,44 @@ export default function ChangeContactInfo() {
     const [valorParaGambiarra2, setValorParaGambiarra2] = useState(false)
     const [showLoading, setShowLoading] = useState(false)
     const [textToShow, setTextToShow] = useState('Suas informações de contato foram alteradas com sucesso!')
+    const [response, setResponse] = useState({});
 
     useEffect(() => {
         const num = async () => {
             const {numero_celular, numero_telefone} = await getLoggedUser();
-            setPhone(numero_telefone ? numero_telefone : "");
-            setCelPhone(numero_celular ? numero_celular : "");
+            setPhone(numero_telefone);
+            setCelPhone(numero_celular);
         }
         num();
-    }, [])
+    }, []);
+
+    function redirectIfUpdateHasFinished(){
+        if(response) {
+            navigation.navigate('BottomTabNavigator');
+            setResponse({});
+        }
+    }
 
     async function pressButtonAndChangeContactInfo(){
-        const response = await changeContactInfoServices(celPhone, phone);
+        setResponse(await changeContactInfoServices(celPhone, phone));
         if(response){
             var user = await getLoggedUser();
-            user.numero_celular = celPhone ? celPhone : user.numero_celular;
-            user.numero_telefone = phone ? phone : user.numero_telefone;
+            user.numero_celular = celPhone;
+            user.numero_telefone = phone;
             await setAndChangeLoggedUser(user);
-            setShowLoading(false)
-            setShow(!show)
+            setShowLoading(false);
+            setShow(!show);
         }
         else {
-            setShowLoading(false)
-            setTextToShow('Ocorreu um erro ao alterar seus dados, tente novamente mais tarde.')
-            setShow(!show)
+            setTextToShow('Ocorreu um erro ao alterar seus dados, tente novamente mais tarde.');
+            setShowLoading(false);
+            setShow(!show);
         }
     }
 
     return (
         <View style={styles.container}>
-            {!show ? <></> : <ModalPopupInfos onPressCloseButton={() => {navigation.navigate('BottomTabNavigator')}} textToShow={textToShow} showModal={show} setShow={setShow}/>}
+            {!show ? <></> : <ModalPopupInfos onPressCloseButton={redirectIfUpdateHasFinished} textToShow={textToShow} showModal={show} setShow={setShow}/>}
             {!showLoading ? <></> : <ModalPopupLoading showModal={showLoading} />}
 
                 <View style={styles.secondContainer}>
@@ -69,7 +78,7 @@ export default function ChangeContactInfo() {
                             }
                         } keyboardType="number-pad"/>
 
-                    <Text style={styles.textNumber}>Número de Telefone</Text>
+                    <Text style={styles.textNumber}>Número de Telefone (opcional)</Text>
                     <TextInput icon="phone" placeholder="Número do seu telefone (com DDD)" value={phone} 
                         validator={ text => { 
                                 if(!valorParaGambiarra2) {
@@ -82,7 +91,10 @@ export default function ChangeContactInfo() {
                         } keyboardType="number-pad"/>
 
                     <TouchableOpacity 
-                        disabled={false} 
+                        disabled={(telValidator(phone) && (phoneValidator(celPhone))) ? false : true}
+                        containerStyle={{
+                            opacity: (telValidator(phone) && (phoneValidator(celPhone))) ? 1 : .4,
+                        }}
                         style={styles.nextButton}
                         onPress={() => {
                             setShowLoading(true);

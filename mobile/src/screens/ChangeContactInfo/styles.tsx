@@ -82,7 +82,7 @@ export default StyleSheet.create({
         backgroundColor: '#FEC044',
         borderRadius: 6,
         height: 40,
-        width: '55%',
+        width: 200,
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: '30%'

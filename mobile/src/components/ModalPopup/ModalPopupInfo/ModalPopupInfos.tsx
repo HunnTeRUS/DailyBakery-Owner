@@ -11,7 +11,7 @@ interface ModalPopupInterface {
     onPressCloseButton(): void;
 }   
 
-const ModalPopupInfos = (props: ModalPopupInterface) => {
+const ModalPopupInfos =  (props: ModalPopupInterface) => {
     const [show, setShow] = useState(props.showModal);
 
     return (
@@ -38,7 +38,7 @@ const ModalPopupInfos = (props: ModalPopupInterface) => {
                             onPress={() => 
                                 {
                                     props.setShow(false);
-                                    if(props.onPressCloseButton) props.onPressCloseButton();
+                                    props.onPressCloseButton();
                                 }}>
 
                             <Text style={styles.nextText}>Fechar</Text>

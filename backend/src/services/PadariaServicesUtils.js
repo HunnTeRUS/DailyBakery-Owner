@@ -125,6 +125,8 @@ module.exports = {
         const cnpj = request.query.cnpj;
         const { numero_celular, numero_telefone } = request.body;
 
+        console.log(numero_celular, numero_telefone )
+
         if (!CNPJValidation.validarCNPJ(cnpj))
             return response.status(400).json({ Erro: "CNPJ inválido" });
 
@@ -132,11 +134,8 @@ module.exports = {
             if ((numero_celular != null && numero_celular != "") && (numero_telefone != null && numero_telefone != ""))
                 await Padaria.updateOne({ "cnpj": cnpj }, { "numero_celular": numero_celular, "numero_telefone": numero_telefone });
 
-            else if ((numero_celular === null || numero_celular === ""))
-                await Padaria.updateOne({ "cnpj": cnpj }, { "numero_telefone": numero_telefone });
-
-            else if ((numero_telefone === null || numero_telefone === ""))
-                await Padaria.updateOne({ "cnpj": cnpj }, { "numero_celular": numero_celular });
+            else if ((numero_telefone === undefined || numero_telefone === null || numero_telefone === ""))
+                await Padaria.updateOne({ "cnpj": cnpj }, { "numero_celular": numero_celular, 'numero_telefone': "" });
 
             response.status(200).json();
 

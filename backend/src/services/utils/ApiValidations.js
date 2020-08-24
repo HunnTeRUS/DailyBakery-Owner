@@ -132,7 +132,7 @@ module.exports = {
                 cnpj: Joi.string().required().length(14)
             }),
             [Segments.BODY]: Joi.object().keys({
-                numero_celular: Joi.string().length(11).optional(),
+                numero_celular: Joi.string().length(11).required(),
                 numero_telefone: Joi.string().length(10).optional(),
             }),
         })
