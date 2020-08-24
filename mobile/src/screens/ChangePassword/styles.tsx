@@ -18,6 +18,7 @@ export default StyleSheet.create({
         alignContent: 'center',
         backgroundColor: "#E8EDFF",
       },
+
       title: {
         fontSize: 17,
         color: '#4A4040',
@@ -85,7 +86,8 @@ export default StyleSheet.create({
         width: '55%',
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: '30%'
+        marginTop: '30%',
+        alignSelf: 'center'
       },
 
       nextText: {
