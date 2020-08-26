@@ -27,8 +27,8 @@ export default function ChangeContactInfo() {
     useEffect(() => {
         const num = async () => {
             const {numero_celular, numero_telefone} = await getLoggedUser();
-            setPhone(numero_telefone);
-            setCelPhone(numero_celular);
+            setPhone(numero_telefone ? numero_telefone : "");
+            setCelPhone(numero_celular ? numero_celular : "");
         }
         num();
     }, []);

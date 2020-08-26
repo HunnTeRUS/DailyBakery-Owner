@@ -61,14 +61,14 @@ const ForgotPassword = () => {
                     <Text style={styles.text}>CNPJ</Text>
                     <TextInput selectionColor='#FEC044'
                         icon="briefcase" placeholder="Digite o CNPJ da sua padaria" keyboardType="number-pad"
-                        validator={text => { setTypedcnpj(text); return text.length === 14; }} value={typedcnpj} autoCapitalize="none" />
+                        validator={text => { setTypedcnpj(text); return ((text.length === 14) && (validate(text))) }} value={typedcnpj} autoCapitalize="none" />
                     <Text style={styles.infos}>Você receberá um e-mail com um codigo para prosseguir com a {'\n'}alteração de sua senha</Text>
                 </View>
             </KeyboardAvoidingView>
             <TouchableOpacity
                 disabled={typedcnpj.length === 14 ? false : true}
                 containerStyle={{
-                    opacity: (typedcnpj.length === 14) ? 1 : .4,
+                    opacity: ((typedcnpj.length === 14) && (validate(typedcnpj))) ? 1 : .4,
                 }}
                 onPress={() => {
                     setShowLoading(true)

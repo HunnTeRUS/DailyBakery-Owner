@@ -9,6 +9,7 @@ import ModalPopupLoading from '../../components/ModalPopup/ModalPopupLoading/Mod
 import UserInterface from '../../services/Utils/UserInterface'
 import styles from './styles'
 import verifyToken from '../../services/AuthServices/AuthServices'
+import {validate} from 'cnpj'
 
 const Login = () => {
     const [typedcnpj, setCnpj] = useState("");
@@ -79,7 +80,7 @@ const Login = () => {
                     <Text style={styles.text}>CNPJ</Text>
                     <TextInput icon="user" placeholder="Digite seu CNPJ"
                         keyboardType="number-pad" blurOnSubmit={true} value={typedcnpj}
-                        validator={text => { setCnpj(text); return text.length === 14; }} />
+                        validator={text => { setCnpj(text); return (text.length === 14 && validate(text)) }} />
                     <Text style={styles.text}>Senha</Text>
                     <TextInput icon="lock" placeholder="Digite sua senha"
                         secureTextEntry={true} value={password}
@@ -91,12 +92,12 @@ const Login = () => {
                 pressButton()
             }
             }
-                disabled={(typedcnpj.length === 14) && (password.length >= 6) ? false : true}
+                disabled={(typedcnpj.length === 14) && (password.length >= 6) && validate(typedcnpj) ? false : true}
                 containerStyle={{
-                    opacity: (typedcnpj.length === 14) && (password.length >= 6) ? 1 : .4,
+                    opacity: (typedcnpj.length === 14) && (password.length >= 6) && validate(typedcnpj) ? 1 : .4,
                 }}
-                style={[styles.nextButton, { backgroundColor: (typedcnpj.length === 14) && (password.length >= 6) ? '#FEC044' : '#FEC044', }]}>
-                <Text style={[styles.nextText, { color: (typedcnpj.length === 14) && (password.length >= 6) ? 'white' : 'white', }]}>Entrar</Text>
+                style={[styles.nextButton, { backgroundColor: (typedcnpj.length === 14) && (password.length >= 6) && validate(typedcnpj) ? '#FEC044' : '#FEC044', }]}>
+                <Text style={[styles.nextText, { color: (typedcnpj.length === 14) && (password.length >= 6) && validate(typedcnpj) ? 'white' : 'white', }]}>Entrar</Text>
             </TouchableOpacity>
             <View style={styles.divLinks}>
                 <TouchableOpacity onPress={() => navigation.navigate('CNPJScreen')}>
