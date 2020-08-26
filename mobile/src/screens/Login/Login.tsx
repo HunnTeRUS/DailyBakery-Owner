@@ -17,6 +17,7 @@ const Login = () => {
     const navigation = useNavigation();
     const [showLoading, setShowLoading] = useState(false)
     const [textToShow, setTextToShow] = useState('CNPJ ou senha inválidos!')
+    const [errorValue, setErrorValue] = useState('')
 
     const WalkthroughOrHome = async () => {
         var variavel = await AsyncStorage.getItem('firstAccess');
@@ -26,9 +27,9 @@ const Login = () => {
     }
 
     useFocusEffect(() => {
-        const isValid = async() => {
-            const response = await verifyToken(); 
-            if(response) {
+        const isValid = async () => {
+            const response = await verifyToken();
+            if (response) {
                 navigation.navigate('BottomTabNavigator')
             }
         }
@@ -36,57 +37,37 @@ const Login = () => {
     })
 
     const setLoggedUserInLocalStorage = async (obj: UserInterface) => {
-        const objResponse = await AsyncStorage.getItem('loggedUser'); 
+        const objResponse = await AsyncStorage.getItem('loggedUser');
 
-        if(!objResponse) {
+        if (!objResponse) {
             await AsyncStorage.removeItem('loggedUser')
             await AsyncStorage.setItem('loggedUser', JSON.stringify(obj));
         }
     }
 
     async function pressButton() {
-
-        try {
-            const { nome, cnpj, senha, email, numero_celular, 
-            numero_telefone, aberto_fechado, ultima_fornada, 
-            cep, rua, numero, bairro, cidade, estado, tempo_espera, token } = await verifyLoginCredentialsService(typedcnpj, password);
-
-            const objUser = {
-                nome: nome,
-                email: email,
-                senha: senha,
-                numero_celular: numero_celular,
-                numero_telefone: numero_telefone,
-                cnpj: cnpj,
-                aberto_fechado: aberto_fechado,
-                ultima_fornada: ultima_fornada,
-                cep: cep,
-                rua: rua,
-                numero: numero,
-                bairro: bairro,
-                cidade: cidade,
-                estado: estado,
-                tempo_espera: tempo_espera,
-                token: token
-            }
-
-            if (cnpj && senha && email) {
+        await verifyLoginCredentialsService(typedcnpj, password).then(response => {
+            console.log(response.error)
+            if(response.error === "" || response.error === undefined || response.error === null){
                 setShowLoading(false)
-                setLoggedUserInLocalStorage(objUser);
+                setLoggedUserInLocalStorage(response);
                 navigation.navigate('BottomTabNavigator')
             }
             else {
-                setShowLoading(false)
-                setShow(!show);
+                setTextToShow(response.error);
+                setShowLoading(false);
+                setShow(true)
             }
-        } catch(e){
-            setTextToShow('Ocorreu um erro no seu login, tente novamente mais tarde')
-            console.log(e)
+        }).catch(() => {
+            setTextToShow("Ocorreu um erro, tente novamente mais tarde!");
+            setShowLoading(false);
+            setShow(true)
         }
+        );
     }
 
     WalkthroughOrHome();
-    
+
     return (
 
         <View style={styles.container}>
@@ -107,14 +88,15 @@ const Login = () => {
             </KeyboardAvoidingView>
             <TouchableOpacity onPress={() => {
                 setShowLoading(true);
-                pressButton()}
-                }
+                pressButton()
+            }
+            }
                 disabled={(typedcnpj.length === 14) && (password.length >= 6) ? false : true}
                 containerStyle={{
                     opacity: (typedcnpj.length === 14) && (password.length >= 6) ? 1 : .4,
                 }}
-                style={[styles.nextButton,{backgroundColor: (typedcnpj.length === 14) && (password.length >= 6) ? '#FEC044' : '#FEC044',}]}>
-                <Text style={[styles.nextText, {color: (typedcnpj.length === 14) && (password.length >= 6) ? 'white' : 'white', }]}>Entrar</Text>
+                style={[styles.nextButton, { backgroundColor: (typedcnpj.length === 14) && (password.length >= 6) ? '#FEC044' : '#FEC044', }]}>
+                <Text style={[styles.nextText, { color: (typedcnpj.length === 14) && (password.length >= 6) ? 'white' : 'white', }]}>Entrar</Text>
             </TouchableOpacity>
             <View style={styles.divLinks}>
                 <TouchableOpacity onPress={() => navigation.navigate('CNPJScreen')}>

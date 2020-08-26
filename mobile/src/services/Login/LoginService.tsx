@@ -1,5 +1,6 @@
 import verifyLoginCredentials from '../../dao/LoginDAO'
 import { View } from '../../components/Themed';
+import UserInterface from '../Utils/UserInterface';
 
 export default async function verifyLoginCredentialsService(cnpj: string, password: string) {
   if (!cnpj) {
@@ -7,33 +8,12 @@ export default async function verifyLoginCredentialsService(cnpj: string, passwo
   } else if (!password) {
     throw "Senha dever ser preenchida";
   }
-  try {
-    const response = await verifyLoginCredentials(cnpj, password)
 
-    const obj = {
-      nome: response?.nome,
-      email: response?.email,
-      senha: response?.senha,
-      numero_celular: response?.numero_celular,
-      numero_telefone: response?.numero_telefone,
-      cnpj: response?.cnpj,
-      aberto_fechado: response?.aberto_fechado,
-      ultima_fornada: response?.ultima_fornada,
-      cep: response?.cep,
-      rua: response?.rua,
-      numero: response?.numero,
-      bairro: response?.bairro,
-      cidade: response?.cidade,
-      estado: response?.estado,
-      ibge: response?.ibge,
-      gia: response?.gia,
-      tempo_espera: response?.tempo_espera,
-      token: response.token
-    }
+  let obj : UserInterface = {}
 
-    return obj;
-  } catch (error) {
-    console.log(error)
-    return error
-  }
+  await verifyLoginCredentials(cnpj, password).then(response => {
+      obj = response;
+  })
+
+  return obj;
 }

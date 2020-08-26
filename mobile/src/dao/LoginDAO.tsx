@@ -1,17 +1,19 @@
 import api from '../services/api'
-export default async function verifyLoginCredentials(cnpj: string, password: string) {
+import UserInterface from '../services/Utils/UserInterface';
+
+async function verifyLoginCredentials(cnpj: string, password: string){
   if (!cnpj) {
     throw "CNPJ dever ser preenchido";
   } else if (!password) {
     throw "Senha dever ser preenchida";
   }
-  try {
-    const response = await api.post('/bakeryLogin', {
-      cnpj: cnpj,
-      senha: password,
-    });
 
-    const obj = {
+  let obj : UserInterface = {};
+
+  await api.post('/bakeryLogin', { cnpj: cnpj, senha: password, }, {
+    timeout: 1000
+  }).then(response => {
+    obj =  {
       nome: response.data?.nome,
       email: response.data?.email,
       senha: response.data?.senha,
@@ -26,16 +28,21 @@ export default async function verifyLoginCredentials(cnpj: string, password: str
       bairro: response.data?.bairro,
       cidade: response.data?.cidade,
       estado: response.data?.estado,
-      ibge: response.data?.ibge,
-      gia: response.data?.gia,
       tempo_espera: response.data?.tempo_espera,
-      token: response.headers['x-access-token']
+      token: response.headers['x-access-token'],
+      error: ""
     }
+    return obj 
 
-    return obj;
-  } catch (error) {
-    console.log(error)
-    return error
-  }
+  }).catch(error => {
+    obj =  {
+      error: error.response.data.error
+    }
+    return obj 
 
+  });
+
+  return obj 
 }
+
+export default verifyLoginCredentials;
