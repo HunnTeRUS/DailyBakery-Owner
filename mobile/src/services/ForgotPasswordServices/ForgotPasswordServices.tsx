@@ -1,19 +1,18 @@
 import api from '../api'
-import sendVerificationEmail from '../../dao/ForgotPasswordDAO'
+import sendVerificationEmail from '../../dao/ForgotPasswordDAO/ForgotPasswordDAO'
 import { useState } from 'react';
+import ForgotPasswordDAOInterface from '../../dao/ForgotPasswordDAO/ForgotPasswordDAOInterface';
 
 export default async function sendVerificationEmailServices(cnpj: string) {
     if(!cnpj) {
         throw "CNPJ não pode ser vazio";
     }
 
-    const response = await sendVerificationEmail(cnpj);
+    let obj : ForgotPasswordDAOInterface = {};
 
-    const obj = {
-        email: response.email,
-        cnpj: response.cnpj,
-        codigoEnviado: response.codigoEnviado,
-    }
+    await sendVerificationEmail(cnpj).then(response => {
+        obj = response;
+    });
 
     return obj;
 }

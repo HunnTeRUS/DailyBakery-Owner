@@ -22,34 +22,29 @@ const ForgotPassword = () => {
     let functionToWarnButton = () => { };
 
     async function pressButton() {
-        try {
-            const { codigoEnviado, cnpj, email } = await sendVerificationEmailServices(typedcnpj);
-
-            if (codigoEnviado && cnpj && email) {
-                setCodeReceivedFromApi(codigoEnviado)
-                setCnpjReceivedFromApi(cnpj)
-                setEmailReceivedFromApi(email)
-                setShow(!show)
+            await sendVerificationEmailServices(typedcnpj).then(response => {
+                if(response.error !== "" && response.error !== undefined && response.error !== null){
+                    setShowLoading(false)
+                    setTextToShowError(response.error ? response.error : "")
+                    setShowWarn(!showWarn)
+                    setShowLoading(false)
+                    return;
+                }
+                else {
+                    setCodeReceivedFromApi(response.codigoEnviado ? response.codigoEnviado : "")
+                    setCnpjReceivedFromApi(response.cnpj ? response.cnpj : "")
+                    setEmailReceivedFromApi(response.email ? response.email : "")
+                    setShow(!show)
+                    setShowLoading(false)
+                    return;
+                }
+            }).catch(() => {
                 setShowLoading(false)
-                return;
-            }
-
-            else {
-                setTextToShowError('Não existe nenhum registro com este CNPJ.')
+                setTextToShowError('Ocorreu um erro, tente novamente mais tarde.')
                 setShowWarn(!showWarn)
                 setShowLoading(false)
-                console.log('Não existe nenhum registro com este CNPJ')
-            }
-
-        } catch (e) {
-            setShowLoading(false)
-            setTextToShowError('Ocorreu um erro, tente novamente mais tarde.')
-            setShowWarn(!showWarn)
-            setShowLoading(false)
-            console.log("CAIU NO CATCH: " + e)
-            return;
-        }
-
+                return;
+            });
     }
 
     return (

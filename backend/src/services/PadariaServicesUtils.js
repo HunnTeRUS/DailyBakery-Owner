@@ -61,7 +61,7 @@ module.exports = {
         const { cnpj, email, novaSenha } = request.body;
 
         if (!CNPJValidation.validarCNPJ(cnpj))
-            return response.status(400).json({ Erro: "CNPJ inválido" });
+            return response.status(400).json({ error: "CNPJ inválido" });
 
         try {
             const user = await Padaria.findOne({ cnpj: cnpj, email: email });
@@ -72,9 +72,9 @@ module.exports = {
                 return response.status(200).json();
             }
 
-            return response.status(404).json({ Error: "Email/CNPJ não encontrado" });
+            return response.status(404).json({ error: "Email/CNPJ não encontrado" });
         } catch (e) {
-            return response.status(400).json(e);
+            return response.status(400).json({error: e});
         }
     },
 
@@ -82,8 +82,9 @@ module.exports = {
         const { cnpj } = request.body;
         let code;
 
-        console.log(cnpj)
-        //57499861000183
+        if (!CNPJValidation.validarCNPJ(cnpj)) 
+            return response.status(404).json({ error: "CNPJ invalido" });
+
         try {
             const user = await Padaria.findOne({ cnpj: cnpj });
 
@@ -96,11 +97,11 @@ module.exports = {
                     codigoEnviado: code,
                 });
             } else {
-                return response.status(404).json({ Error: "Email invalido" });
+                return response.status(404).json({ error: "Email invalido" });
             }
 
         } catch (e) {
-            return response.status(400).json(e);
+            return response.status(400).json({error: e});
         }
     },
 
