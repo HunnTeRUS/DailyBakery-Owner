@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import styles from './styles'
-import { Text, Modal, View, Image, TouchableOpacity } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
-import Baker from '../../ImagesComponents/Baker'
+import { Text, Modal, View, Image } from 'react-native'
 
 interface ModalPopupLoadingInterface {
     showModal: boolean;

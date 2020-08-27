@@ -26,17 +26,12 @@ const styles = StyleSheet.create({
     },
 });
 
-async function setFirstAcessToFalse(key: string) {
-    await AsyncStorage.removeItem(key);
-    await AsyncStorage.setItem(key, 'false');
-}
-
 const Comecar = ({ label, onPress }: ComecarProps) => {
     const navigation = useNavigation();
 
     if (label === 'Começar') {
         onPress = async () => {
-            navigation.navigate('BottomTabNavigator');
+            navigation.navigate('Login');
         }
     }
 

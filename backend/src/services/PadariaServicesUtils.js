@@ -48,11 +48,11 @@ module.exports = {
             updated = await Padaria.findOne({ "cnpj": cnpj });
 
             if (!updated) {
-                return response.status(400).json({ Erro: "CNPJ incorreto" });
+                return response.status(400).json({ error: "CNPJ incorreto" });
             }
             return response.json(updated);
         } catch (e) {
-            return response.status(400).json(e);
+            return response.status(400).json({error: e});
         }
 
     },

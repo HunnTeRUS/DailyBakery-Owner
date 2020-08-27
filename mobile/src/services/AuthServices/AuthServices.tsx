@@ -21,7 +21,7 @@ export default function verifyToken() {
         if(!obj)
             return false;
 
-        return verifyTokenDAO(obj.token) ? true : false
+        return verifyTokenDAO(obj.token ? obj.token : "") ? true : false
     }
 
     return changeValue();

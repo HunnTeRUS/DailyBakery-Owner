@@ -1,4 +1,4 @@
-import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme, DarkTheme, useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import { Image, StyleSheet, View ,ColorSchemeName } from 'react-native';
@@ -21,6 +21,7 @@ import FourthScreenRegister from "../screens/BakeryRegister/FourthScreenRegister
 import CNPJScreen from '../screens/BakeryRegister/CNPJScreen/CNPJScreen'
 import WalkThroughTutorial from '../screens/WalkthroughTutorial/WalkthroughTutorial'
 import ChangePasswordForgot from '../screens/ForgotPassword/ChangePassword/ChangePassword'
+import { Feather } from '@expo/vector-icons';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -72,7 +73,12 @@ function RootNavigator() {
       }} />
       <Stack.Screen name="ClosedBakery" component={ClosedBakery} options={{
         headerShown: true,
-        headerTitle: () => (<><View style={[style.container]}><Image resizeMode="contain" style={style.imagem} source={require('../../assets/images/owner1.png')} /></View></>),
+        headerTitle: () => (
+          <>
+            <View style={[style.containerForgot]}>
+              <Image resizeMode="contain" style={style.imagemHome} source={require('../../assets/images/owner1.png')} />
+            </View>
+          </>),
         headerStyle: {
           elevation: 0,
           shadowOpacity: 0,
@@ -204,6 +210,23 @@ const style = StyleSheet.create({
     alignContent: 'center',
     justifyContent: 'center',
     flex: 1,
+  },
+  containerForgot: {
+    flexDirection: 'row',
+    display: 'flex',
+    alignContent: 'center',
+    flex: 1,
+    justifyContent: 'space-between'
+  },
+  helpIcon:{
+    alignSelf: "center",
+    color: "red"
+  },
+  imagemHome: {
+    height: 50,
+    alignSelf: 'center',
+    width: 130,
+    marginLeft: '20%'
   },
 })
 

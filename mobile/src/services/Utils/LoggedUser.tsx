@@ -18,3 +18,11 @@ export async function setAndChangeLoggedUser(obj: UserInterface){
         await AsyncStorage.setItem('loggedUser', JSON.stringify(obj));
     }
 }
+
+export async function removeLoggedUser(indexId: string){
+    const objResponse = await AsyncStorage.getItem(indexId); 
+
+    if(objResponse) {
+        await AsyncStorage.removeItem(indexId)
+    }
+}

@@ -10,6 +10,7 @@ import UserInterface from '../../services/Utils/UserInterface'
 import styles from './styles'
 import verifyToken from '../../services/AuthServices/AuthServices'
 import {validate} from 'cnpj'
+import getLoggedUser from '../../services/Utils/LoggedUser'
 
 const Login = () => {
     const [typedcnpj, setCnpj] = useState("");
@@ -18,7 +19,6 @@ const Login = () => {
     const navigation = useNavigation();
     const [showLoading, setShowLoading] = useState(false)
     const [textToShow, setTextToShow] = useState('CNPJ ou senha inválidos!')
-    const [errorValue, setErrorValue] = useState('')
 
     const WalkthroughOrHome = async () => {
         var variavel = await AsyncStorage.getItem('firstAccess');
@@ -31,7 +31,12 @@ const Login = () => {
         const isValid = async () => {
             const response = await verifyToken();
             if (response) {
-                navigation.navigate('BottomTabNavigator')
+                const loggedUser = await getLoggedUser();
+
+                if(loggedUser.aberto_fechado)
+                    navigation.navigate('ClosedBakery')
+                else 
+                    navigation.navigate('BottomTabNavigator')
             }
         }
         isValid();
@@ -52,6 +57,12 @@ const Login = () => {
             if(response.error === "" || response.error === undefined || response.error === null){
                 setShowLoading(false)
                 setLoggedUserInLocalStorage(response);
+
+                if(response.aberto_fechado) {
+                    navigation.navigate('ClosedBakery')
+                    return;
+                }
+
                 navigation.navigate('BottomTabNavigator')
             }
             else {
@@ -78,9 +89,15 @@ const Login = () => {
                 <Image source={require('../../../assets/images/owner1.png')} style={styles.image} />
                 <View style={styles.inputs}>
                     <Text style={styles.text}>CNPJ</Text>
-                    <TextInput icon="user" placeholder="Digite seu CNPJ"
+                    <TextInput icon="user" maxLength={14}  placeholder="Digite seu CNPJ"
                         keyboardType="number-pad" blurOnSubmit={true} value={typedcnpj}
-                        validator={text => { setCnpj(text); return (text.length === 14 && validate(text)) }} />
+                        validator={
+                            text => { 
+                                var textFormated = text.replace(/[^0-9]/g, '');
+                                setCnpj(textFormated); 
+                                return (textFormated.length === 14 && validate(textFormated)) 
+                            }
+                        } />
                     <Text style={styles.text}>Senha</Text>
                     <TextInput icon="lock" placeholder="Digite sua senha"
                         secureTextEntry={true} value={password}

@@ -29,14 +29,14 @@ export default StyleSheet.create({
         textAlign: 'center',
         fontFamily: 'Poppins-Regular',
     },
-    box:{
+    box: {
         height: '80%',
         width: '100%',
         paddingTop: '20%',
         justifyContent: 'flex-start',
         alignItems: 'center'
     },
-    button:{
+    button: {
         width: '100%',
         alignItems: 'center'
     },
@@ -48,7 +48,7 @@ export default StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'row',
-        marginBottom: '25%'
+        marginBottom: '5%'
     },
     nextText: {
         color: '#FFF',
@@ -56,4 +56,24 @@ export default StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
     },
+    nextTextLogout: {
+        color: 'red',
+        fontSize: 15,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        paddingLeft: 10
+    },
+    iconUser: {
+        paddingRight: '4%',
+        color: 'red'
+    },
+    logoutButton: {
+        borderRadius: 6,
+        height: 45,
+        width: '40%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row',
+        marginBottom: '5%',
+    }
 })
