@@ -40,14 +40,14 @@ export default function ChangePassword() {
         else {
             await sendVerificationEmailServices(params.email, params.cnpj, confirmationPassword).then(response => {
                 if(response.error !== "" && response.error !== undefined && response.error !== null) {
-                    setShowLoading(false);
-                    setShow(!show);
-                }
-                else {
                     setMessageToWarn(response.error ? response.error : "")
                     setShowLoading(false);
                     setShowWarn(!showWarn)
                     return;
+                }
+                else {
+                    setShowLoading(false);
+                    setShow(!show);
                 }
             }).catch(()=>{
                 setMessageToWarn("Ocorreu um erro ao atualizar sua senha, tente novamente mais tarde.")
