@@ -40,21 +40,31 @@ export default function ChangeContactInfo() {
         }
     }
 
+    async function updateNumberLoggedUser(){
+        var user = await getLoggedUser();
+        user.numero_celular = celPhone;
+        user.numero_telefone = phone;
+        await setAndChangeLoggedUser(user);
+    }
+
     async function pressButtonAndChangeContactInfo(){
-        setResponse(await changeContactInfoServices(celPhone, phone));
-        if(response){
-            var user = await getLoggedUser();
-            user.numero_celular = celPhone;
-            user.numero_telefone = phone;
-            await setAndChangeLoggedUser(user);
+        await changeContactInfoServices(celPhone, phone).then(response => {
+            if(response.error === "" || response.error === undefined || response.error === null){
+                updateNumberLoggedUser();
+                setShowLoading(false);
+                setShow(!show);
+            }
+            else {
+                setTextToShow(response.error);
+                setShowLoading(false);
+                setShow(!show);
+            }
+            
+        }).catch(() =>{
+            setTextToShow("Ocorreu um erro ao alterar seus dados de contato, tente novamente mais tarde");
             setShowLoading(false);
             setShow(!show);
-        }
-        else {
-            setTextToShow('Ocorreu um erro ao alterar seus dados, tente novamente mais tarde.');
-            setShowLoading(false);
-            setShow(!show);
-        }
+        })
     }
 
     return (
