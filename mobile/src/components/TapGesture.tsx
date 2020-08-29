@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Text, TouchableOpacity, Alert, BackHandler, AsyncStorage } from "react-native";
 import { State, TapGestureHandler } from "react-native-gesture-handler";
 import Animated, { Value, cond, eq } from "react-native-reanimated";
@@ -105,6 +105,8 @@ export default () => {
   const scale = mix(progress, 1, 1.2);
   const [textToShow, setTextToShow] = useState('Ocorreu um erro ao executar essa função!')
   const [showLoading, setShowLoading] = useState(false)
+  const [lastBatch, setLastBatch] = useState("")
+  const [day, setDay] = useState("")
 
   const [show, setShow] = useState(false);
 
@@ -115,11 +117,60 @@ export default () => {
       };
   
       BackHandler.addEventListener('hardwareBackPress', onBackPress);
-  
+      changeLastBatchValue();
+
       return () =>
         BackHandler.removeEventListener('hardwareBackPress', onBackPress);
     }, [])
   );
+
+  async function changeLastBatchValue(){
+      const loggedUser = await getLoggedUser();
+
+      const data = new Date(loggedUser.ultima_fornada ? loggedUser.ultima_fornada : "")
+
+      if(data.toString() !== "Invalid Date"){
+        const hora = formatDate(data.getUTCHours());
+        const minutos  = formatDate(data.getUTCMinutes());
+        const segundos = formatDate(data.getUTCSeconds());
+        const day = formatDate(data.getDate());
+        const month  = formatDate(data.getMonth());
+        const year = formatDate(data.getFullYear());
+
+        const dataAtual = new Date();
+
+        if(dataAtual.getDate() === data.getDate() 
+          && dataAtual.getFullYear() === data.getFullYear()
+          && dataAtual.getMonth() === data.getMonth()){
+            setDay("HOJE")
+        }
+
+        else if(dataAtual.getDate()-1 === data.getDate()
+          && dataAtual.getFullYear() === data.getFullYear()
+          && dataAtual.getMonth() === data.getMonth()){
+            setDay("ONTEM")
+        }
+
+        else {
+            setDay(`${day}/${month}/${year}`)
+        }
+
+        const dataFinal = `${hora}:${minutos}:${segundos}`
+
+        setLastBatch(dataFinal)
+      }
+      else {
+        setDay(`Não há fornadas`)
+        setLastBatch("até o momento")
+      }
+  }
+
+  function formatDate(data: any){
+      if(data < 10){
+          return `0${data}`;
+      }
+      return data;
+  }
 
   async function changeLoggedUserValue(obj : UserInterface){
     const objResponse = await getLoggedUser()
@@ -174,7 +225,11 @@ export default () => {
         <View style={styles.viewOfFornadas}>
             <FontAwesome5 style={styles.clockIcon} name="clock" size={35}/>
             <Text style={styles.ultimaFornadaText}>
-              <Text style={styles.ultimaFornadaTextLabel}>Ultima fornada:</Text> {"\n"}HOJE{"\n"}13:15:30
+              <Text 
+                style={styles.ultimaFornadaTextLabel}>
+                  Ultima fornada:
+              </Text>
+              {"\n"}{day}{"\n"}{lastBatch}
             </Text>
         </View>
       </View>
