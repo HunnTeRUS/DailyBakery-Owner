@@ -4,7 +4,7 @@ import { AsyncStorage } from 'react-native';
 import UserInterface from '../Utils/UserInterface';
 import { useState } from 'react';
 
-export default function verifyToken() {
+export default async function verifyToken() {
 
     async function getLoggedUser() {
         const objUser = await AsyncStorage.getItem('loggedUser');

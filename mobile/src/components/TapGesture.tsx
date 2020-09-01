@@ -109,7 +109,7 @@ export default () => {
   const [day, setDay] = useState("")
 
   const [show, setShow] = useState(false);
-
+      
   useFocusEffect(
     React.useCallback(() => {
       const onBackPress = () => {
@@ -125,7 +125,15 @@ export default () => {
   );
 
   async function changeLastBatchValue(){
-      const loggedUser = await getLoggedUser();
+      let loggedUser = null;
+
+      setShowLoading(true)
+        
+        while(loggedUser === null) {
+          loggedUser = await getLoggedUser();
+        }
+
+      setShowLoading(false)
 
       const data = new Date(loggedUser.ultima_fornada ? loggedUser.ultima_fornada : "")
 
