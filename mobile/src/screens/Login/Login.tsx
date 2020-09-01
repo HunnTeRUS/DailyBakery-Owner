@@ -10,7 +10,7 @@ import UserInterface from '../../services/Utils/UserInterface'
 import styles from './styles'
 import verifyToken from '../../services/AuthServices/AuthServices'
 import {validate} from 'cnpj'
-import getLoggedUser from '../../services/Utils/LoggedUser'
+import getLoggedUser, {removeLoggedUser} from '../../services/Utils/LoggedUser'
 
 const Login = () => {
     const [typedcnpj, setCnpj] = useState("");
@@ -27,20 +27,23 @@ const Login = () => {
         }
     }
 
-    useFocusEffect(() => {
+    useEffect(() => {
         const isValid = async () => {
-            const response = await verifyToken();
-            if (response) {
-                const loggedUser = await getLoggedUser();
-
-                if(loggedUser.aberto_fechado)
-                    navigation.navigate('ClosedBakery')
-                else 
-                    navigation.navigate('BottomTabNavigator')
-            }
+        const loggedUser = await getLoggedUser();
+            await verifyToken().then(response => {
+                if(response.status === 200){
+                    if(loggedUser?.aberto_fechado)
+                        navigation.navigate('ClosedBakery')
+                    else 
+                        navigation.navigate('BottomTabNavigator')
+                }
+                else {
+                    removeLoggedUser('loggedUser')
+                }
+            });   
         }
         isValid();
-    })
+    }, [])
 
     const setLoggedUserInLocalStorage = async (obj: UserInterface) => {
         const objResponse = await AsyncStorage.getItem('loggedUser');
@@ -53,7 +56,6 @@ const Login = () => {
 
     async function pressButton() {
         await verifyLoginCredentialsService(typedcnpj, password).then(response => {
-            console.log(response.error)
             if(response.error === "" || response.error === undefined || response.error === null){
                 setShowLoading(false)
                 setLoggedUserInLocalStorage(response);

@@ -125,17 +125,11 @@ export default () => {
   );
 
   async function changeLastBatchValue(){
-      let loggedUser = null;
+      let loggedUser : UserInterface = {};
+      loggedUser = await getLoggedUser();
 
-      setShowLoading(true)
-        
-        while(loggedUser === null) {
-          loggedUser = await getLoggedUser();
-        }
-
-      setShowLoading(false)
-
-      const data = new Date(loggedUser.ultima_fornada ? loggedUser.ultima_fornada : "")
+      if(loggedUser) {
+      const data = new Date(loggedUser?.ultima_fornada ? loggedUser.ultima_fornada : "")
 
       if(data.toString() !== "Invalid Date"){
         const hora = formatDate(data.getUTCHours());
@@ -171,6 +165,11 @@ export default () => {
         setDay(`Não há fornadas`)
         setLastBatch("até o momento")
       }
+    }
+    else {
+      setDay(`Não há fornadas`)
+      setLastBatch("até o momento")
+    }
   }
 
   function formatDate(data: any){
@@ -192,6 +191,7 @@ export default () => {
   async function closeBakery(){
     setShowLoading(true)
     const loggedUser = await getLoggedUser();
+    if(loggedUser)
     await changeOpenedClosedBakery(loggedUser.cnpj ? loggedUser.cnpj : "", loggedUser.token ? loggedUser.token : "", true).then(response => {
         if(response.error === "" || response.error === undefined || response.error === null){
             setShowLoading(false)

@@ -13,7 +13,7 @@ export default async function changeContactInfoServices(numero_celular: string, 
 
     const obj = await getLoggedUser();
 
-    if(obj.cnpj && obj.token)
+    if(obj?.cnpj && obj?.token)
         await changeContactInfoDAO(obj.cnpj ? obj.cnpj : "", obj.token ? obj.token : "", numero_celular, numero_telefone)
         .then(response => {
             objResponse = response;

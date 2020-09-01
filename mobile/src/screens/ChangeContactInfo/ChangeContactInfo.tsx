@@ -26,9 +26,9 @@ export default function ChangeContactInfo() {
 
     useEffect(() => {
         const num = async () => {
-            const {numero_celular, numero_telefone} = await getLoggedUser();
-            setPhone(numero_telefone ? numero_telefone : "");
-            setCelPhone(numero_celular ? numero_celular : "");
+            const obj = await getLoggedUser();
+            setPhone(obj?.numero_telefone ? obj?.numero_telefone : "");
+            setCelPhone(obj?.numero_celular ? obj?.numero_celular : "");
         }
         num();
     }, []);
@@ -42,9 +42,11 @@ export default function ChangeContactInfo() {
 
     async function updateNumberLoggedUser(){
         var user = await getLoggedUser();
-        user.numero_celular = celPhone;
-        user.numero_telefone = phone;
-        await setAndChangeLoggedUser(user);
+        if(user) {
+            user.numero_celular = celPhone;
+            user.numero_telefone = phone;
+            await setAndChangeLoggedUser(user);
+        }
     }
 
     async function pressButtonAndChangeContactInfo(){

@@ -2,8 +2,17 @@ import { AsyncStorage } from "react-native";
 import UserInterface from "./UserInterface";
 
 export default async function getLoggedUser(){
-    const objUser = await AsyncStorage.getItem('loggedUser');
-    return JSON.parse(objUser ? objUser : "") as UserInterface;
+    let objUser : UserInterface = {};
+    var i = 0;
+
+    while(i<3) {
+        let obj = await AsyncStorage.getItem('loggedUser');
+        if(obj)
+            objUser = JSON.parse(obj) as UserInterface
+        i = i + 1;
+    }
+
+    return objUser as UserInterface;
 }
 
 export async function setAndChangeLoggedUser(obj: UserInterface){

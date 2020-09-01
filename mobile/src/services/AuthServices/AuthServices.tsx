@@ -1,28 +1,22 @@
 import api from '../api'
-import verifyTokenDAO from '../../dao/AuthDAO'
+import verifyTokenDAO from '../../dao/AuthDAO/AuthDAO'
 import { AsyncStorage } from 'react-native';
 import UserInterface from '../Utils/UserInterface';
 import { useState } from 'react';
+import getLoggedUser from '../Utils/LoggedUser';
+import AuthDAOInterface from '../../dao/AuthDAO/AuthDAOInterface';
 
 export default async function verifyToken() {
 
-    async function getLoggedUser() {
-        const objUser = await AsyncStorage.getItem('loggedUser');
+    let objResponse : AuthDAOInterface = {};
 
-        if(objUser)
-            return JSON.parse(objUser) as UserInterface;
+    const obj = await getLoggedUser();
 
-        return null;
-    }
+    await verifyTokenDAO(obj?.token ? obj.token : "")
+        .then(response => {
+            objResponse = response;
+            return objResponse;
+    })
 
-    async function changeValue() {
-        const obj = await getLoggedUser();
-
-        if(!obj)
-            return false;
-
-        return verifyTokenDAO(obj.token ? obj.token : "") ? true : false
-    }
-
-    return changeValue();
+    return objResponse;
 }
