@@ -52,7 +52,7 @@ module.exports = {
             }
             return response.json(updated);
         } catch (e) {
-            return response.status(400).json({error: e});
+            return response.status(400).json({ error: e });
         }
 
     },
@@ -66,7 +66,7 @@ module.exports = {
         try {
             const user = await Padaria.findOne({ cnpj: cnpj, email: email });
 
-            if(user) {
+            if (user) {
                 const novaSenhaCrypt = String(cryp.encrypt(novaSenha));
                 await Padaria.updateOne({ "cnpj": cnpj, "email": email }, { "senha": novaSenhaCrypt });
                 return response.status(200).json();
@@ -74,7 +74,7 @@ module.exports = {
 
             return response.status(404).json({ error: "Email/CNPJ não encontrado" });
         } catch (e) {
-            return response.status(400).json({error: e});
+            return response.status(400).json({ error: e });
         }
     },
 
@@ -82,7 +82,7 @@ module.exports = {
         const { cnpj } = request.body;
         let code;
 
-        if (!CNPJValidation.validarCNPJ(cnpj)) 
+        if (!CNPJValidation.validarCNPJ(cnpj))
             return response.status(404).json({ error: "CNPJ invalido" });
 
         try {
@@ -101,7 +101,7 @@ module.exports = {
             }
 
         } catch (e) {
-            return response.status(400).json({error: e});
+            return response.status(400).json({ error: e });
         }
     },
 
@@ -126,10 +126,10 @@ module.exports = {
         const cnpj = request.query.cnpj;
         const { numero_celular, numero_telefone } = request.body;
 
-        console.log(numero_celular, numero_telefone )
+        console.log(numero_celular, numero_telefone)
 
         if (!CNPJValidation.validarCNPJ(cnpj))
-            return response.status(400).json({ Erro: "CNPJ inválido" });
+            return response.status(400).json({ Error: "CNPJ inválido" });
 
         try {
             if ((numero_celular != null && numero_celular != "") && (numero_telefone != null && numero_telefone != ""))
@@ -151,29 +151,26 @@ module.exports = {
     async getAddressByCep(request, response) {
         const { cep } = request.query;
 
-        let logradouro, bairro, cidade, estado;
-
         axios.get('https://www.cepaberto.com/api/v3/cep', {
                 headers: { "Authorization": 'Token token=b8589b52d467c9c5ded3c65c244b4fe6' },
                 params: { cep: cep }
             })
             .then(responseAPI => {
-                logradouro = responseAPI.data.logradouro;
-                bairro = responseAPI.data.bairro;
-                cidade = responseAPI.data.cidade;
-                estado = responseAPI.data.estado;
+                responseAPI.data.logradouro;
+                responseAPI.data.bairro;
+                responseAPI.data.cidade;
+                responseAPI.data.estado;
 
                 response.json(responseAPI.data);
             })
             .catch((error) => {
-                console.log('error' + error);
+                return response.status(400).json({ Error: error });
             });
 
     },
 
     async getCnpjFromWs(request, response) {
         const { cnpj } = request.query;
-
         let bakery, situacao;
 
         bakery = await Padaria.findOne({ "cnpj": cnpj });

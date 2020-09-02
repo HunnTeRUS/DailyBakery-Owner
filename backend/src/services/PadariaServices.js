@@ -9,29 +9,41 @@ module.exports = {
 
         //Como na API é recebida a latitude e longitude, é necessario pegar separado do objeto e 
         //transformar em um objeto location para colocar dentro d objeto para inserção no DB
+        console.log(request.body);
         const { latitude, longitude } = request.body;
         PadariaDTO = request.body;
 
-        if (!CNPJValidation.validarCNPJ(PadariaDTO.cnpj))
-            return response.status(400).json({ Erro: "CNPJ inválido" });
+        if (!CNPJValidation.validarCNPJ(PadariaDTO.cnpj)) {
 
-        if ((!(-90 < latitude) || !(latitude < 90)) || (!(-180 < longitude) || !(longitude < 180)))
+            console.log("CNPJ ZOADO");
+            return response.status(400).json({ error: "CNPJ inválido" });
+        }
+
+        if ((!(-90 < latitude) || !(latitude < 90)) || (!(-180 < longitude) || !(longitude < 180))) {
+            console.log("coordenadas zoadas");
             return response.status(400).json({ error: 'Latitude e/ou longitude incorretos!' });
+        }
 
         const validationOfCnpjDuplicates = await Padaria.findOne({ "cnpj": PadariaDTO.cnpj });
 
-        if (validationOfCnpjDuplicates)
+        if (validationOfCnpjDuplicates) {
+            console.log("CNPJ Existe");
             return response.status(400).json({ error: 'Já existe uma padaria cadastrada com este CNPJ!' });
+        }
 
         const validationOfEmailDuplicates = await Padaria.findOne({ "email": PadariaDTO.email });
 
-        if (validationOfEmailDuplicates)
+        if (validationOfEmailDuplicates) {
+            console.log("email ZOADO");
             return response.status(400).json({ error: 'Já existe uma padaria cadastrada com este email!' });
+        }
 
         const validationOfAdressDuplicates = await Padaria.findOne({ "latitude": PadariaDTO.cep, "numero": PadariaDTO.numero });
 
-        if (validationOfAdressDuplicates)
+        if (validationOfAdressDuplicates) {
+            console.log("endereço    ZOADO");
             return response.status(400).json({ error: 'Já existe uma padaria cadastrada neste endereço!' });
+        }
 
         const location = {
             type: 'Point',

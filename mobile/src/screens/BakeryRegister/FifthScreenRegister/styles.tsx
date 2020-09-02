@@ -1,14 +1,14 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Dimensions } from 'react-native'
+
+const { width } = Dimensions.get("window");
 
 export default StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#F4EEEE",
         display: 'flex',
-        justifyContent: 'center',
-        alignContent: 'center'
+        alignItems: 'center'
       },
-
       secondContainer: {
         height: '90%',
         width: '80%',
@@ -16,49 +16,22 @@ export default StyleSheet.create({
         display: 'flex',
         alignItems: 'center',
         alignContent: 'center',
+        justifyContent: 'center',
         backgroundColor: "#F4EEEE",
       },
       title: {
-        fontSize: 17,
+        fontSize: 20,
         color: '#4A4040',
         textAlign: 'center',
-        marginTop: '10%',
         fontFamily: 'Poppins-Bold',
+        marginTop: '-15%'
       },
-
       subTitle: {
         fontSize: 14,
         marginTop: '3%',
         color: '#BAA6A6',
         textAlign: 'center',
         fontFamily: 'Poppins-Regular',
-      },
-
-      text: {
-        marginTop: '15%',
-        alignSelf: 'flex-start',
-        fontFamily: 'Poppins-Regular',
-      },
-      textNumber: {
-        marginTop: '10%',
-        alignSelf: 'flex-start',
-        fontFamily: 'Poppins-Regular',
-      },
-
-      inputNumber: {
-        height: 45,
-        color: '#333',
-        borderRadius: 10,
-        backgroundColor: 'white',
-        width: '100%',
-        fontFamily: 'Poppins-Regular',
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 4,
-          height: 4
-        },
-        elevation: 2,
-        paddingHorizontal: 10
       },
 
       nextButton: {
@@ -68,7 +41,7 @@ export default StyleSheet.create({
         width: '55%',
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: '30%'
+        marginTop: '20%'
       },
 
       nextText: {
@@ -76,4 +49,4 @@ export default StyleSheet.create({
         fontSize: 15, 
         fontWeight: 'bold'
       }      
-})
+});

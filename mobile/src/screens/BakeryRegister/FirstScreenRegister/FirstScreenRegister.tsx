@@ -3,13 +3,16 @@ import { View, KeyboardAvoidingView, Image, Text } from 'react-native';
 import TextInput from '../../../components/TextInput';
 import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
 import styles from './styles';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import RegisterInterface from '../../../services/Utils/RegisterInterface';
 
 const FirstScreenRegister = () => {
     const navigation = useNavigation();
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmationPassword, setConfirmationPassword] = useState('')
+    const route = useRoute();
+    const routeParams:RegisterInterface = route.params as RegisterInterface
     
     const emailValidator = (email: string) : boolean =>
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
@@ -22,7 +25,10 @@ const FirstScreenRegister = () => {
     const submitButtonValidator = () : boolean => {
         return (password.length >= 6 && confirmationPassword.length >= 6 && password === confirmationPassword && emailValidator(email)) ? true : false}
     
-    
+    async function pressButton() {
+        navigation.navigate('SecondScreenRegister', { cnpj: routeParams.cnpj, senha: password, email: email });
+    }
+
     return (
         <View style={styles.container}>
             <ScrollView>
@@ -38,9 +44,8 @@ const FirstScreenRegister = () => {
                         <Text style={styles.text}>Confirmar Senha</Text>
                         <TextInput icon="key" validator={text => {setConfirmationPassword(text); return passwordConfirmationValidator(text);}} value={confirmationPassword} secureTextEntry={true} 
                             placeholder="Digite novamente sua senha" />
-
                         <TouchableOpacity style={styles.nextButton} disabled={submitButtonValidator() ? false : true}
-                            onPress={() => { navigation.navigate('SecondScreenRegister') }}
+                            onPress={() => { pressButton() }}
                             containerStyle={{
                                 opacity: submitButtonValidator() ? 1 : .4,
                             }}>

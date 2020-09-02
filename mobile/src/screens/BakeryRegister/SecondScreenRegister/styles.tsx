@@ -18,7 +18,7 @@ export default StyleSheet.create({
         alignSelf: 'center',
         display: 'flex',
         backgroundColor: "#F4EEEE",
-        paddingBottom: "2%",
+        paddingBottom: "14%",
     },
     title: {
         fontSize: 17,
