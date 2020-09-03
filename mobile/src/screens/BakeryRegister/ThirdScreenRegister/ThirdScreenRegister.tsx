@@ -86,8 +86,8 @@ const ThirdScreenRegister = () => {
                             setCity(text);
                             return cityValidator(text)
                         }} value={city} placeholder="Cidade onde a padaria está localizada" />
-                        <Text style={styles.text}>Estado</Text>
-                        <TextInput icon="map-pin" validator={text => {
+                        <Text style={styles.text}>Estado (UF)</Text>
+                        <TextInput icon="map-pin" maxLength={2} validator={text => {
                             if (!count4) {
                                 text = routeParams.estado as string
                                 setCount4(true)

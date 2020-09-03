@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { TouchableOpacity, Modal, View, Text, AsyncStorage } from 'react-native';
+import { Modal, View, Text, AsyncStorage } from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler'
 import styles from './styles'
 import TextInput from '../../../components/TextInput'
 import ModalPopupInfos from '../../../components/ModalPopup/ModalPopupInfo/ModalPopupInfos'
@@ -17,7 +18,7 @@ export default function ChangeContactInfo() {
     const [textToShow, setTextToShow] = useState('');
 
     const phoneValidator = (phone: string) => phone.length === 11;
-    const telValidator = (phone: string) => phone.length === 10;
+    const telValidator = (phone: string) => {if(phone)return phone.length === 10; else return true;};
     const navigation = useNavigation();
     const route = useRoute();
     const routeParams: RegisterInterface = route.params as RegisterInterface
@@ -60,16 +61,19 @@ export default function ChangeContactInfo() {
                 <Text style={styles.title}>Adicione dados para contato</Text>
                 <Text style={styles.text}>Número de celular</Text>
                 <TextInput icon="smartphone" placeholder="Número do seu celular (com DDD)" value={cellPhone} validator={text => { setCellPhone(text); return phoneValidator(text); }} keyboardType="number-pad" />
-                <Text style={styles.textNumber}>Número de Telefone</Text>
+                <Text style={styles.textNumber}>Número de Telefone (opcional)</Text>
                 <TextInput icon="phone" placeholder="Número do seu telefone (com DDD)" value={phone} validator={text => { setPhone(text); return telValidator(text); }} keyboardType="number-pad" />
-                <TouchableOpacity
-                    disabled={false}
-                    style={styles.nextButton}
+                <TouchableOpacity disabled={(phoneValidator(cellPhone) && telValidator(phone)) ? false : true}
                     onPress={() => {
                         setLoading(true);
                         pressButton()
-                    }}>
-                    <Text style={styles.nextText}>Próximo</Text>
+                    }}
+                    containerStyle={{
+                        opacity: (phoneValidator(cellPhone) && telValidator(phone)) ? 1 : .4,
+                    }}
+                    style={styles.nextButton}>
+
+                    <Text style={styles.nextText}>Finalizar cadastro</Text>
                 </TouchableOpacity>
 
             </View>

@@ -78,7 +78,7 @@ const SecondScreenRegister = () => {
                         <Text style={styles.text}>Por qual nome sua padaria é conhecida?</Text>
                         <TextInput icon="coffee" validator={text => { setName(text); return nameValidator(text) }} placeholder="Digite o nome da sua padaria" />
                         <Text style={styles.text}>CEP da sua padaria</Text>
-                        <TextInput icon="hash" validator={text => {
+                        <TextInput icon="hash" maxLength={8} validator={text => {
                             var textFormated = text.replace(/[^0-9]/g, '');
                             setTypedCep(textFormated);
                             return cepValidator(textFormated);

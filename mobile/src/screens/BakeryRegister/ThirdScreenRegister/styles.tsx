@@ -20,6 +20,7 @@ export default StyleSheet.create({
         paddingBottom: "30%"
     },
     title: {
+        paddingTop: 20,
         fontSize: 17,
         color: '#4A4040',
         textAlign: 'center',

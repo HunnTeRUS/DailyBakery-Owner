@@ -5,6 +5,7 @@ import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
 import styles from './styles';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import RegisterInterface from '../../../services/Utils/RegisterInterface';
+import ModalPopupLoading from '../../../components/ModalPopup/ModalPopupLoading/ModalPopupLoading';
 
 const FirstScreenRegister = () => {
     const navigation = useNavigation();
@@ -13,7 +14,7 @@ const FirstScreenRegister = () => {
     const [confirmationPassword, setConfirmationPassword] = useState('')
     const route = useRoute();
     const routeParams:RegisterInterface = route.params as RegisterInterface
-    
+
     const emailValidator = (email: string) : boolean =>
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
 
