@@ -12,6 +12,7 @@ module.exports = {
     async updateLastBatch(request, response) {
         const { ultima_fornada } = request.body;
         const { cnpj } = request.query;
+        console.log(ultima_fornada, cnpj)
         let updated;
 
         if (!CNPJValidation.validarCNPJ(cnpj))

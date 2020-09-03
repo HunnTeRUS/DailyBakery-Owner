@@ -4,10 +4,10 @@ import { State, TapGestureHandler } from "react-native-gesture-handler";
 import Animated, { Value, cond, eq } from "react-native-reanimated";
 import { mix, onGestureEvent, withTransition } from "react-native-redash";
 import Button from "./Button";
-import {FontAwesome5} from '@expo/vector-icons'
-import {useNavigation, useFocusEffect} from '@react-navigation/native'
+import { FontAwesome5 } from '@expo/vector-icons'
+import { useNavigation, useFocusEffect } from '@react-navigation/native'
 import changeOpenedClosedBakery from '../services/CloseBakeryServices/CloseBakeryServices'
-import getLoggedUser, {removeLoggedUser, setAndChangeLoggedUser} from '../services/Utils/LoggedUser'
+import getLoggedUser, { removeLoggedUser, setAndChangeLoggedUser } from '../services/Utils/LoggedUser'
 import ModalPopupWarns from '../components/ModalPopup/ModalPopupWarn/ModalPopupWarns'
 import ModalPopupLoading from "./ModalPopup/ModalPopupLoading/ModalPopupLoading";
 import UserInterface from "../services/Utils/UserInterface";
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   ultimaFornadaTextLabel: {
     fontWeight: 'bold',
     color: '#FEC044',
-    
+
   },
 
   buttonHandler: {
@@ -84,12 +84,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     marginTop: '15%',
-    
+
   },
 
   toCloseBakeryText: {
     color: '#FFF',
-    fontSize: 15, 
+    fontSize: 15,
     fontWeight: 'bold'
   }
 
@@ -109,13 +109,13 @@ export default () => {
   const [day, setDay] = useState("")
 
   const [show, setShow] = useState(false);
-      
+
   useFocusEffect(
     React.useCallback(() => {
       const onBackPress = () => {
         return true;
       };
-  
+
       BackHandler.addEventListener('hardwareBackPress', onBackPress);
       changeLastBatchValue();
 
@@ -124,37 +124,39 @@ export default () => {
     }, [])
   );
 
-  async function changeLastBatchValue(){
-      let loggedUser : UserInterface = {};
-      loggedUser = await getLoggedUser();
+  async function changeLastBatchValue() {
+    let loggedUser: UserInterface = {};
+    await getLoggedUser().then(response => {
+      loggedUser = response
+    });
 
-      if(loggedUser) {
+    if (loggedUser) {
       const data = new Date(loggedUser?.ultima_fornada ? loggedUser.ultima_fornada : "")
 
-      if(data.toString() !== "Invalid Date"){
+      if (data.toString() !== "Invalid Date") {
         const hora = formatDate(data.getUTCHours());
-        const minutos  = formatDate(data.getUTCMinutes());
+        const minutos = formatDate(data.getUTCMinutes());
         const segundos = formatDate(data.getUTCSeconds());
         const day = formatDate(data.getDate());
-        const month  = formatDate(data.getMonth());
+        const month = formatDate(data.getMonth());
         const year = formatDate(data.getFullYear());
 
         const dataAtual = new Date();
 
-        if(dataAtual.getDate() === data.getDate() 
+        if (dataAtual.getDate() === data.getDate()
           && dataAtual.getFullYear() === data.getFullYear()
-          && dataAtual.getMonth() === data.getMonth()){
-            setDay("HOJE")
+          && dataAtual.getMonth() === data.getMonth()) {
+          setDay("HOJE")
         }
 
-        else if(dataAtual.getDate()-1 === data.getDate()
+        else if (dataAtual.getDate() - 1 === data.getDate()
           && dataAtual.getFullYear() === data.getFullYear()
-          && dataAtual.getMonth() === data.getMonth()){
-            setDay("ONTEM")
+          && dataAtual.getMonth() === data.getMonth()) {
+          setDay("ONTEM")
         }
 
         else {
-            setDay(`${day}/${month}/${year}`)
+          setDay(`${day}/${month}/${year}`)
         }
 
         const dataFinal = `${hora}:${minutos}:${segundos}`
@@ -172,45 +174,53 @@ export default () => {
     }
   }
 
-  function formatDate(data: any){
-      if(data < 10){
-          return `0${data}`;
-      }
-      return data;
+  function formatDate(data: any) {
+    if (data < 10) {
+      return `0${data}`;
+    }
+    return data;
   }
 
-  async function changeLoggedUserValue(obj : UserInterface){
+  async function changeLoggedUserValue(obj: UserInterface) {
     const objResponse = await getLoggedUser()
 
     if (!objResponse) {
-        await removeLoggedUser('loggedUser')
-        await setAndChangeLoggedUser(obj);
+      await removeLoggedUser('loggedUser')
+      await setAndChangeLoggedUser(obj);
     }
   }
 
-  async function closeBakery(){
+  async function closeBakery() {
     setShowLoading(true)
     const loggedUser = await getLoggedUser();
-    if(loggedUser)
-    await changeOpenedClosedBakery(loggedUser.cnpj ? loggedUser.cnpj : "", loggedUser.token ? loggedUser.token : "", true).then(response => {
-        if(response.error === "" || response.error === undefined || response.error === null){
-            setShowLoading(false)
-            loggedUser.aberto_fechado = true;
-            changeLoggedUserValue(loggedUser); 
-            navigation.navigate('ClosedBakery')
+    if (loggedUser)
+      await changeOpenedClosedBakery(loggedUser.cnpj ? loggedUser.cnpj : "", loggedUser.token ? loggedUser.token : "", true).then(response => {
+        if (response.error === "" || response.error === undefined || response.error === null) {
+          setShowLoading(false)
+          loggedUser.aberto_fechado = true;
+          changeLoggedUserValue(loggedUser);
+          navigation.navigate('ClosedBakery')
         }
         else {
           setShowLoading(false)
           setTextToShow(response.error ? response.error : "")
           setShow(true)
         }
-    }).catch(() => {
+      }).catch(() => {
         setShowLoading(false)
         setTextToShow('Ocorreu um erro ao executar essa função!')
         setShow(true)
-    });
+      });
 
   }
+
+  const breadButton = <View style={styles.buttonHandler}>
+                        <TapGestureHandler {...gestureHandler}>
+                          <Animated.View style={{ transform: [{ scale }] }}>
+                            <Button {...{ progress }} />
+                          </Animated.View>
+                        </TapGestureHandler>
+                      </View>;
 
   return (
     <View style={styles.container}>
@@ -219,26 +229,20 @@ export default () => {
       <Text style={styles.novaFornadaText}>
         Notificar clientes sobre nova fornada:
       </Text>
-      <View style={styles.buttonHandler}>
-        <TapGestureHandler {...gestureHandler}>
-          <Animated.View style={{ transform: [{ scale }] }}>
-            <Button {...{ progress }} />
-          </Animated.View>
-        </TapGestureHandler>
-      </View>
+      {lastBatch !== "" && day !== "" ? breadButton : <></>}
       <Text style={styles.novaFornadaTextDeion}>
         Os clientes que pediram para {"\n"}serem notificados receberão o aviso!
       </Text>
       <View style={styles.viewOfFornadasAux}>
         <View style={styles.viewOfFornadas}>
-            <FontAwesome5 style={styles.clockIcon} name="clock" size={35}/>
-            <Text style={styles.ultimaFornadaText}>
-              <Text 
-                style={styles.ultimaFornadaTextLabel}>
-                  Ultima fornada:
+          <FontAwesome5 style={styles.clockIcon} name="clock" size={35} />
+          <Text style={styles.ultimaFornadaText}>
+            <Text
+              style={styles.ultimaFornadaTextLabel}>
+              Ultima fornada:
               </Text>
-              {"\n"}{day}{"\n"}{lastBatch}
-            </Text>
+            {"\n"}{day}{"\n"}{lastBatch}
+          </Text>
         </View>
       </View>
       <TouchableOpacity style={styles.toCloseBakery} onPress={() => closeBakery()}>

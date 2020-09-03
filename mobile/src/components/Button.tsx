@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Alert } from "react-native";
 import Animated, { call, cond, eq, useCode } from "react-native-reanimated";
 import { FontAwesome5 as Icon } from "@expo/vector-icons";
-import { mix } from "react-native-redash";
+import { mix, string } from "react-native-redash";
 import CircularProgress from "./CircularProgress/CircularProgress";
 import StyleGuide from "./StyleGuide";
+import newFornadaServices from "../services/NewFornadaServices/NewFornadaServices";
 
 const SIZE = 150;
 const STROKE_WIDTH = 10;
@@ -35,6 +36,25 @@ interface ButtonProps {
   progress: Animated.Node<number>;
 }
 
+async function newFornada(){
+    var date = new Date();
+    console.log(date.getHours())
+    console.log(date.getDate())
+    console.log(date.getMonth())
+    console.log(date.getFullYear())
+
+    await newFornadaServices(date).then(response => {
+      console.log(response)
+    });
+    return true;
+}
+
+function convertDate(date : any){
+    if(date<10)
+      date = `0${date}`
+    return date 
+}
+
 export default ({ progress }: ButtonProps) => {
   const [active, setActive] = useState(false);
   const height = mix(progress, 0, ICON_SIZE);
@@ -46,7 +66,13 @@ export default ({ progress }: ButtonProps) => {
        ),
      [progress]
    );
-  
+
+   if(active){
+      if(newFornada()){
+        setActive(false)
+      };
+   }
+    
    return (
     <View>
       <CircularProgress
