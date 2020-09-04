@@ -6,6 +6,9 @@ import { mix, string } from "react-native-redash";
 import CircularProgress from "./CircularProgress/CircularProgress";
 import StyleGuide from "./StyleGuide";
 import newFornadaServices from "../services/NewFornadaServices/NewFornadaServices";
+import getLoggedUser, { setAndChangeLoggedUser } from "../services/Utils/LoggedUser";
+import UserInterface from "../services/Utils/UserInterface";
+import ModalPopupLoading from "./ModalPopup/ModalPopupLoading/ModalPopupLoading";
 
 const SIZE = 150;
 const STROKE_WIDTH = 10;
@@ -34,47 +37,41 @@ const styles = StyleSheet.create({
 
 interface ButtonProps {
   progress: Animated.Node<number>;
+  functionToButton(): void;
+  setShowLoading(trueFalse: boolean): void;
+  changeTextInfo(text: string): void;
+  changeLocalDateFunc(): void;
 }
 
-async function newFornada(){
-    var date = new Date();
-    console.log(date.getHours())
-    console.log(date.getDate())
-    console.log(date.getMonth())
-    console.log(date.getFullYear())
-
-    await newFornadaServices(date).then(response => {
-      console.log(response)
-    });
-    return true;
-}
-
-function convertDate(date : any){
-    if(date<10)
-      date = `0${date}`
-    return date 
-}
-
-export default ({ progress }: ButtonProps) => {
+export default ({ changeLocalDateFunc, changeTextInfo, setShowLoading, progress, functionToButton }: ButtonProps) => {
   const [active, setActive] = useState(false);
   const height = mix(progress, 0, ICON_SIZE);
-   useCode(
-     () =>
-       cond(
-         eq(progress, 1),
-         call([], () => setActive(true))
-       ),
-     [progress]
-   );
+  const alertMessage = useState("")
 
-   if(active){
-      if(newFornada()){
-        setActive(false)
-      };
-   }
-    
-   return (
-    <View>
+  useCode(
+    () =>
+      cond(
+        eq(progress, 1),
+        call([], () => setActive(true))
+      ),
+    [progress]
+  );
+
+  if (active) {
+    setShowLoading(true);
+    functionToButton();
+    setShowLoading(false);
+    changeTextInfo("Daqui 3 minutos você poderá avisar seus clientes novamente!")
+    changeLocalDateFunc();
+    setTimeout(() => {
+      changeLocalDateFunc(); 
+      setActive(false)
+      changeTextInfo("Os clientes que pediram para serem \n notificados receberão o aviso!")
+    }, 5000);
+  }
+
+  return (
+    <View >
       <CircularProgress
         radius={SIZE / 2}
         bg="white"

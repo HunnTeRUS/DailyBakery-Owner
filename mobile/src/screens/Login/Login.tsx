@@ -54,17 +54,27 @@ const Login = () => {
         }
     }
 
+    async function getUser(){
+        return await getLoggedUser();
+    }
+
     async function pressButton() {
+        let loggedUser : UserInterface = {}
         await verifyLoginCredentialsService(typedcnpj, password).then(response => {
             if(response.error === "" || response.error === undefined || response.error === null){
-                setShowLoading(false)
                 setLoggedUserInLocalStorage(response);
 
+                while(loggedUser === {}){
+                    getUser();
+                }
+
                 if(response.aberto_fechado) {
+                    setShowLoading(false)
                     navigation.navigate('ClosedBakery')
                     return;
                 }
-
+                
+                setShowLoading(false)
                 navigation.navigate('BottomTabNavigator')
             }
             else {
