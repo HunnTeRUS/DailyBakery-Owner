@@ -18,7 +18,7 @@ module.exports = {
                 numero_telefone: Joi.string().optional().length(10),
                 cnpj: Joi.string().length(14),
                 aberto_fechado: Joi.boolean().required(),
-                ultima_fornada: Joi.date(),
+                ultima_fornada: Joi.date().optional(),
                 cep: Joi.string().length(8),
                 rua: Joi.string().required(),
                 numero: Joi.string().required(),
@@ -29,7 +29,7 @@ module.exports = {
                 gia: Joi.string().optional(),
                 latitude: Joi.number(),
                 longitude: Joi.number(),
-                tempo_espera: Joi.date()
+                tempo_espera: Joi.date().optional()
             })
         });
     },

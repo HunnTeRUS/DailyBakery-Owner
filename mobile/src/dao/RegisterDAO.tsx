@@ -20,7 +20,6 @@ export default async function register(nome: string,email: string,senha: string,
       numero_telefone: numero_telefone,
       cnpj: cnpj,
       aberto_fechado: true,
-      ultima_fornada: "2020-05-31 00:00:00",
       cep: cep,
       rua: rua,
       numero: numero,
@@ -29,7 +28,6 @@ export default async function register(nome: string,email: string,senha: string,
       estado: estado,
       latitude: latitude,
       longitude: longitude,
-      tempo_espera: "2020-05-31 00:00:00"
     }
   else objSend = {
     nome: nome,
@@ -38,7 +36,6 @@ export default async function register(nome: string,email: string,senha: string,
     numero_celular: numero_celular,
     cnpj: cnpj,
     aberto_fechado: true,
-    ultima_fornada: "2020-05-31 00:00:00",
     cep: cep,
     rua: rua,
     numero: numero,
@@ -47,7 +44,6 @@ export default async function register(nome: string,email: string,senha: string,
     estado: estado,
     latitude: latitude,
     longitude: longitude,
-    tempo_espera: "2020-05-31 00:00:00"
   }
 
   await api.post('/insertBakery', objSend).then(Response => {
