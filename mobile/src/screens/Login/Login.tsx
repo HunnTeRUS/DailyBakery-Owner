@@ -30,23 +30,23 @@ const Login = () => {
         }
     }
 
-    useEffect(() => {
+    useFocusEffect(() => {
         const isValid = async () => {
             await verifyToken().then(response => {
+                console.log(response.cnpj + ' LOOOOOGIN')
                 if (response.error === "" || response.error === undefined || response.error === null){
                     if(response.cnpj !== "" && response.cnpj !== undefined && response.cnpj !== null) {
+                        setLoggedUserInLocalStorage(response);
                         if (response.aberto_fechado === true)
                             navigation.navigate('ClosedBakery')
                         else
                             navigation.navigate('BottomTabNavigator')
                     }
                     else {
-                        removeLoggedUser('loggedUser')
                         return;
                     }
                 }
                 else {
-                    removeLoggedUser('loggedUser')
                     return;
                 }
             }).catch(error => {
@@ -56,13 +56,8 @@ const Login = () => {
             });
         }
 
-        if(!netInfo.isConnected){
-            console.log("Não é possivel logar sem a conexão com internet.")
-            return;
-        }
-
         isValid();
-    }, [])
+    })
 
     const setLoggedUserInLocalStorage = async (obj: UserInterface) => {
         const objResponse = await AsyncStorage.getItem('loggedUser');

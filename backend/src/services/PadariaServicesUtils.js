@@ -202,13 +202,10 @@ module.exports = {
 
         const padarias = await Padaria.findOne({ "cnpj": cnpj });
 
-        if (padarias) {
-            for (var i = 0; i < padarias.length; i++) {
-                padarias[i].email = null;
-                padarias[i].cnpj = null;
-                padarias[i].senha = null;
-            }
-            return response.status(200).json({padarias});
+        if (padarias) {            
+            padarias.email = null;
+            padarias.senha = null;
+            return response.status(200).json(padarias);
         }
 
         else response.status(400).json({ error: "Não foi possivel retornar a padaria a partir do token" });

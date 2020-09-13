@@ -137,11 +137,8 @@ export default () => {
   async function changeLastBatchValue() {
     setShowLoading(true)
     let loggedUser: UserInterface = {};
-    while(loggedUser === {})
-      await getLoggedUser().then(response => {
-        loggedUser = response
-      });
-      console.log(loggedUser.ultima_fornada)
+    loggedUser = await getLoggedUser();
+    
     setShowLoading(false)
 
     const data = new Date(loggedUser?.ultima_fornada ? loggedUser.ultima_fornada : "")

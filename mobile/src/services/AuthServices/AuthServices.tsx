@@ -10,11 +10,9 @@ export default async function verifyToken() {
     const obj = await getLoggedUser();
 
     if(obj.token && obj.cnpj){
-
-        await verifyTokenDAO(obj?.token, obj.cnpj)
+        await verifyTokenDAO(obj.token, obj.cnpj)
             .then(response => {
                 objResponse = response;
-                return objResponse;
         })
     }
 
