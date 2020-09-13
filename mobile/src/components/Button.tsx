@@ -38,12 +38,10 @@ const styles = StyleSheet.create({
 interface ButtonProps {
   progress: Animated.Node<number>;
   functionToButton(): void;
-  setShowLoading(trueFalse: boolean): void;
   changeTextInfo(text: string): void;
-  changeLocalDateFunc(): void;
 }
 
-export default ({ changeLocalDateFunc, changeTextInfo, setShowLoading, progress, functionToButton }: ButtonProps) => {
+export default ({ changeTextInfo, progress, functionToButton }: ButtonProps) => {
   const [active, setActive] = useState(false);
   const height = mix(progress, 0, ICON_SIZE);
   const alertMessage = useState("")
@@ -58,13 +56,9 @@ export default ({ changeLocalDateFunc, changeTextInfo, setShowLoading, progress,
   );
 
   if (active) {
-    setShowLoading(true);
     functionToButton();
-    setShowLoading(false);
     changeTextInfo("Daqui 3 minutos você poderá avisar seus clientes novamente!")
-    changeLocalDateFunc();
     setTimeout(() => {
-      changeLocalDateFunc(); 
       setActive(false)
       changeTextInfo("Os clientes que pediram para serem \n notificados receberão o aviso!")
     }, 5000);

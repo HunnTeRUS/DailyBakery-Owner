@@ -135,54 +135,45 @@ export default () => {
   );
 
   async function changeLastBatchValue() {
-    setShowLoading(true)
-    let loggedUser: UserInterface = {};
-    loggedUser = await getLoggedUser();
-    
-    setShowLoading(false)
+      let loggedUser: UserInterface = {};
+      loggedUser = await getLoggedUser();
+      
+      const data = new Date(loggedUser?.ultima_fornada ? loggedUser.ultima_fornada : "")
 
-    const data = new Date(loggedUser?.ultima_fornada ? loggedUser.ultima_fornada : "")
+      if (data.toString() !== "Invalid Date") {
+        const hora = formatDate(data.getUTCHours());
+        const minutos = formatDate(data.getUTCMinutes());
+        const segundos = formatDate(data.getUTCSeconds());
+        const day = formatDate(data.getDate());
+        const month = formatDate(data.getMonth());
+        const year = formatDate(data.getFullYear());
 
-    if (data.toString() !== "Invalid Date") {
-      const hora = formatDate(data.getUTCHours());
-      const minutos = formatDate(data.getUTCMinutes());
-      const segundos = formatDate(data.getUTCSeconds());
-      const day = formatDate(data.getDate());
-      const month = formatDate(data.getMonth());
-      const year = formatDate(data.getFullYear());
+        const dataAtual = new Date();
 
-      const dataAtual = new Date();
+        if (dataAtual.getDate() === data.getDate()
+          && dataAtual.getFullYear() === data.getFullYear()
+          && dataAtual.getMonth() === data.getMonth()) {
+          setDay("HOJE")
+        }
 
-      if (dataAtual.getDate() === data.getDate()
-        && dataAtual.getFullYear() === data.getFullYear()
-        && dataAtual.getMonth() === data.getMonth()) {
-        setDay("HOJE")
+        else if (dataAtual.getDate() - 1 === data.getDate()
+          && dataAtual.getFullYear() === data.getFullYear()
+          && dataAtual.getMonth() === data.getMonth()) {
+          setDay("ONTEM")
+        }
+
+        else {
+          setDay(`${day}/${month}/${year}`)
+        }
+
+        const dataFinal = `${hora}:${minutos}:${segundos}`
+
+        setLastBatch(dataFinal)
       }
-
-      else if (dataAtual.getDate() - 1 === data.getDate()
-        && dataAtual.getFullYear() === data.getFullYear()
-        && dataAtual.getMonth() === data.getMonth()) {
-        setDay("ONTEM")
-      }
-
       else {
-        setDay(`${day}/${month}/${year}`)
+        setDay(`Não há fornadas`)
+        setLastBatch("até o momento")
       }
-
-      const dataFinal = `${hora}:${minutos}:${segundos}`
-
-      setLastBatch(dataFinal)
-    }
-    else if (31 === data.getDate()
-      && 2000 === data.getFullYear()
-      && 5 === data.getMonth()) {
-      setDay(`Não há fornadas`)
-      setLastBatch("até o momento")
-    }
-    else {
-      setDay(`Não há fornadas`)
-      setLastBatch("até o momento")
-    }
   }
 
   function formatDate(data: any) {
@@ -229,20 +220,27 @@ export default () => {
   async function newFornada() {
     var currentDate = new Date();
     var loggedUser = await getLoggedUser();
-
-    var date = new Date(`${currentDate.getFullYear()}-${convertDate(currentDate.getMonth())}-${convertDate(currentDate.getDate())}T${convertDate(currentDate.getHours())}:${convertDate(currentDate.getMinutes())}`);
+    var date = new Date(`${currentDate.getFullYear()}-${convertDate(currentDate.getMonth() + 1)}-${convertDate(currentDate.getDate())}T${convertDate(currentDate.getHours())}:${convertDate(currentDate.getMinutes())}:${convertDate(currentDate.getSeconds())}`);
 
     await newFornadaServices(date).then(response => {
       if (response.error === "" || response.error === undefined || response.error === null) {
         loggedUser.ultima_fornada = date;
-        changeLoggedUser(loggedUser);
+        setAndChangeLoggedUser(loggedUser);
         changeLastBatchValue();
+        setShowLoading(false)
+        return;
       }
+      else {
+        setShowLoading(false)
+        setTextToShow(response.error)
+        setShow(true)
+        return;
+      }
+    }).catch(error => {
+      console.log(error)
+      setShowLoading(false)
+      return;
     });
-  }
-
-  async function changeLoggedUser(user: UserInterface) {
-    await setAndChangeLoggedUser(user);
   }
 
   function convertDate(date: any) {
@@ -256,12 +254,12 @@ export default () => {
   }
 
   const breadButton = <View style={styles.buttonHandler}>
-    <TapGestureHandler {...gestureHandler}>
-      <Animated.View style={{ transform: [{ scale }] }}>
-        <Button changeLocalDateFunc={changeLastBatchValue} changeTextInfo={setTextInfo} setShowLoading={setShowLoading} functionToButton={pressBreadButton} {...{ progress }} />
-      </Animated.View>
-    </TapGestureHandler>
-  </View>;
+                        <TapGestureHandler {...gestureHandler}>
+                          <Animated.View style={{ transform: [{ scale }] }}>
+                            <Button {...{ progress }} changeTextInfo={setTextInfo} functionToButton={pressBreadButton}  />
+                          </Animated.View>
+                        </TapGestureHandler>
+                      </View>;
 
   return (
     <View style={styles.container}>
@@ -272,7 +270,7 @@ export default () => {
       </Text>
       {lastBatch !== "" && day !== "" ? breadButton : <></>}
       <Text style={styles.novaFornadaTextDeion}>
-        {textInfo}
+      {textInfo}
       </Text>
       <View style={styles.viewOfFornadasAux}>
         <View style={styles.viewOfFornadas}>

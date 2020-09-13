@@ -33,7 +33,6 @@ const Login = () => {
     useFocusEffect(() => {
         const isValid = async () => {
             await verifyToken().then(response => {
-                console.log(response.cnpj + ' LOOOOOGIN')
                 if (response.error === "" || response.error === undefined || response.error === null){
                     if(response.cnpj !== "" && response.cnpj !== undefined && response.cnpj !== null) {
                         setLoggedUserInLocalStorage(response);
@@ -43,10 +42,12 @@ const Login = () => {
                             navigation.navigate('BottomTabNavigator')
                     }
                     else {
+                        removeLoggedUser('loggedUser')
                         return;
                     }
                 }
                 else {
+                    removeLoggedUser('loggedUser')
                     return;
                 }
             }).catch(error => {
