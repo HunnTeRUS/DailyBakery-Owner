@@ -8,8 +8,7 @@ import FindCEPService from '../../../services/CepService/CepService';
 import ModalPopupInfos from '../../../components/ModalPopup/ModalPopupInfo/ModalPopupInfos';
 import RegisterInterface from '../../../services/Utils/RegisterInterface';
 import ModalPopupLoading from '../../../components/ModalPopup/ModalPopupLoading/ModalPopupLoading';
-
-
+import {useNetInfo} from '@react-native-community/netinfo';
 
 const SecondScreenRegister = () => {
     const [showLoading, setLoading] = useState(false);
@@ -20,6 +19,8 @@ const SecondScreenRegister = () => {
     const [show, setShow] = useState(false);
     const [textToShow, setTextToshow] = useState("");
     const route = useRoute();
+    const netInfo = useNetInfo();
+
     const routeParams: RegisterInterface = route.params as RegisterInterface
     const nameValidator = (name: string) =>
         name.length > 2;
@@ -35,6 +36,13 @@ const SecondScreenRegister = () => {
     }
 
     async function pressButton() {
+        if(!netInfo.isConnected){
+            setShow(true)
+            setTextToshow("Você precisa estar conectado na internet para usar essa funcionalidade");
+            setShow(true);
+            return;
+        }
+        setLoading(true);
 
         await FindCEPService(typedCep).then(response => {
             setLoading(false);
@@ -61,8 +69,8 @@ const SecondScreenRegister = () => {
             }
         }).catch(error => {
             setLoading(false);
-            setShow(true);
             setTextToshow("Por favor verifique o CEP");
+            setShow(true);
         })
 
     }
@@ -88,7 +96,6 @@ const SecondScreenRegister = () => {
                         <TouchableOpacity style={styles.nextButton}
                             disabled={submitButtonValidator() ? false : true}
                             onPress={() => {
-                                setLoading(true);
                                 pressButton();
                             }}
                             containerStyle={{

@@ -8,14 +8,23 @@ import findCnpjService from '../../../services/CNPJServices/FindCnpjService';
 import ModalPopupInfos from '../../../components/ModalPopup/ModalPopupInfo/ModalPopupInfos';
 import { validate } from 'cnpj'
 import ModalPopupLoading from '../../../components/ModalPopup/ModalPopupLoading/ModalPopupLoading';
+import {useNetInfo} from '@react-native-community/netinfo';
+
 const FirstScreenRegister = () => {
     const [typedCnpj, setTypedcnpj] = useState('')
     const navigation = useNavigation();
     const [show, setShow] = useState(false);
     const [textToShow, setTextToShow] = useState("");
     const [showLoading, setShowLoading] = useState(false)
+    const netInfo = useNetInfo();
 
     async function pressButton() {
+        if(!netInfo.isConnected){
+            setShow(true)
+            setTextToShow("Você precisa estar conectado à internet para acessar essa funcionalidade!");
+            return;
+        }
+        
         setShowLoading(true)
         await findCnpjService(typedCnpj).then(response => {
             if ((response.error === "" || response.error === undefined || response.error === null) && (response.cnpj !== "" && response.cnpj !== undefined && response.cnpj !== null)) {

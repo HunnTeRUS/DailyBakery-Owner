@@ -11,6 +11,7 @@ import ModalPopupWarns from '../../components/ModalPopup/ModalPopupWarn/ModalPop
 import ModalPopupLoading from '../../components/ModalPopup/ModalPopupLoading/ModalPopupLoading'
 import changeLoggedUserInfo from '../../services/Utils/ChangeLoggedUserInfos';
 import UserInterface from '../../services/Utils/UserInterface';
+import {useNetInfo} from '@react-native-community/netinfo';
 
 export default function ChangePassword() {
     const [show, setShow] = useState(false);
@@ -20,6 +21,8 @@ export default function ChangePassword() {
     const [oldPass, setOldPass] = useState('');
     const [newPass, setNewpass] = useState('');
     const [newPassConfirmation, setNewPassConfirmation] = useState('');
+
+    const netInfo = useNetInfo();
 
     const passwordValidator = (password: string) => password.length >= 6;
     const newpasswordValidator = (password: string) => password.length >= 6;
@@ -34,6 +37,12 @@ export default function ChangePassword() {
     }
 
     async function changePass() {
+        if(!netInfo.isConnected){
+            setErrorMessageForModal('Você precisa estar conectado à internet para usar esta funcionalidade.')
+            setShowWarn(true)
+            return;
+        }
+
         setShowLoading(true)
         const loggedUser = await getLoggedUser();
         if (loggedUser?.senha === oldPass) {

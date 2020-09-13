@@ -8,6 +8,7 @@ import ModalPopupLoading from '../../components/ModalPopup/ModalPopupLoading/Mod
 import ModalPopupWarns from '../../components/ModalPopup/ModalPopupWarn/ModalPopupWarns'
 import sendVerificationEmailServices from '../../services/ForgotPasswordServices/ForgotPasswordServices'
 import { validate, format } from 'cnpj';
+import {useNetInfo} from '@react-native-community/netinfo';
 
 const ForgotPassword = () => {
 
@@ -18,16 +19,24 @@ const ForgotPassword = () => {
     const [show, setShow] = useState(false);
     const [showWarn, setShowWarn] = useState(false);
     const [showLoading, setShowLoading] = useState(false);
+    const netInfo = useNetInfo();
     const [textToShowError, setTextToShowError] = useState('CNPJ invalido, tente novamente')
     let functionToWarnButton = () => { };
 
     async function pressButton() {
+            if(!netInfo.isConnected){
+                setTextToShowError("Você precisa estar conectado à internet para usar esta funcionalidade!")
+                setShowWarn(!showWarn)
+                return;
+            }
+
+            setShowLoading(true)
+
             await sendVerificationEmailServices(typedcnpj).then(response => {
                 if(response.error !== "" && response.error !== undefined && response.error !== null){
                     setShowLoading(false)
                     setTextToShowError(response.error ? response.error : "")
                     setShowWarn(!showWarn)
-                    setShowLoading(false)
                     return;
                 }
                 else {
@@ -71,7 +80,6 @@ const ForgotPassword = () => {
                     opacity: ((typedcnpj.length === 14) && (validate(typedcnpj))) ? 1 : .4,
                 }}
                 onPress={() => {
-                    setShowLoading(true)
                     pressButton();
                 }}
                 style={styles.nextButton}>

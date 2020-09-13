@@ -1,5 +1,12 @@
 const { celebrate, Joi, Segments } = require('celebrate');
 
+/*
+.messages({
+                    'string.base': `Formato invalido para numero de telefone`,
+                    'string.min': `Numero telefone precisa ter 10 caracteres`,
+                    'string.max': `Numero telefone precisa ter 10 caracteres`,
+                  })
+*/ 
 module.exports = {
     validateBakeryInsertion() {
         return celebrate({
@@ -8,7 +15,7 @@ module.exports = {
                 email: Joi.string().required().email(),
                 senha: Joi.string().required().min(4),
                 numero_celular: Joi.string().length(11),
-                numero_telefone: Joi.string().length(10),
+                numero_telefone: Joi.string().optional().length(10),
                 cnpj: Joi.string().length(14),
                 aberto_fechado: Joi.boolean().required(),
                 ultima_fornada: Joi.date(),

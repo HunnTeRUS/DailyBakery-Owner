@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Image, Text, KeyboardAvoidingView, AsyncStorage, BackHandler } from 'react-native'
 import { useNavigation, useFocusEffect } from '@react-navigation/native'
 import TextInput from '../../components/TextInput'
@@ -11,6 +11,7 @@ import styles from './styles'
 import verifyToken from '../../services/AuthServices/AuthServices'
 import { validate } from 'cnpj'
 import getLoggedUser, { removeLoggedUser } from '../../services/Utils/LoggedUser'
+import {useNetInfo} from '@react-native-community/netinfo';
 
 const Login = () => {
     const [typedcnpj, setCnpj] = useState("");
@@ -20,6 +21,8 @@ const Login = () => {
     const [showLoading, setShowLoading] = useState(false)
     const [textToShow, setTextToShow] = useState('CNPJ ou senha inválidos!')
 
+    const netInfo = useNetInfo();
+
     const WalkthroughOrHome = async () => {
         var variavel = await AsyncStorage.getItem('firstAccess');
         if (variavel === null) {
@@ -27,7 +30,7 @@ const Login = () => {
         }
     }
 
-    useFocusEffect(() => {
+    useEffect(() => {
         const isValid = async () => {
             await verifyToken().then(response => {
                 if (response.error === "" || response.error === undefined || response.error === null){
@@ -52,8 +55,14 @@ const Login = () => {
                 return;
             });
         }
+
+        if(!netInfo.isConnected){
+            console.log("Não é possivel logar sem a conexão com internet.")
+            return;
+        }
+
         isValid();
-    })
+    }, [])
 
     const setLoggedUserInLocalStorage = async (obj: UserInterface) => {
         const objResponse = await AsyncStorage.getItem('loggedUser');
@@ -69,6 +78,13 @@ const Login = () => {
     }
 
     async function pressButton() {
+        if(!netInfo.isConnected){
+            setShowLoading(false);
+            setTextToShow("Você precisa estar conectado à internet para usar o aplicativo!");
+            setShow(true)
+            return;
+        }
+
         let loggedUser: UserInterface = {}
         await verifyLoginCredentialsService(typedcnpj, password).then(response => {
             if (response.error === "" || response.error === undefined || response.error === null) {

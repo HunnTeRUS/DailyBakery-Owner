@@ -1,10 +1,9 @@
 import React from 'react';
 import styles from './styles'
-import { TextInput, TouchableOpacity, Image, AsyncStorage } from 'react-native'
+import { TouchableOpacity} from 'react-native'
 import { Text, View } from '../../../components/Themed';
 import Baker from '../../../components/ImagesComponents/Baker'
 import { useNavigation } from '@react-navigation/native'
-import Walkthrough from '../../Walkthrough/Walkthrough'
 import { ScrollView } from 'react-native-gesture-handler';
 
 const FifthScreenRegister = () => {

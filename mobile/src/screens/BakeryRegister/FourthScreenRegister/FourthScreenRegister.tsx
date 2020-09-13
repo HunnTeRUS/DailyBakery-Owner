@@ -11,6 +11,7 @@ import RegisterInterface from '../../../services/Utils/RegisterInterface';
 import RegisterService from '../../../services/Register/RegisterService';
 import ModalPopupWarns from '../../../components/ModalPopup/ModalPopupWarn/ModalPopupWarns'
 import ModalPopupLoading from '../../../components/ModalPopup/ModalPopupLoading/ModalPopupLoading'
+import {useNetInfo} from '@react-native-community/netinfo';
 
 export default function ChangeContactInfo() {
     const [show, setShow] = useState(false);
@@ -24,7 +25,17 @@ export default function ChangeContactInfo() {
     const routeParams: RegisterInterface = route.params as RegisterInterface
     const [phone, setPhone] = useState('')
     const [cellPhone, setCellPhone] = useState('')    
+    const netInfo = useNetInfo();
+
     async function pressButton() {
+        if(!netInfo.isConnected){
+            setShow(true)
+            setTextToShow("Você precisa estar conectado à internet para acessar essa funcionalidade");
+            return;
+        }
+
+        setLoading(true);
+
         await RegisterService(
             routeParams.nome as string,
             routeParams.email as string,
@@ -49,7 +60,12 @@ export default function ChangeContactInfo() {
                 setShow(true);
                 setTextToShow(Response.error as string)
             }
-        })
+        }).catch(error => {
+            console.log(error)
+            setLoading(false);
+            setShow(true);
+            setTextToShow("Ocorreu um erro ao criar seu cadastro, tente novamente mais tarde.")
+        });
     }
 
 
@@ -65,7 +81,6 @@ export default function ChangeContactInfo() {
                 <TextInput icon="phone" placeholder="Número do seu telefone (com DDD)" value={phone} validator={text => { setPhone(text); return telValidator(text); }} keyboardType="number-pad" />
                 <TouchableOpacity disabled={(phoneValidator(cellPhone) && telValidator(phone)) ? false : true}
                     onPress={() => {
-                        setLoading(true);
                         pressButton()
                     }}
                     containerStyle={{

@@ -36,23 +36,9 @@ export default async function RegisterService(
     "\n" + longitude
   )
   let obj: RegisterInterface = {}
-  await register(
-    nome,
-    email,
-    senha,
-    numero_celular,
-    numero_telefone,
-    cnpj,
-    cep,
-    rua,
-    numero,
-    bairro,
-    cidade,
-    estado,
-    latitude,
-    longitude).then(response => {
+  await register(nome,email,senha,numero_celular,numero_telefone,cnpj,cep,rua,numero,bairro,cidade,estado,latitude,longitude).then(response => {
       obj = response
-    })
+  })
   
   return obj;
 }

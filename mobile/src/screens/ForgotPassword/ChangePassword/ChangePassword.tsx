@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {  Modal, View, Text } from 'react-native';
+import {  View, Text } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import styles from './styles'
 import TextInput from '../../../components/TextInput'
@@ -8,9 +8,7 @@ import ModalPopupWarns from '../../../components/ModalPopup/ModalPopupWarn/Modal
 import { useNavigation, useRoute } from '@react-navigation/native'
 import sendVerificationEmailServices from '../../../services/ChangePassword/ChangePasswordServices'
 import ModalPopupLoading from '../../../components/ModalPopup/ModalPopupLoading/ModalPopupLoading';
-
-const passwordValidator = (password: string) => password.length >= 6;
-const secondPasswordValidator = (password: string) => password.length >= 6;
+import {useNetInfo} from '@react-native-community/netinfo';
 
 interface ChangePassword {
     email: string,
@@ -28,16 +26,27 @@ export default function ChangePassword() {
     const params = routes.params as ChangePassword;
     const [showLoading, setShowLoading] = useState(false);
 
+    const netInfo = useNetInfo();
+
     const [messageToWarn, setMessageToWarn] = useState("O campo senha não pode ser diferente do campo de Confirmar Senha");
 
     //83340511000180
     async function changePassword() {
+        if(!netInfo.isConnected){
+            setMessageToWarn("Você precisa estar conectado à internet para usar esta funcionalidade.")
+            setShowWarn(!showWarn)
+            return;
+        }
+
+        setShowLoading(true);
+
         if (password !== confirmationPassword) {
             setShowLoading(false);
             setShowWarn(!showWarn)
             return;
         }
         else {
+            setShowLoading(true)
             await sendVerificationEmailServices(params.email, params.cnpj, confirmationPassword).then(response => {
                 if(response.error !== "" && response.error !== undefined && response.error !== null) {
                     setMessageToWarn(response.error ? response.error : "")
@@ -82,7 +91,6 @@ export default function ChangePassword() {
 
                 <TouchableOpacity disabled={(password.length >= 6) && (confirmationPassword.length >= 6) ? false : true}
                     onPress={() => {
-                        setShowLoading(true)
                         changePassword()
                     }}
                     containerStyle={{
