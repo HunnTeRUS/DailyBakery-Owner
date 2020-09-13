@@ -9,8 +9,8 @@ import ModalPopupLoading from '../../components/ModalPopup/ModalPopupLoading/Mod
 import UserInterface from '../../services/Utils/UserInterface'
 import styles from './styles'
 import verifyToken from '../../services/AuthServices/AuthServices'
-import {validate} from 'cnpj'
-import getLoggedUser, {removeLoggedUser} from '../../services/Utils/LoggedUser'
+import { validate } from 'cnpj'
+import getLoggedUser, { removeLoggedUser } from '../../services/Utils/LoggedUser'
 
 const Login = () => {
     const [typedcnpj, setCnpj] = useState("");
@@ -27,23 +27,33 @@ const Login = () => {
         }
     }
 
-    useEffect(() => {
+    useFocusEffect(() => {
         const isValid = async () => {
-        const loggedUser = await getLoggedUser();
             await verifyToken().then(response => {
-                if(response.status === 200){
-                    if(loggedUser?.aberto_fechado)
-                        navigation.navigate('ClosedBakery')
-                    else 
-                        navigation.navigate('BottomTabNavigator')
+                if (response.error === "" || response.error === undefined || response.error === null){
+                    if(response.cnpj !== "" && response.cnpj !== undefined && response.cnpj !== null) {
+                        if (response.aberto_fechado === true)
+                            navigation.navigate('ClosedBakery')
+                        else
+                            navigation.navigate('BottomTabNavigator')
+                    }
+                    else {
+                        removeLoggedUser('loggedUser')
+                        return;
+                    }
                 }
                 else {
                     removeLoggedUser('loggedUser')
+                    return;
                 }
-            });   
+            }).catch(error => {
+                console.log(error)
+                removeLoggedUser('loggedUser')
+                return;
+            });
         }
         isValid();
-    }, [])
+    })
 
     const setLoggedUserInLocalStorage = async (obj: UserInterface) => {
         const objResponse = await AsyncStorage.getItem('loggedUser');
@@ -54,26 +64,26 @@ const Login = () => {
         }
     }
 
-    async function getUser(){
+    async function getUser() {
         return await getLoggedUser();
     }
 
     async function pressButton() {
-        let loggedUser : UserInterface = {}
+        let loggedUser: UserInterface = {}
         await verifyLoginCredentialsService(typedcnpj, password).then(response => {
-            if(response.error === "" || response.error === undefined || response.error === null){
+            if (response.error === "" || response.error === undefined || response.error === null) {
                 setLoggedUserInLocalStorage(response);
 
-                while(loggedUser === {}){
+                while (loggedUser === {}) {
                     getUser();
                 }
 
-                if(response.aberto_fechado) {
+                if (response.aberto_fechado) {
                     setShowLoading(false)
                     navigation.navigate('ClosedBakery')
                     return;
                 }
-                
+
                 setShowLoading(false)
                 navigation.navigate('BottomTabNavigator')
             }
@@ -101,13 +111,13 @@ const Login = () => {
                 <Image source={require('../../../assets/images/owner1.png')} style={styles.image} />
                 <View style={styles.inputs}>
                     <Text style={styles.text}>CNPJ</Text>
-                    <TextInput icon="user" maxLength={14}  placeholder="Digite seu CNPJ"
+                    <TextInput icon="user" maxLength={14} placeholder="Digite seu CNPJ"
                         keyboardType="number-pad" blurOnSubmit={true} value={typedcnpj}
                         validator={
-                            text => { 
+                            text => {
                                 var textFormated = text.replace(/[^0-9]/g, '');
-                                setCnpj(textFormated); 
-                                return (textFormated.length === 14 && validate(textFormated)) 
+                                setCnpj(textFormated);
+                                return (textFormated.length === 14 && validate(textFormated))
                             }
                         } />
                     <Text style={styles.text}>Senha</Text>

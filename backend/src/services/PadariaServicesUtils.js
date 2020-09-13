@@ -4,7 +4,9 @@ let PadariaDTO = require('../models/dto/PadariaDTO');
 let Mailer = require('./utils/Mailer');
 const CNPJValidation = require('./utils/CNPJValidation');
 const axios = require('axios');
-const { numero } = require('../models/dto/PadariaDTO');
+const jwt = require("jsonwebtoken")
+
+require('dotenv').config('../../../.env');
 
 module.exports = {
 
@@ -193,7 +195,23 @@ module.exports = {
     },
 
     async verifyToken(request, response) {
-        return response.status(200).json();
+        const {cnpj} = request.body;
+
+        if (!CNPJValidation.validarCNPJ(cnpj))
+            return response.status(400).json({ error: "CNPJ inválido" });
+
+        const padarias = await Padaria.findOne({ "cnpj": cnpj });
+
+        if (padarias) {
+            for (var i = 0; i < padarias.length; i++) {
+                padarias[i].email = null;
+                padarias[i].cnpj = null;
+                padarias[i].senha = null;
+            }
+            return response.status(200).json({padarias});
+        }
+
+        else response.status(400).json({ error: "Não foi possivel retornar a padaria a partir do token" });
     }
 
 }

@@ -3,7 +3,11 @@ import UserInterface from "./UserInterface";
 
 export default async function getLoggedUser(){
     let objUser : UserInterface = {};
-    const user = await AsyncStorage.getItem('loggedUser'); 
+    let user;
+    var i;
+
+    for(i = 0; i<3; i++)
+        user = await AsyncStorage.getItem('loggedUser');
     
     if(user)
         objUser = JSON.parse(user) as UserInterface;

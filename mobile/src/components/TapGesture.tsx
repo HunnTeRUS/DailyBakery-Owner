@@ -220,7 +220,8 @@ export default () => {
           setTextToShow(response.error ? response.error : "")
           setShow(true)
         }
-      }).catch(() => {
+      }).catch(error => {
+        console.log(error)
         setShowLoading(false)
         setTextToShow('Ocorreu um erro ao executar essa função!')
         setShow(true)
