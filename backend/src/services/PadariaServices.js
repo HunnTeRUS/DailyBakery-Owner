@@ -14,34 +14,28 @@ module.exports = {
         PadariaDTO = request.body;
 
         if (!CNPJValidation.validarCNPJ(PadariaDTO.cnpj)) {
-
-            console.log("CNPJ ZOADO");
             return response.status(400).json({ error: "CNPJ inválido" });
         }
 
         if ((!(-90 < latitude) || !(latitude < 90)) || (!(-180 < longitude) || !(longitude < 180))) {
-            console.log("coordenadas zoadas");
             return response.status(400).json({ error: 'Latitude e/ou longitude incorretos!' });
         }
 
         const validationOfCnpjDuplicates = await Padaria.findOne({ "cnpj": PadariaDTO.cnpj });
 
         if (validationOfCnpjDuplicates) {
-            console.log("CNPJ Existe");
             return response.status(400).json({ error: 'Já existe uma padaria cadastrada com este CNPJ!' });
         }
 
         const validationOfEmailDuplicates = await Padaria.findOne({ "email": PadariaDTO.email });
 
         if (validationOfEmailDuplicates) {
-            console.log("email ZOADO");
             return response.status(400).json({ error: 'Já existe uma padaria cadastrada com este email!' });
         }
 
         const validationOfAdressDuplicates = await Padaria.findOne({ "latitude": PadariaDTO.cep, "numero": PadariaDTO.numero });
 
         if (validationOfAdressDuplicates) {
-            console.log("endereço    ZOADO");
             return response.status(400).json({ error: 'Já existe uma padaria cadastrada neste endereço!' });
         }
 
@@ -55,7 +49,6 @@ module.exports = {
         PadariaDTO.senha = String(cryp.encrypt(PadariaDTO.senha));
 
         const foundBakery = await Padaria.create(PadariaDTO);
-
         foundBakery.email = null;
         foundBakery.cnpj = null;
         foundBakery.senha = null;

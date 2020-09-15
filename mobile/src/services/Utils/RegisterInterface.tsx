@@ -1,4 +1,5 @@
 export default interface UserInterface {
+  token?: string,
   nome?: string,
   email?: string,
   senha?: string,

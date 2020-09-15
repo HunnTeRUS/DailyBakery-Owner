@@ -2,7 +2,7 @@ export type RootStackParamList = {
   Root: any;
   NotFound: any;
   Walkthrough: any;
-  ChangeAdress: any;
+  ChangeAddress: any;
   InfoBakery:any;
   Login: any;
   ForgotPassword: any;

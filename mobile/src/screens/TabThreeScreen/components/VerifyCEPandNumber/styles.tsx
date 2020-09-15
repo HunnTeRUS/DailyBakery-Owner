@@ -1,5 +1,6 @@
-import {StyleSheet} from 'react-native'
+import {Dimensions, StyleSheet} from 'react-native'
 
+const width = Dimensions.get("window").width;
 export default StyleSheet.create({
     container: {
         flex: 1,
@@ -39,8 +40,8 @@ export default StyleSheet.create({
         alignSelf: 'flex-start',
         color: '#9C8F8F',
         fontFamily: 'Poppins-Regular',
-      },
-
+  },
+      
       inputCep: {
         height: 45,
         color: '#333',
@@ -48,12 +49,6 @@ export default StyleSheet.create({
         backgroundColor: 'white',
         width: '100%',
         fontFamily: 'Poppins-Regular',
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 4,
-          height: 4
-        },
-        elevation: 2,
         paddingHorizontal: 10
       },
 
@@ -71,12 +66,6 @@ export default StyleSheet.create({
         backgroundColor: 'white',
         width: '100%',
         fontFamily: 'Poppins-Regular',
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 4,
-          height: 4
-        },
-        elevation: 2,
         paddingHorizontal: 10
       },
 
@@ -84,7 +73,7 @@ export default StyleSheet.create({
         backgroundColor: '#FEC044',
         borderRadius: 6,
         height: 40,
-        width: '55%',
+        width: width-150,
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: '30%'

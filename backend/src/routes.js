@@ -31,7 +31,7 @@ routes.post('/verifyToken', VerifyToken, PadariaServicesUtils.verifyToken);
 
 routes.put('/updateBakeryAddress', VerifyToken, ApiValidations.updateBakeryAddress(), PadariaServicesUtils.updateAddress);
 
-routes.get('/getAddressByCep', ApiValidations.getAddressByCep(), PadariaServicesUtils.getAddressByCep);
+routes.post('/getAddressByCep', ApiValidations.getAddressByCep(), PadariaServicesUtils.getAddressByCep);
 
 routes.get('/verifyCnpj', ApiValidations.getCnpjFromWs(), PadariaServicesUtils.getCnpjFromWs);
 

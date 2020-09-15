@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import { Image, StyleSheet, View, ColorSchemeName } from 'react-native';
 import NotFoundScreen from '../screens/NotFoundScreen';
-import ChangeAdress from '../screens/TabThreeScreen/components/ChangeAdress/ChangeAdress';
+import ChangeAddress from '../screens/TabThreeScreen/components/ChangeAddress/ChangeAddress';
 import Walkthrough from '../screens/Walkthrough/Walkthrough'
 import { RootStackParamList } from '../../types';
 import BottomTabNavigator from './BottomTabNavigator';
@@ -43,7 +43,7 @@ function RootNavigator() {
       <Stack.Screen name="BottomTabNavigator" component={BottomTabNavigator} />
       <Stack.Screen name="Walkthrough" component={Walkthrough} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
-      <Stack.Screen name="ChangeAdress" component={ChangeAdress}
+      <Stack.Screen name="ChangeAddress" component={ChangeAddress}
         options={
           {
             headerShown: true,

@@ -44,7 +44,7 @@ const SecondScreenRegister = () => {
         }
         setLoading(true);
 
-        await FindCEPService(typedCep).then(response => {
+        await FindCEPService(typedCep, number).then(response => {
             setLoading(false);
             if (response.error === "" || response.error === undefined || response.error === null) {
                 navigation.navigate('ThirdScreenRegister', 
@@ -69,8 +69,8 @@ const SecondScreenRegister = () => {
             }
         }).catch(error => {
             setLoading(false);
-            setTextToshow("Por favor verifique o CEP");
             setShow(true);
+            setTextToshow(error);
         })
 
     }

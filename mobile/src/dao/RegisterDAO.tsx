@@ -48,6 +48,7 @@ export default async function register(nome: string,email: string,senha: string,
 
   await api.post('/insertBakery', objSend).then(Response => {
     obj = {
+      token: Response.headers['x-access-token'],
       nome: Response.data.nome,
       email: Response.data.email,
       senha: Response.data.senha,
@@ -65,7 +66,7 @@ export default async function register(nome: string,email: string,senha: string,
   }).catch(Error => {
       console.log(Error.response.data.message)
       obj = {
-        error: Error.response.data.message 
+        error: Error.response.data.message ? Error.response.data.message : Error.response.data.Error
       }
     })
 

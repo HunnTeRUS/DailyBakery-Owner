@@ -3,11 +3,11 @@ const cryp = require('./utils/EncryptMethods')
 let PadariaDTO = require('../models/dto/PadariaDTO');
 let Mailer = require('./utils/Mailer');
 const CNPJValidation = require('./utils/CNPJValidation');
+const CoolDownVerify = require('./utils/CoolDown');
 const axios = require('axios');
 const jwt = require("jsonwebtoken")
 
 require('dotenv').config('../../../.env');
-
 module.exports = {
 
     //Altera o horario/dia da ultima fornada
@@ -110,14 +110,12 @@ module.exports = {
 
     async updateAddress(request, response) {
         const { cnpj } = request.query;
-        const { cep, rua, numero, bairro, cidade, estado } = request.body;
-        const { tempo_espera } = Padaria.findOne({ "cnpj": cnpj });
-        const data_atualizacao = new Date.now();
+        const { cep, rua, numero, bairro, cidade, estado, latitude, longitude } = request.body;
+        const data_atualizacao = new Date();
 
-        if (!CNPJValidation.validarCNPJ(cnpj)) { return response.status(400).json({ Erro: "CNPJ inválido" }); }
-        if (!CNPJUpdate.CoolDown(tempo_espera)) { return response.status(406).json({ Error: "Endereço alterado recentemente" }); }
+        if (!CNPJValidation.validarCNPJ(cnpj)) { return response.status(400).json({ Error: "CNPJ inválido" }); }
         try {
-            await Padaria.updateOne({ "cnpj": cnpj }, { "cep": cep, "rua": rua, "numero": numero, "bairro": bairro, "cidade": cidade, "estado": estado, "tempo_espera": data_atualizacao });
+            await Padaria.updateOne({ "cnpj": cnpj }, { "cep": cep, "rua": rua, "numero": numero, "bairro": bairro, "cidade": cidade, "estado": estado, "longitude": longitude, "latitude": latitude, "tempo_espera": data_atualizacao });
 
             return response.status(200).json();
         } catch (error) {
@@ -152,22 +150,35 @@ module.exports = {
 
 
     async getAddressByCep(request, response) {
-        const { cep } = request.query;
-
-        axios.get('https://www.cepaberto.com/api/v3/cep', {
+        const { cep, numero, cnpj } = request.body;
+        if (cnpj) {
+            await Padaria.findOne({ "cnpj": cnpj }).then(resp => {
+                if (!CoolDownVerify.CoolDown(resp.tempo_espera)) { return response.status(406).json({ Error: "Endereço alterado recentemente" }); }
+            })
+        }
+        await axios.get('https://www.cepaberto.com/api/v3/cep', {
                 headers: { "Authorization": 'Token token=b8589b52d467c9c5ded3c65c244b4fe6' },
                 params: { cep: cep }
             })
             .then(responseAPI => {
                 responseAPI.data.logradouro;
                 responseAPI.data.bairro;
-                responseAPI.data.cidade;
-                responseAPI.data.estado;
+                responseAPI.data.cidade = responseAPI.data.cidade.nome;
+                responseAPI.data.estado = responseAPI.data.estado.sigla;
 
                 response.json(responseAPI.data);
             })
             .catch((error) => {
-                return response.status(400).json({ Error: error });
+                return axios.get(`http://viacep.com.br/ws/${cep}/json/`)
+                    .then(responseAPI => {
+                        responseAPI.data.estado = responseAPI.data.uf;
+                        responseAPI.data.cidade = responseAPI.data.localidade;
+                        return response.json(responseAPI.data);
+                    }).catch((error => {
+                        return response.status(400).json({
+                            Error: error
+                        })
+                    }))
             });
 
     },
@@ -187,7 +198,7 @@ module.exports = {
             .then(responseAPI => {
                 situacao = responseAPI.data.situacao;
                 if (situacao == "ATIVA") { return response.status(200).json(responseAPI.data); }
-                return response.status(406).json({ Error: "Padaria não pode ser cadastrada" });
+                return response.status(406).json({ Error: "Infelizmente a padaria não pode ser cadastrada por estar com o status inativo na receita federal" });
             })
             .catch((erro) => {
                 return response.json({ Error: erro });
@@ -195,20 +206,18 @@ module.exports = {
     },
 
     async verifyToken(request, response) {
-        const {cnpj} = request.body;
+        const { cnpj } = request.body;
 
         if (!CNPJValidation.validarCNPJ(cnpj))
             return response.status(400).json({ error: "CNPJ inválido" });
 
         const padarias = await Padaria.findOne({ "cnpj": cnpj });
 
-        if (padarias) {            
+        if (padarias) {
             padarias.email = null;
             padarias.senha = null;
             return response.status(200).json(padarias);
-        }
-
-        else response.status(400).json({ error: "Não foi possivel retornar a padaria a partir do token" });
+        } else response.status(400).json({ error: "Não foi possivel retornar a padaria a partir do token" });
     }
 
 }

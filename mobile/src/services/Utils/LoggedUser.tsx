@@ -17,7 +17,7 @@ export default async function getLoggedUser(){
 
 export async function setAndChangeLoggedUser(obj: UserInterface){
     const objResponse = await AsyncStorage.getItem('loggedUser'); 
-
+    
     if(objResponse) {
         await AsyncStorage.removeItem('loggedUser')
         await AsyncStorage.setItem('loggedUser', JSON.stringify(obj));

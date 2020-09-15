@@ -1,7 +1,6 @@
 import changeContactInfoDAO from '../../dao/ChangeContactInfoDAO/ChangeContactInfoDAO'
 import getLoggedUser from '../Utils/LoggedUser';
 import ChangeContactInfoDAOInterface from '../../dao/ChangeContactInfoDAO/ChangeContactInfoDAOInterface';
-import changeLoggedUserInfo from '../Utils/ChangeLoggedUserInfos';
 
 export default async function changeContactInfoServices(numero_celular: string, numero_telefone?: string) {
     let objResponse: ChangeContactInfoDAOInterface = {};

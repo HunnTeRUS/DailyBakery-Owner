@@ -54,7 +54,12 @@ export default function ChangeContactInfo() {
         ).then(Response => {
             setLoading(false);
             if (Response.error === "" || Response.error === undefined || Response.error === null) {
-                navigation.navigate('FifthScreenRegister')
+                navigation.navigate('FifthScreenRegister',
+                    {
+                        cnpj: routeParams.cnpj,
+                        senha: routeParams.senha,
+                    }
+                )
             } else {
                 setLoading(false);
                 setShow(true);

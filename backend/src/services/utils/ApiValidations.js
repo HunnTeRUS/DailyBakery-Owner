@@ -128,7 +128,9 @@ module.exports = {
                 bairro: Joi.string().required(),
                 estado: Joi.string().required(),
                 cidade: Joi.string().required(),
-                numero: Joi.string().required()
+                numero: Joi.string().required(),
+                latitude: Joi.number(),
+                longitude: Joi.number(),
             }),
         })
     },
@@ -147,8 +149,10 @@ module.exports = {
 
     getAddressByCep() {
         return celebrate({
-            [Segments.QUERY]: Joi.object().keys({
-                cep: Joi.string().required().length(8)
+            [Segments.BODY]: Joi.object().keys({
+                cep: Joi.string().required().length(8),
+                numero: Joi.string().required(),
+                cnpj: Joi.string().optional()
             }),
         });
     },
@@ -160,5 +164,4 @@ module.exports = {
             }),
         });
     },
-
 }

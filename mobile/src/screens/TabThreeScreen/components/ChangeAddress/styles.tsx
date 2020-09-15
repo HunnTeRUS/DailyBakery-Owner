@@ -48,12 +48,6 @@ export default StyleSheet.create({
         backgroundColor: 'white',
         width: '100%',
         fontFamily: 'Poppins-Regular',
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 4,
-          height: 4
-        },
-        elevation: 2,
         paddingHorizontal: 10
       },
 
@@ -71,12 +65,6 @@ export default StyleSheet.create({
         backgroundColor: 'white',
         width: '100%',
         fontFamily: 'Poppins-Regular',
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 4,
-          height: 4
-        },
-        elevation: 2,
         paddingHorizontal: 10
       },
 
@@ -94,12 +82,6 @@ export default StyleSheet.create({
         backgroundColor: 'white',
         width: '100%',
         fontFamily: 'Poppins-Regular',
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 4,
-          height: 4
-        },
-        elevation: 2,
         paddingHorizontal: 10
       },
 
@@ -117,12 +99,6 @@ export default StyleSheet.create({
         backgroundColor: 'white',
         width: '100%',
         fontFamily: 'Poppins-Regular',
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 4,
-          height: 4
-        },
-        elevation: 2,
         paddingHorizontal: 10
       },
 

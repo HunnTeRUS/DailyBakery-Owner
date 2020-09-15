@@ -29,7 +29,7 @@ const TextInput = ({ icon, validator, ...props }: TextInputProps) => {
     const [input, setInput] = useState("");
 
     const validate = () => {
-        
+
         const valid = validator(input);
 
         setState(valid);
@@ -58,7 +58,13 @@ const TextInput = ({ icon, validator, ...props }: TextInputProps) => {
             alignSelf: "center",
             borderColor: borderColor,
             paddingRight: 5,
-            paddingLeft: 5
+            paddingLeft: 5,
+            elevation: 2,
+            shadowColor: '#000',
+            shadowOffset: {
+                width: 4,
+                height: 4
+            }
         }}>
             <View style={{ height: 45, flexDirection: "row", display: "flex", alignItems: "center", marginRight: 5 }}>
                 <Icon name={icon} size={20} {...{ color }} />

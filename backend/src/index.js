@@ -3,7 +3,6 @@ const routes = require('./routes');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate')
 
-
 //Criando uma instancia do express pra variavel app conduzir o sistema
 const app = express();
 
