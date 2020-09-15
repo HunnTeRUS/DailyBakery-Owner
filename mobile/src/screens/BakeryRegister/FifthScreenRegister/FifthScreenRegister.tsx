@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from './styles'
-import { AsyncStorage, TouchableOpacity} from 'react-native'
+import { AsyncStorage, BackHandler, TouchableOpacity} from 'react-native'
 import { Text, View } from '../../../components/Themed';
 import Baker from '../../../components/ImagesComponents/Baker'
-import { useNavigation, useRoute } from '@react-navigation/native'
+import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native'
 import { ScrollView } from 'react-native-gesture-handler';
 import verifyLoginCredentials from '../../../dao/LoginDAO';
 import UserInterface from '../../../services/Utils/RegisterInterface';
@@ -21,7 +21,18 @@ const FifthScreenRegister = () => {
             await AsyncStorage.setItem('loggedUser', JSON.stringify(obj));
         }
     }
-
+    useFocusEffect(
+        React.useCallback(() => {
+          const onBackPress = () => {
+            return true;
+          };
+    
+          BackHandler.addEventListener('hardwareBackPress', onBackPress);
+    
+          return () =>
+            BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+        }, [])
+      );
     async function pressButton() {
         await verifyLoginCredentials(routeParams.cnpj as string, routeParams.senha as string).then(Response => {
             setLoggedUserInLocalStorage(Response)

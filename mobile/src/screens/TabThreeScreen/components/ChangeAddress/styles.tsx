@@ -1,5 +1,6 @@
-import {StyleSheet} from 'react-native'
+import {StyleSheet, Dimensions} from 'react-native'
 
+const width = Dimensions.get("window").width;
 export default StyleSheet.create({
     container: {
         flex: 1,
@@ -106,7 +107,7 @@ export default StyleSheet.create({
         backgroundColor: '#FEC044',
         borderRadius: 6,
         height: 40,
-        width: '55%',
+        width: width-150,
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: '20%'

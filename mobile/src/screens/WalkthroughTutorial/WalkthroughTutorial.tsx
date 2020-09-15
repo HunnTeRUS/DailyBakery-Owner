@@ -1,11 +1,12 @@
 import React, { useRef, useState } from "react";
-import { View, ScrollView, StyleSheet, Dimensions, AsyncStorage, Text } from "react-native";
+import { View, ScrollView, StyleSheet, Dimensions, AsyncStorage, Text, BackHandler } from "react-native";
 import Slide, { SLIDE_HEIGHT } from "./Slide";
 import Animated, { multiply, divide, Value } from "react-native-reanimated";
 import { onScrollEvent, useValue } from "react-native-redash";
 import Subslide from "./Subslide";
 import Dots from './Components/Dots';
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { useFocusEffect } from "@react-navigation/native";
 
 const { width } = Dimensions.get("window");
 
@@ -55,6 +56,18 @@ const WalkThroughTutorial = () => {
 
     const slides = tutorial;
     const onScroll = onScrollEvent({ x });
+    useFocusEffect(
+        React.useCallback(() => {
+          const onBackPress = () => {
+            return true;
+          };
+    
+          BackHandler.addEventListener('hardwareBackPress', onBackPress);
+    
+          return () =>
+            BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+        }, [])
+      );
     return (
         <View style={styles.container}>
             <Animated.View style={styles.slider}>
