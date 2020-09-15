@@ -6,25 +6,23 @@ export default async function sendVerificationEmail(cnpj: string) {
         throw "Email não pode ser vazio";
     }
 
-    let obj : ForgotPasswordDAOInterface = {};
+    let obj: ForgotPasswordDAOInterface = {};
 
     await api.post('/forgotPassword', {
         cnpj: cnpj,
     }).then(response => {
-        obj =  {
+        obj = {
             cnpj: response.data.cnpj,
             email: response.data.email,
             codigoEnviado: response.data.codigoEnviado
         }
         return obj
-    }).catch(error => {
+    }).catch(Error => {
         obj = {
-            error: error.response.data.error
+            error: Error.response.data.message ? Error.response.data.message : Error.response.data.Error
         }
         return obj
     });
-
-    console.log(obj)
 
     return obj
 }

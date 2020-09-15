@@ -1,19 +1,19 @@
 import api from '../services/api'
 import UserInterface from '../services/Utils/UserInterface';
 
-async function verifyLoginCredentials(cnpj: string, password: string){
+async function verifyLoginCredentials(cnpj: string, password: string) {
   if (!cnpj) {
     throw "CNPJ dever ser preenchido";
   } else if (!password) {
     throw "Senha dever ser preenchida";
   }
 
-  let obj : UserInterface = {};
+  let obj: UserInterface = {};
 
   await api.post('/bakeryLogin', { cnpj: cnpj, senha: password, }, {
     timeout: 1000
   }).then(response => {
-    obj =  {
+    obj = {
       nome: response.data?.nome,
       email: response.data?.email,
       senha: response.data?.senha,
@@ -32,17 +32,17 @@ async function verifyLoginCredentials(cnpj: string, password: string){
       token: response.headers['x-access-token'],
       error: ""
     }
-    return obj 
+    return obj
 
-  }).catch(error => {
-    obj =  {
-      error: error.response.data.error
+  }).catch(Error => {
+    obj = {
+      error: Error.response.data.message ? Error.response.data.message : Error.response.data.Error
     }
-    return obj 
+    return obj
 
   });
 
-  return obj 
+  return obj
 }
 
 export default verifyLoginCredentials;

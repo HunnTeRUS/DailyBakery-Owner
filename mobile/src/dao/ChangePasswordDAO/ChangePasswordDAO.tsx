@@ -12,9 +12,9 @@ export default async function changePasswordDAO(email: string, cnpj: string, new
         email: email,
         cnpj: cnpj,
         novaSenha: newPass
-    }).catch(error=> {
+    }).catch(Error=> {
         obj = {
-            error: error.response.data.error
+            error: Error.response.data.message ? Error.response.data.message : Error.response.data.Error
         }
     });
 

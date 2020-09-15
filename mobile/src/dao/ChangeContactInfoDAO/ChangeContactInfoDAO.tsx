@@ -30,9 +30,9 @@ export default async function changeContactInfoDAO(cnpj: string, token: string, 
         params: {
             cnpj: cnpj
         }
-    }).catch(error => {
+    }).catch(Error => {
         obj = {
-            error: error.response.data.error,
+            error: Error.response.data.message ? Error.response.data.message : Error.response.data.Error
         }
         return obj;
     });
