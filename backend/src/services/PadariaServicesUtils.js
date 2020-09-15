@@ -113,7 +113,7 @@ module.exports = {
         const { cep, rua, numero, bairro, cidade, estado, latitude, longitude } = request.body;
         const data_atualizacao = new Date();
 
-        if (!CNPJValidation.validarCNPJ(cnpj)) { return response.status(400).json({ Error: "CNPJ inválido" }); }
+        if (!CNPJValidation.validarCNPJ(cnpj)) { return response.status(400).json({ error: "CNPJ inválido" }); }
         try {
             await Padaria.updateOne({ "cnpj": cnpj }, { "cep": cep, "rua": rua, "numero": numero, "bairro": bairro, "cidade": cidade, "estado": estado, "longitude": longitude, "latitude": latitude, "tempo_espera": data_atualizacao });
 
@@ -130,7 +130,7 @@ module.exports = {
         console.log(numero_celular, numero_telefone)
 
         if (!CNPJValidation.validarCNPJ(cnpj))
-            return response.status(400).json({ Error: "CNPJ inválido" });
+            return response.status(400).json({ error: "CNPJ inválido" });
 
         try {
             if ((numero_celular != null && numero_celular != "") && (numero_telefone != null && numero_telefone != ""))
@@ -142,7 +142,7 @@ module.exports = {
             response.status(200).json();
 
         } catch (error) {
-            return response.status(400).json({ Error: error });
+            return response.status(400).json({ error: error });
         }
 
     },
@@ -153,7 +153,7 @@ module.exports = {
         const { cep, numero, cnpj } = request.body;
         if (cnpj) {
             await Padaria.findOne({ "cnpj": cnpj }).then(resp => {
-                if (!CoolDownVerify.CoolDown(resp.tempo_espera)) { return response.status(406).json({ Error: "Endereço alterado recentemente" }); }
+                if (!CoolDownVerify.CoolDown(resp.tempo_espera)) { return response.status(406).json({ error: "Endereço alterado recentemente" }); }
             })
         }
         await axios.get('https://www.cepaberto.com/api/v3/cep', {
@@ -176,7 +176,7 @@ module.exports = {
                         return response.json(responseAPI.data);
                     }).catch((error => {
                         return response.status(400).json({
-                            Error: error
+                            error: error
                         })
                     }))
             });
@@ -190,7 +190,7 @@ module.exports = {
         bakery = await Padaria.findOne({ "cnpj": cnpj });
 
         if (bakery) {
-            return response.status(400).json({ Error: "Já existe um cadastro dessa padaria em nossa base" });
+            return response.status(400).json({ error: "Já existe um cadastro dessa padaria em nossa base" });
         }
         axios.get(`https://www.receitaws.com.br/v1/cnpj/${cnpj}`, {
                 headers: { "Authorization": 'Bearer ' + process.env.TOKEN_WS }
@@ -198,10 +198,10 @@ module.exports = {
             .then(responseAPI => {
                 situacao = responseAPI.data.situacao;
                 if (situacao == "ATIVA") { return response.status(200).json(responseAPI.data); }
-                return response.status(406).json({ Error: "Infelizmente a padaria não pode ser cadastrada por estar com o status inativo na receita federal" });
+                return response.status(406).json({ error: "Infelizmente a padaria não pode ser cadastrada por estar com o status inativo na receita federal" });
             })
             .catch((erro) => {
-                return response.json({ Error: erro });
+                return response.json({ error: erro });
             });
     },
 

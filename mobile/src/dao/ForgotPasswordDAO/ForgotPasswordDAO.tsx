@@ -17,9 +17,9 @@ export default async function sendVerificationEmail(cnpj: string) {
             codigoEnviado: response.data.codigoEnviado
         }
         return obj
-    }).catch(Error => {
+    }).catch(error => {
         obj = {
-            error: Error.response.data.message ? Error.response.data.message : Error.response.data.Error
+            error: error.response.data.message ? error.response.data.message : error.response.data.error
         }
         return obj
     });

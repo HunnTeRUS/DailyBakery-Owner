@@ -63,10 +63,10 @@ export default async function register(nome: string,email: string,senha: string,
       estado: Response.data.estado,
       error: "",
     }
-  }).catch(Error => {
-      console.log(Error.response.data.message)
+  }).catch(error => {
+      console.log(error.response.data.message)
       obj = {
-        error: Error.response.data.message ? Error.response.data.message : Error.response.data.Error
+        error: error.response.data.message ? error.response.data.message : error.response.data.error
       }
     })
 

@@ -19,7 +19,7 @@ export default async function findCnpj(cnpj: string) {
     }
   }).catch(error => {
     obj = {
-      error: error.response.data.Error
+      error: error.response.data.message ? error.response.data.message : error.response.data.error
     }
   })
   return obj;
