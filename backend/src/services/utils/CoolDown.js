@@ -4,7 +4,7 @@ module.exports = {
         const espera = new Date(tempo_espera);
         const total = atual.getTime() - espera.getTime();
 
-        if (total > 2628000000) {
+        if (total > 2628000000 || espera == 'Invalid Date' || espera == null || espera == undefined || espera == '') {
             return true;
         }
         return false;
