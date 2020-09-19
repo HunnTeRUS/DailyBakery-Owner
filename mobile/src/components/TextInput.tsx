@@ -70,7 +70,7 @@ const TextInput = ({ icon, validator, ...props }: TextInputProps) => {
                 <Icon name={icon} size={20} {...{ color }} />
             </View >
             <View style={{ flex: 1, justifyContent: "center" }}>
-                <RNTextInput underlineColorAndroid="transparent" style={{ height: "100%" }} onFocus={validate} onChangeText={onChangeText}{...props} />
+                <RNTextInput selectionColor={state ? "green": "red"} underlineColorAndroid="transparent" style={{ height: "100%" }} onFocus={validate} onChangeText={onChangeText}{...props} />
             </View>
             {
                 (state === Valid || state === Invalid) && (
