@@ -12,11 +12,13 @@ import ModalPopupLoading from '../../components/ModalPopup/ModalPopupLoading/Mod
 import changeLoggedUserInfo from '../../services/Utils/ChangeLoggedUserInfos';
 import UserInterface from '../../services/Utils/UserInterface';
 import {useNetInfo} from '@react-native-community/netinfo';
+import ModalPopupInterrogs from '../../components/ModalPopup/ModalPopupInterrog/ModalPopupInterrogs';
 
 export default function ChangePassword() {
     const [show, setShow] = useState(false);
     const [showWarn, setShowWarn] = useState(false);
     const [showLoading, setShowLoading] = useState(false)
+    const [showAsk, setShowAsk] = useState(false)
 
     const [oldPass, setOldPass] = useState('');
     const [newPass, setNewpass] = useState('');
@@ -38,6 +40,7 @@ export default function ChangePassword() {
 
     async function changePass() {
         if(!netInfo.isConnected){
+            console.log("sem internet")
             setErrorMessageForModal('Você precisa estar conectado à internet para usar esta funcionalidade.')
             setShowWarn(true)
             return;
@@ -78,6 +81,9 @@ export default function ChangePassword() {
             {!show ? <></> : <ModalPopupInfos onPressCloseButton={() => { navigation.navigate('Root') }} textToShow='Sua senha foi alterada com sucesso!' showModal={show} setShow={setShow} />}
             {!showWarn ? <></> : <ModalPopupWarns functionToButton={() => { }} textToShow={errorMessageForModal} showModal={showWarn} setShow={setShowWarn} />}
             {!showLoading ? <></> : <ModalPopupLoading showModal={showLoading} />}
+            {!showAsk ? <></> : <ModalPopupInterrogs functionToYesButton={changePass} textToTitle='Alterar senha'
+             textToShow='Tem certeza de que deseja alterar sua senha?' showModal={showAsk} setShow={setShowAsk}/>}
+
             <View style={styles.secondContainer}>
                 <KeyboardAvoidingView behavior="position">
                     <Text style={styles.title}>Alterar senha da conta</Text>
@@ -98,7 +104,7 @@ export default function ChangePassword() {
                             opacity: (passwordValidator(oldPass) && (newpasswordValidator(newPass) && (confirmationpasswordValidator(newPassConfirmation)))) ? 1 : .4,
                         }}
                         style={styles.nextButton}
-                        onPress={() => { changePass() }}>
+                        onPress={() => { setShowAsk(true) }}>
                         <Text style={styles.nextText}>Trocar senha</Text>
                     </TouchableOpacity>
                 </KeyboardAvoidingView>

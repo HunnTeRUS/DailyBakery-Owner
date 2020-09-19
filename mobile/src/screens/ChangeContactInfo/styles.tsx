@@ -85,7 +85,6 @@ export default StyleSheet.create({
         width: 200,
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: '30%'
       },
 
       nextText: {

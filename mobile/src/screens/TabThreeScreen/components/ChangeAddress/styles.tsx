@@ -11,7 +11,7 @@ export default StyleSheet.create({
       },
 
       secondContainer: {
-        height: '90%',
+        height: '93%',
         width: '80%',
         alignSelf: 'center',
         display: 'flex',
@@ -110,7 +110,7 @@ export default StyleSheet.create({
         width: width-150,
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: '20%'
+        alignSelf: "center",
       },
 
       nextText: {

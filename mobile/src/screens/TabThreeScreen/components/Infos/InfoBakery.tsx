@@ -26,7 +26,7 @@ const InfoBakery = () => {
                 <Baker />
                 <Text style={styles.title}>Endereço alterado com sucesso!</Text>
                 <Text style={styles.subTitle}>Seus dados de endereço foram atualizados corretamente e lembrando, só poderá ser alterado novamente daqui 30 dias!</Text>
-                <TouchableOpacity disabled={false} style={styles.nextButton} onPress={() => navigation.navigate('Root')}>
+                <TouchableOpacity disabled={false} style={styles.nextButton} onPress={() => navigation.navigate('BottomTabNavigator')}>
                     <Text style={styles.nextText}>Voltar para o inicio</Text>
                 </TouchableOpacity>
 

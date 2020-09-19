@@ -9,6 +9,7 @@ import ModalPopupLoading from '../../../../components/ModalPopup/ModalPopupLoadi
 import ModalPopupInfos from '../../../../components/ModalPopup/ModalPopupInfo/ModalPopupInfos';
 import changeAddressService from '../../../../services/ChangeAddressServices/ChangeAddressService';
 import { KeyboardAvoidingView } from 'react-native';
+import ModalPopupInterrogs from '../../../../components/ModalPopup/ModalPopupInterrog/ModalPopupInterrogs';
 
 const ChangeAdress = () => {
     const navigation = useNavigation();
@@ -25,6 +26,7 @@ const ChangeAdress = () => {
     const [count2, setCount2] = useState(false);
     const [count3, setCount3] = useState(false);
     const [count4, setCount4] = useState(false);
+    const [showAsk, setShowAsk] = useState(false)
 
     const streetValidator = (street: string) =>
         street.length > 3;
@@ -43,6 +45,7 @@ const ChangeAdress = () => {
     }
 
     async function pressButton() {
+        setLoading(true)
         await changeAddressService(routeParams.cep as string, street, neighborhood, state, city, routeParams.latitude as string, routeParams.longitude as string, routeParams.numero as string).then(Response => {
             setLoading(false);
             if (Response.error === "" || Response.error === undefined || Response.error === null) {
@@ -65,92 +68,94 @@ const ChangeAdress = () => {
         <View style={styles.container}>
             {!showLoading ? <></> : <ModalPopupLoading showModal={showLoading} />}
             {!show ? <></> : <ModalPopupInfos textToShow={textToShow} showModal={show} setShow={setShow} onPressCloseButton={() => { navigation.navigate("ChangeAddress") }} />}
-            <ScrollView>
+            {!showAsk ? <></> : <ModalPopupInterrogs functionToYesButton={pressButton} textToTitle='Alterar endereço'
+             textToShow='Tem certeza de que deseja alterar seu endereço? Obs: Poderá alterar novamente daqui 30 dias.' showModal={showAsk} setShow={setShowAsk}/>}
+
+            <View style={styles.secondContainer}>
                 <KeyboardAvoidingView behavior="position">
 
-                    <View style={styles.secondContainer}>
-                        <Text style={styles.subTitle}>Confira seus dados e não deixe nenhum campo em branco!.</Text>
-                        <Text style={styles.textStreetName}>Nome da rua</Text>
-                        <TextInput
-                            icon="map-pin" validator={text => {
-                                if (!count1) {
-                                    text = routeParams.logradouro as string
-                                    setCount1(true)
-                                }
-                                setStreet(text);
-                                return streetValidator(text)
-                            }}
-                            style={styles.inputStreet}
-                            placeholder="Logradouro"
-                            placeholderTextColor="#999"
-                            autoCapitalize="words"
-                            textContentType="addressCity"
-                            autoCorrect={false}
-                            value={street}
-                        />
+                    <Text style={styles.subTitle}>Confira seus dados e não deixe nenhum campo em branco!.</Text>
+                    <Text style={styles.textStreetName}>Nome da rua</Text>
+                    <TextInput
+                        icon="map-pin" validator={text => {
+                            if (!count1) {
+                                text = routeParams.logradouro as string
+                                setCount1(true)
+                            }
+                            setStreet(text);
+                            return streetValidator(text)
+                        }}
+                        style={styles.inputStreet}
+                        placeholder="Logradouro"
+                        placeholderTextColor="#999"
+                        autoCapitalize="words"
+                        textContentType="addressCity"
+                        autoCorrect={true}
+                        value={street}
+                    />
 
-                        <Text style={styles.textBairro}>Bairro</Text>
-                        <TextInput
-                            icon="map-pin" validator={text => {
-                                if (!count2) {
-                                    text = routeParams.bairro as string
-                                    setCount2(true)
-                                }
-                                setNeighborhood(text);
-                                return neighborhoodValidator(text)
-                            }}
-                            style={styles.inputBairro}
-                            placeholder="Digite o Bairro"
-                            placeholderTextColor="#999"
-                            autoCapitalize="words"
-                            autoCorrect={false}
-                            value={neighborhood}
-                        />
+                    <Text style={styles.textBairro}>Bairro</Text>
+                    <TextInput
+                        icon="map-pin" validator={text => {
+                            if (!count2) {
+                                text = routeParams.bairro as string
+                                setCount2(true)
+                            }
+                            setNeighborhood(text);
+                            return neighborhoodValidator(text)
+                        }}
+                        style={styles.inputBairro}
+                        placeholder="Digite o Bairro"
+                        placeholderTextColor="#999"
+                        autoCapitalize="words"
+                        autoCorrect={true}
+                        value={neighborhood}
+                    />
 
-                        <Text style={styles.textCity}>Cidade</Text>
-                        <TextInput
-                            icon="map-pin" validator={text => {
-                                if (!count3) {
-                                    text = routeParams.cidade as string
-                                    setCount3(true)
-                                }
-                                setCity(text);
-                                return cityValidator(text)
-                            }}
-                            style={styles.inputCity}
-                            placeholder="Digite a cidade"
-                            placeholderTextColor="#999"
-                            autoCapitalize="words"
-                            textContentType="addressCity"
-                            autoCorrect={false}
-                            value={city}
-                        />
+                    <Text style={styles.textCity}>Cidade</Text>
+                    <TextInput
+                        icon="map-pin" validator={text => {
+                            if (!count3) {
+                                text = routeParams.cidade as string
+                                setCount3(true)
+                            }
+                            setCity(text);
+                            return cityValidator(text)
+                        }}
+                        style={styles.inputCity}
+                        placeholder="Digite a cidade"
+                        placeholderTextColor="#999"
+                        autoCapitalize="words"
+                        textContentType="addressCity"
+                        autoCorrect={true}
+                        value={city}
+                    />
 
-                        <Text style={styles.textState}>Estado</Text>
-                        <TextInput
-                            icon="map-pin" maxLength={2} validator={text => {
-                                if (!count4) {
-                                    text = routeParams.estado as string
-                                    setCount4(true)
-                                }
-                                setState(text);
-                                return stateValidator(text)
-                            }}
-                            style={styles.inputState}
-                            placeholder="Digite o Estado"
-                            placeholderTextColor="#999"
-                            autoCapitalize="words"
-                            textContentType="addressCityAndState"
-                            autoCorrect={false}
-                            value={state}
-                        />
+                    <Text style={styles.textState}>Estado (UF)</Text>
+                    <TextInput
+                        icon="map-pin" maxLength={2} numberOfLines={1}  validator={text => {
+                            if (!count4) {
+                                text = routeParams.estado as string
+                                setCount4(true)
+                            }
+                            setState(text);
+                            return stateValidator(text)
+                        }}
+                        style={styles.inputState}
+                        placeholder="Digite o Estado"
+                        placeholderTextColor="#999"
+                        autoCapitalize='characters'
+                        textContentType="addressCityAndState"
+                        autoCorrect={false}
+                        value={state}
+                    />
 
+                    <View style={{marginTop: "15%", backgroundColor: "#E8EDFF",}}>
                         <TouchableOpacity
                             disabled={submitValidator() ? false : true}
                             style={styles.nextButton}
                             onPress={() => {
-                                setLoading(true)
-                                pressButton()
+                                setShowAsk(true)
                             }}
                             containerStyle={{
                                 opacity: submitValidator() ? 1 : .4,
@@ -158,10 +163,11 @@ const ChangeAdress = () => {
                         >
                             <Text style={styles.nextText}>Salvar</Text>
                         </TouchableOpacity>
-
                     </View>
+
                 </KeyboardAvoidingView>
-            </ScrollView>
+
+            </View>
         </View>
     )
 }

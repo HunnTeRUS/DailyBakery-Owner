@@ -56,7 +56,7 @@ const VerifyCEPAndNumber = () => {
     return (
         <View style={styles.container}>
             {!showLoading ? <></> : <ModalPopupLoading showModal={showLoading} />}
-            {!show ? <></> : <ModalPopupInfos textToShow={textToShow} showModal={show} setShow={setShow} onPressCloseButton={() => { navigation.navigate("TabTwoScreen") }} />}
+            {!show ? <></> : <ModalPopupInfos textToShow={textToShow} showModal={show} setShow={setShow} onPressCloseButton={() => { }} />}
             <ScrollView>
                 <KeyboardAvoidingView behavior="position">
 
