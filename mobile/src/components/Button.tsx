@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Alert,Text } from "react-native";
-import Animated, { call, cond, eq, useCode,  } from "react-native-reanimated";
-import { FontAwesome5 as Icon } from "@expo/vector-icons";
+import { StyleSheet, View, Alert, Text } from "react-native";
+import Animated, { call, cond, eq, useCode, Value, } from "react-native-reanimated";
+import { FontAwesome5 as Icon, FontAwesome5 } from "@expo/vector-icons";
 import CircularProgress from "./CircularProgress/CircularProgress";
 import StyleGuide from "./StyleGuide";
 import ModalPopupLoading from "./ModalPopup/ModalPopupLoading/ModalPopupLoading";
 import getLoggedUser, { setAndChangeLoggedUser } from "../services/Utils/LoggedUser";
 import newFornadaServices from "../services/NewFornadaServices/NewFornadaServices";
 import ModalPopupWarns from '../components/ModalPopup/ModalPopupWarn/ModalPopupWarns'
+import UserInterface from "../services/Utils/UserInterface";
 
 const SIZE = 150;
 const STROKE_WIDTH = 10;
@@ -47,6 +48,50 @@ const styles = StyleSheet.create({
     color: '#BAA6A6',
     fontSize: 16
   },
+
+  ultimaFornadaTextLabel: {
+    fontWeight: 'bold',
+    color: '#FEC044',
+
+  },
+
+
+  novaFornadaTextWarn: {
+    textAlign: "center",
+    fontFamily: 'Poppins-Regular',
+    marginTop: '2%',
+    color: 'red',
+    fontSize: 16
+  },
+
+  viewOfFornadas: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignContent: 'space-between',
+    alignSelf: 'center',
+    marginTop: 0
+  },
+
+  viewOfFornadasAux: {
+    backgroundColor: '#c7c5c540',
+    marginTop: '7%',
+    padding: 20,
+    width: '50%',
+    alignSelf: 'center',
+    borderRadius: 10,
+  },
+
+  clockIcon: {
+    marginRight: '3%',
+    color: '#FEC044',
+    alignSelf: 'center'
+  },
+
+  ultimaFornadaText: {
+    textAlign: "center",
+    fontFamily: 'Poppins-Regular',
+    color: '#BAA6A6'
+  },
 });
 
 interface ButtonProps {
@@ -55,14 +100,67 @@ interface ButtonProps {
 }
 
 export default ({ changeTextInfo, progress }: ButtonProps) => {
-  const {
-    set,} = Animated;
-  const [active, setActive] = useState(false);
+  const [active, setActive] = useState(false); //TA FALSEEEEE
   const [text, setText] = useState("Notificar clientes sobre nova fornada:")
   const [textInfo, setTextInfo] = useState("Os clientes que pediram para serem \n notificados receberão o aviso!")
   const [show, setShow] = useState(false);
   const [showLoading, setShowLoading] = useState(false)
   const [textError, setTextError] = useState("")
+  const [lastBatch, setLastBatch] = useState("")
+  const [day, setDay] = useState("")
+
+  useEffect(() => {
+    changeLastBatchValue()
+  }, [])
+
+  async function changeLastBatchValue() {
+    let loggedUser: UserInterface = {};
+    loggedUser = await getLoggedUser();
+
+    const data = new Date(loggedUser?.ultima_fornada ? loggedUser.ultima_fornada : "")
+
+    if (data.toString() !== "Invalid Date") {
+      const hora = formatDate(data.getUTCHours());
+      const minutos = formatDate(data.getUTCMinutes());
+      const segundos = formatDate(data.getUTCSeconds());
+      const day = formatDate(data.getDate());
+      const month = formatDate(data.getMonth());
+      const year = formatDate(data.getFullYear());
+
+      const dataAtual = new Date();
+
+      if (dataAtual.getDate() === data.getDate()
+        && dataAtual.getFullYear() === data.getFullYear()
+        && dataAtual.getMonth() === data.getMonth()) {
+        setDay("HOJE")
+      }
+
+      else if (dataAtual.getDate() - 1 === data.getDate()
+        && dataAtual.getFullYear() === data.getFullYear()
+        && dataAtual.getMonth() === data.getMonth()) {
+        setDay("ONTEM")
+      }
+
+      else {
+        setDay(`${day}/${month}/${year}`)
+      }
+
+      const dataFinal = `${hora}:${minutos}:${segundos}`
+
+      setLastBatch(dataFinal)
+    }
+    else {
+      setDay(`Não há fornadas`)
+      setLastBatch("até o momento")
+    }
+  }
+
+  function formatDate(data: any) {
+    if (data < 10) {
+      return `0${data}`;
+    }
+    return data;
+  }
 
   async function newFornada() {
     var currentDate = new Date();
@@ -93,16 +191,13 @@ export default ({ changeTextInfo, progress }: ButtonProps) => {
     return date
   }
 
-  async function pressBreadButton() {
+  async function changeAndDo() {
     await newFornada();
-  }
-
-  function changeAndDo(){
-    pressBreadButton();
-    setActive(true);
+    await changeLastBatchValue();
     setTextInfo("Você poderá notificar seus clientes novamente dentro de 4 minutos!")
     setText("Seus clientes foram notificados!")
     setTimeout(() => {
+      setText("Notificar clientes sobre nova fornada:")
       setActive(false)
       setTextInfo("Os clientes que pediram para serem \n notificados receberão o aviso!")
     }, 5000);
@@ -110,12 +205,11 @@ export default ({ changeTextInfo, progress }: ButtonProps) => {
 
   useCode(
     () =>
-      cond(
-        eq(progress, 1),
-        call([], () => {
+      cond(eq(progress, 1),
+        call([progress], () => {
+          setActive(true)
           changeAndDo()
-        })
-      ),
+        })),
     [progress]
   );
 
@@ -123,9 +217,9 @@ export default ({ changeTextInfo, progress }: ButtonProps) => {
     <>
       {!showLoading ? <></> : <ModalPopupLoading showModal={showLoading} />}
       {!show ? <></> : <ModalPopupWarns textToShow={textError} showModal={show} setShow={setShow} />}
-      <View style={{width: 400}}>
+      <View style={{ width: 400 }}>
         <Text style={styles.novaFornadaText}>{text}</Text>
-        <View style={{alignSelf: "center"}}>
+        <View style={{ alignSelf: "center" }}>
           <CircularProgress
             radius={SIZE / 2}
             bg="white"
@@ -146,6 +240,18 @@ export default ({ changeTextInfo, progress }: ButtonProps) => {
         <Text style={styles.novaFornadaTextDeion}>
           {textInfo}
         </Text>
+      </View>
+      <View style={styles.viewOfFornadasAux}>
+        <View style={styles.viewOfFornadas}>
+          <FontAwesome5 style={styles.clockIcon} name="clock" size={35} />
+          <Text style={styles.ultimaFornadaText}>
+            <Text
+              style={styles.ultimaFornadaTextLabel}>
+              Ultima fornada:
+                    </Text>
+            {"\n"}{day}{"\n"}{lastBatch}
+          </Text>
+        </View>
       </View>
     </>
   );

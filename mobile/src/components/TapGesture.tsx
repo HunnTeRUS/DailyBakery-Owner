@@ -128,7 +128,6 @@ export default () => {
           </Animated.View>
         </TapGestureHandler>
       </View>
-      <LastFornada/>
       <TouchableOpacity style={styles.toCloseBakery} onPress={() => closeBakery()}>
         <Text style={styles.toCloseBakeryText}>Fechar Padaria</Text>
       </TouchableOpacity>
