@@ -9,6 +9,7 @@ import getLoggedUser, { setAndChangeLoggedUser } from "../services/Utils/LoggedU
 import newFornadaServices from "../services/NewFornadaServices/NewFornadaServices";
 import ModalPopupWarns from '../components/ModalPopup/ModalPopupWarn/ModalPopupWarns'
 import UserInterface from "../services/Utils/UserInterface";
+import { useFocusEffect } from "@react-navigation/native";
 
 const SIZE = 150;
 const STROKE_WIDTH = 10;
@@ -109,9 +110,16 @@ export default ({ changeTextInfo, progress }: ButtonProps) => {
   const [lastBatch, setLastBatch] = useState("")
   const [day, setDay] = useState("")
 
-  useEffect(() => {
+  useFocusEffect(() => {
     changeLastBatchValue()
-  }, [])
+  })
+
+  useEffect(() => {
+    if(active) {
+      console.log("ACTIVE")
+      changeAndDo()
+    }
+  }, [active])
 
   async function changeLastBatchValue() {
     let loggedUser: UserInterface = {};
@@ -200,7 +208,7 @@ export default ({ changeTextInfo, progress }: ButtonProps) => {
       setText("Notificar clientes sobre nova fornada:")
       setActive(false)
       setTextInfo("Os clientes que pediram para serem \n notificados receberão o aviso!")
-    }, 5000);
+    }, 240000);
   }
 
   useCode(
@@ -208,7 +216,6 @@ export default ({ changeTextInfo, progress }: ButtonProps) => {
       cond(eq(progress, 1),
         call([progress], () => {
           setActive(true)
-          changeAndDo()
         })),
     [progress]
   );
