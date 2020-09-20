@@ -12,6 +12,7 @@ import verifyToken from '../../services/AuthServices/AuthServices'
 import { validate } from 'cnpj'
 import getLoggedUser, { removeLoggedUser } from '../../services/Utils/LoggedUser'
 import {useNetInfo} from '@react-native-community/netinfo';
+import CNPJMask, {removeCnpjMask} from '../../components/CNPJMask'
 
 const Login = () => {
     const [typedcnpj, setCnpj] = useState("");
@@ -82,7 +83,7 @@ const Login = () => {
         }
 
         let loggedUser: UserInterface = {}
-        await verifyLoginCredentialsService(typedcnpj, password).then(response => {
+        await verifyLoginCredentialsService(removeCnpjMask(typedcnpj), password).then(response => {
             if (response.error === "" || response.error === undefined || response.error === null) {
                 setLoggedUserInLocalStorage(response);
 
@@ -123,13 +124,13 @@ const Login = () => {
                 <Image source={require('../../../assets/images/owner1.png')} style={styles.image} />
                 <View style={styles.inputs}>
                     <Text style={styles.text}>CNPJ</Text>
-                    <TextInput icon="user" maxLength={14} placeholder="Digite seu CNPJ"
-                        keyboardType="number-pad" blurOnSubmit={true} value={typedcnpj}
+                    <TextInput icon="user" placeholder="Digite seu CNPJ"
+                        keyboardType="number-pad" maxLength={18} blurOnSubmit={true} value={typedcnpj}
                         validator={
                             text => {
-                                var textFormated = text.replace(/[^0-9]/g, '');
+                                var textFormated = CNPJMask(text)
                                 setCnpj(textFormated);
-                                return (textFormated.length === 14 && validate(textFormated))
+                                return (textFormated.length === 18 && validate(textFormated))
                             }
                         } />
                     <Text style={styles.text}>Senha</Text>
@@ -143,12 +144,12 @@ const Login = () => {
                 pressButton()
             }
             }
-                disabled={(typedcnpj.length === 14) && (password.length >= 6) && validate(typedcnpj) ? false : true}
+                disabled={(typedcnpj.length === 18) && (password.length >= 6) && validate(typedcnpj) ? false : true}
                 containerStyle={{
-                    opacity: (typedcnpj.length === 14) && (password.length >= 6) && validate(typedcnpj) ? 1 : .4,
+                    opacity: (typedcnpj.length === 18) && (password.length >= 6) && validate(typedcnpj) ? 1 : .4,
                 }}
-                style={[styles.nextButton, { backgroundColor: (typedcnpj.length === 14) && (password.length >= 6) && validate(typedcnpj) ? '#FEC044' : '#FEC044', }]}>
-                <Text style={[styles.nextText, { color: (typedcnpj.length === 14) && (password.length >= 6) && validate(typedcnpj) ? 'white' : 'white', }]}>Entrar</Text>
+                style={styles.nextButton}>
+                <Text style={styles.nextText}>Entrar</Text>
             </TouchableOpacity>
             <View style={styles.divLinks}>
                 <TouchableOpacity onPress={() => navigation.navigate('CNPJScreen')}>

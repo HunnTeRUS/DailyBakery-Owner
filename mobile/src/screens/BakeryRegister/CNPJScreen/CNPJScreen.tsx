@@ -9,6 +9,7 @@ import ModalPopupInfos from '../../../components/ModalPopup/ModalPopupInfo/Modal
 import { validate } from 'cnpj'
 import ModalPopupLoading from '../../../components/ModalPopup/ModalPopupLoading/ModalPopupLoading';
 import {useNetInfo} from '@react-native-community/netinfo';
+import CNPJMask, {removeCnpjMask} from '../../../components/CNPJMask'
 
 const FirstScreenRegister = () => {
     const [typedCnpj, setTypedcnpj] = useState('')
@@ -26,7 +27,7 @@ const FirstScreenRegister = () => {
         }
         
         setShowLoading(true)
-        await findCnpjService(typedCnpj).then(response => {
+        await findCnpjService(removeCnpjMask(typedCnpj)).then(response => {
             if ((response.error === "" || response.error === undefined || response.error === null) && (response.cnpj !== "" && response.cnpj !== undefined && response.cnpj !== null)) {
                 setShowLoading(false)
                 navigation.navigate('FirstScreenRegister', { cnpj: typedCnpj });
@@ -52,10 +53,10 @@ const FirstScreenRegister = () => {
                         <Text style={styles.title}>Seja bem vindo ao nosso app!</Text>
                         <Text style={styles.subTitle}>Para começar seu cadastro, informe o CNPJ da sua padaria.</Text>
                         <Text style={styles.text}>CNPJ</Text>
-                        <TextInput icon="briefcase" maxLength={14} validator={text => {
-                             var textFormated = text.replace(/[^0-9]/g, '');
+                        <TextInput icon="briefcase" maxLength={18} validator={text => {
+                             var textFormated = CNPJMask(text)
                              setTypedcnpj(textFormated); 
-                             return (textFormated.length === 14 && validate(textFormated))
+                             return (textFormated.length === 18 && validate(textFormated))
                         }} value={typedCnpj} placeholder="Digite o CNPJ da sua padaria" keyboardType="number-pad" />
                         <Text style={[styles.subTitle, { marginTop: '5%' }]}>
                             Seu CNPJ será usado apenas para validação de sua padaria e para acesso ao app</Text>
@@ -63,9 +64,9 @@ const FirstScreenRegister = () => {
                     <View style={styles.thirdContainer}>
                         <TouchableOpacity style={styles.nextButton}
                             containerStyle={{
-                                opacity: (typedCnpj.length === 14) && (validate(typedCnpj)) ? 1 : .4,
+                                opacity: (typedCnpj.length === 18) && (validate(typedCnpj)) ? 1 : .4,
                             }}
-                            disabled={typedCnpj.length === 14 && validate(typedCnpj) ? false : true} onPress={() => pressButton()}>
+                            disabled={typedCnpj.length === 18 && validate(typedCnpj) ? false : true} onPress={() => pressButton()}>
                             <Text style={styles.nextText}>Próximo</Text>
                         </TouchableOpacity>
                     </View>

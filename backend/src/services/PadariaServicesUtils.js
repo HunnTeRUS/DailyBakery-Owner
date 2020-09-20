@@ -100,7 +100,7 @@ module.exports = {
                     codigoEnviado: code,
                 });
             } else {
-                return response.status(404).json({ error: "Email invalido" });
+                return response.status(404).json({ error: "CNPJ invalido ou não encontrado" });
             }
 
         } catch (e) {

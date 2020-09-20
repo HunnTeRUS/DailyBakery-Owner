@@ -9,7 +9,7 @@ import ModalPopupWarns from '../../components/ModalPopup/ModalPopupWarn/ModalPop
 import sendVerificationEmailServices from '../../services/ForgotPasswordServices/ForgotPasswordServices'
 import { validate, format } from 'cnpj';
 import {useNetInfo} from '@react-native-community/netinfo';
-
+import CNPJMask, {removeCnpjMask} from '../../components/CNPJMask'
 const ForgotPassword = () => {
 
     const [typedcnpj, setTypedcnpj] = useState("")
@@ -32,7 +32,7 @@ const ForgotPassword = () => {
 
             setShowLoading(true)
 
-            await sendVerificationEmailServices(typedcnpj).then(response => {
+            await sendVerificationEmailServices(removeCnpjMask(typedcnpj)).then(response => {
                 if(response.error !== "" && response.error !== undefined && response.error !== null){
                     setShowLoading(false)
                     setTextToShowError(response.error ? response.error : "")
@@ -69,15 +69,24 @@ const ForgotPassword = () => {
                 <View style={styles.inputs}>
                     <Text style={styles.text}>CNPJ</Text>
                     <TextInput selectionColor='#FEC044'
-                        icon="briefcase" placeholder="Digite o CNPJ da sua padaria" keyboardType="number-pad"
-                        validator={text => { setTypedcnpj(text); return ((text.length === 14) && (validate(text))) }} value={typedcnpj} autoCapitalize="none" />
+                        icon="briefcase" 
+                        placeholder="Digite o CNPJ da sua padaria" 
+                        keyboardType="number-pad"
+                        validator={text => {
+                            var textFormated = CNPJMask(text)
+                            setTypedcnpj(textFormated); 
+                            return (textFormated.length === 18 && validate(textFormated))
+                        }}
+                        value={typedcnpj} 
+                        maxLength={18}
+                        autoCapitalize="none" />
                     <Text style={styles.infos}>Você receberá um e-mail com um codigo para prosseguir com a {'\n'}alteração de sua senha</Text>
                 </View>
             </KeyboardAvoidingView>
             <TouchableOpacity
-                disabled={typedcnpj.length === 14 ? false : true}
+                disabled={typedcnpj.length === 18 ? false : true}
                 containerStyle={{
-                    opacity: ((typedcnpj.length === 14) && (validate(typedcnpj))) ? 1 : .4,
+                    opacity: ((typedcnpj.length === 18) && (validate(typedcnpj))) ? 1 : .4,
                 }}
                 onPress={() => {
                     pressButton();
