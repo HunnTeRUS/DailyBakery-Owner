@@ -5,6 +5,7 @@ import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
 import styles from './styles';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import RegisterInterface from '../../../services/Utils/RegisterInterface';
+import {textMask} from '../../../components/InputMasks'
 
 const ThirdScreenRegister = () => {
     const navigation = useNavigation();
@@ -89,10 +90,10 @@ const ThirdScreenRegister = () => {
                         <Text style={styles.text}>Estado (UF)</Text>
                         <TextInput icon="map-pin" maxLength={2} validator={text => {
                             if (!count4) {
-                                text = routeParams.estado as string
+                                text = textMask(routeParams.estado as string)
                                 setCount4(true)
                             }
-                            setState(text);
+                            setState(textMask(text));
                             return stateValidator(text)
                         }} value={state} placeholder="Estado onde a padaria está localizada" />
                         <TouchableOpacity style={styles.nextButton}

@@ -10,6 +10,7 @@ import ModalPopupInfos from '../../../../components/ModalPopup/ModalPopupInfo/Mo
 import changeAddressService from '../../../../services/ChangeAddressServices/ChangeAddressService';
 import { KeyboardAvoidingView } from 'react-native';
 import ModalPopupInterrogs from '../../../../components/ModalPopup/ModalPopupInterrog/ModalPopupInterrogs';
+import {textMask, removeMask} from '../../../../components/InputMasks'
 
 const ChangeAdress = () => {
     const navigation = useNavigation();
@@ -135,10 +136,10 @@ const ChangeAdress = () => {
                     <TextInput
                         icon="map-pin" maxLength={2} numberOfLines={1}  validator={text => {
                             if (!count4) {
-                                text = routeParams.estado as string
+                                text = textMask(routeParams.estado as string)
                                 setCount4(true)
                             }
-                            setState(text);
+                            setState(textMask(text));
                             return stateValidator(text)
                         }}
                         style={styles.inputState}

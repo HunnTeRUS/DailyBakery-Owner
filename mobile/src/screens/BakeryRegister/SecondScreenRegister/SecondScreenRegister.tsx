@@ -9,6 +9,7 @@ import ModalPopupInfos from '../../../components/ModalPopup/ModalPopupInfo/Modal
 import RegisterInterface from '../../../services/Utils/RegisterInterface';
 import ModalPopupLoading from '../../../components/ModalPopup/ModalPopupLoading/ModalPopupLoading';
 import {useNetInfo} from '@react-native-community/netinfo';
+import {cepMask, removeMask, numberMask} from '../../../components/InputMasks'
 
 const SecondScreenRegister = () => {
     const [showLoading, setLoading] = useState(false);
@@ -26,7 +27,7 @@ const SecondScreenRegister = () => {
         name.length > 2;
 
     const cepValidator = (cep: string) =>
-        cep.length === 8;
+        cep.length === 9;
 
     const numberValidator = (number: string) =>
         number.length >= 1;
@@ -44,7 +45,7 @@ const SecondScreenRegister = () => {
         }
         setLoading(true);
 
-        await FindCEPService(typedCep, number).then(response => {
+        await FindCEPService(removeMask(typedCep), number).then(response => {
             setLoading(false);
             if (response.error === "" || response.error === undefined || response.error === null) {
                 navigation.navigate('ThirdScreenRegister', 
@@ -52,7 +53,7 @@ const SecondScreenRegister = () => {
                         cnpj: routeParams.cnpj,
                         senha: routeParams.senha,
                         email: routeParams.email,
-                        cep: response.cep,
+                        cep: removeMask(response.cep),
                         nome: name,
                         numero: number,
                         rua: response.logradouro,
@@ -86,13 +87,17 @@ const SecondScreenRegister = () => {
                         <Text style={styles.text}>Por qual nome sua padaria é conhecida?</Text>
                         <TextInput icon="coffee" validator={text => { setName(text); return nameValidator(text) }} placeholder="Digite o nome da sua padaria" />
                         <Text style={styles.text}>CEP da sua padaria</Text>
-                        <TextInput icon="hash" maxLength={8} validator={text => {
-                            var textFormated = text.replace(/[^0-9]/g, '');
+                        <TextInput icon="hash" maxLength={9} validator={text => {
+                            var textFormated = cepMask(text)
                             setTypedCep(textFormated);
                             return cepValidator(textFormated);
-                        }} placeholder="Digite o CEP da sua padaria" keyboardType="number-pad" />
+                        }} placeholder="Digite o CEP da sua padaria" value={typedCep}  keyboardType="number-pad" />
                         <Text style={styles.text}>Número</Text>
-                        <TextInput icon="hash" validator={text => { setNumber(text); return numberValidator(text) }} placeholder="Digite o número onde fica a padaria" keyboardType="number-pad" />
+                        <TextInput icon="hash"
+                            validator={text => { setNumber(numberMask(text)); return numberValidator(text) }}
+                            placeholder="Digite o número onde fica a padaria"
+                            keyboardType="number-pad"
+                            value={number} />
                         <TouchableOpacity style={styles.nextButton}
                             disabled={submitButtonValidator() ? false : true}
                             onPress={() => {

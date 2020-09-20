@@ -9,7 +9,7 @@ import ModalPopupWarns from '../../components/ModalPopup/ModalPopupWarn/ModalPop
 import sendVerificationEmailServices from '../../services/ForgotPasswordServices/ForgotPasswordServices'
 import { validate, format } from 'cnpj';
 import {useNetInfo} from '@react-native-community/netinfo';
-import CNPJMask, {removeCnpjMask} from '../../components/CNPJMask'
+import CNPJMask, {removeMask} from '../../components/InputMasks'
 const ForgotPassword = () => {
 
     const [typedcnpj, setTypedcnpj] = useState("")
@@ -32,7 +32,7 @@ const ForgotPassword = () => {
 
             setShowLoading(true)
 
-            await sendVerificationEmailServices(removeCnpjMask(typedcnpj)).then(response => {
+            await sendVerificationEmailServices(removeMask(typedcnpj)).then(response => {
                 if(response.error !== "" && response.error !== undefined && response.error !== null){
                     setShowLoading(false)
                     setTextToShowError(response.error ? response.error : "")

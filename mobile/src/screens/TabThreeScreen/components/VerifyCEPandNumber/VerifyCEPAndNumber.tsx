@@ -9,9 +9,10 @@ import ModalPopupInfos from '../../../../components/ModalPopup/ModalPopupInfo/Mo
 import { KeyboardAvoidingView } from 'react-native';
 import findCEP from '../../../../dao/FindCEP';
 import FindCEPService from '../../../../services/CepService/CepService';
+import {cepMask, numberMask, removeMask} from '../../../../components/InputMasks'
 
 const cepValidator = (cep: string) =>
-    cep.length === 8;
+    cep.length === 9;
 
 const numberValidator = (number: string) =>
     number.length >= 1;
@@ -28,7 +29,7 @@ const VerifyCEPAndNumber = () => {
     }
 
     async function pressButton() {
-        await FindCEPService(typedCep, number).then(Response => {
+        await FindCEPService(removeMask(typedCep), number).then(Response => {
             setLoading(false);
 
             if (Response.error === "" || Response.error === undefined || Response.error === null) {
@@ -69,15 +70,16 @@ const VerifyCEPAndNumber = () => {
                             icon='hash'
                             validator={
                                 text => {
-                                    var textFormated = text.replace(/[^0-9]/g, '');
+                                    var textFormated = cepMask(text)
                                     setTypedCep(textFormated);
                                     return cepValidator(textFormated);
                                 }}
                             style={styles.inputCep}
+                            value={typedCep}
                             placeholder="Somente números"
                             placeholderTextColor="#999"
                             autoCapitalize="characters"
-                            maxLength={8}
+                            maxLength={9}
                             textContentType="postalCode"
                             keyboardType="number-pad"
                             selectionColor="#FEC044"
@@ -86,8 +88,9 @@ const VerifyCEPAndNumber = () => {
                         <Text style={styles.textNumber}>Número</Text>
                         <TextInput
                             icon='hash'
-                            validator={text => { setNumber(text); return numberValidator(text) }}
+                            validator={text => { setNumber(numberMask(text)); return numberValidator(text) }}
                             style={styles.inputNumber}
+                            value={number}
                             placeholder="Numero do estabelecimento"
                             placeholderTextColor="#999"
                             autoCapitalize="characters"

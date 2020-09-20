@@ -1,25 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { Modal, View, Text, AsyncStorage } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text } from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler'
 import styles from './styles'
 import TextInput from '../../../components/TextInput'
-import ModalPopupInfos from '../../../components/ModalPopup/ModalPopupInfo/ModalPopupInfos'
 import { useNavigation, useRoute } from '@react-navigation/native'
-import UserInterface from '../../../services/Utils/UserInterface'
-import changeContactInfoServices from '../../../services/ChangeContactInfoServices/ChangeContactInfoServices'
 import RegisterInterface from '../../../services/Utils/RegisterInterface';
 import RegisterService from '../../../services/Register/RegisterService';
 import ModalPopupWarns from '../../../components/ModalPopup/ModalPopupWarn/ModalPopupWarns'
 import ModalPopupLoading from '../../../components/ModalPopup/ModalPopupLoading/ModalPopupLoading'
 import {useNetInfo} from '@react-native-community/netinfo';
+import {celPhoneMask, telphoneMask, removeMask} from '../../../components/InputMasks'
 
 export default function ChangeContactInfo() {
     const [show, setShow] = useState(false);
     const [showLoading, setLoading] = useState(false);
     const [textToShow, setTextToShow] = useState('');
 
-    const phoneValidator = (phone: string) => phone.length === 11;
-    const telValidator = (phone: string) => {if(phone)return phone.length === 10; else return true;};
+    const phoneValidator = (phone: string) => phone.length === 15;
+    const telValidator = (phone: string) => {if(phone)return phone.length === 14; else return true;};
     const navigation = useNavigation();
     const route = useRoute();
     const routeParams: RegisterInterface = route.params as RegisterInterface
@@ -40,8 +38,8 @@ export default function ChangeContactInfo() {
             routeParams.nome as string,
             routeParams.email as string,
             routeParams.senha as string,
-            cellPhone as string,
-            phone as string,
+            removeMask(cellPhone as string),
+            removeMask(phone as string),
             routeParams.cnpj as string,
             routeParams.cep as string,
             routeParams.rua as string,
@@ -81,9 +79,30 @@ export default function ChangeContactInfo() {
             <View style={styles.secondContainer}>
                 <Text style={styles.title}>Adicione dados para contato</Text>
                 <Text style={styles.text}>Número de celular</Text>
-                <TextInput icon="smartphone" placeholder="Número do seu celular (com DDD)" value={cellPhone} validator={text => { setCellPhone(text); return phoneValidator(text); }} keyboardType="number-pad" />
+                <TextInput 
+                    icon="smartphone" 
+                    maxLength={15}
+                    placeholder="Número do seu celular (com DDD)" 
+                    value={cellPhone} 
+                    validator={
+                        text => { 
+                            setCellPhone(celPhoneMask(text)); 
+                            return phoneValidator(text); 
+                        }
+                    } 
+                    keyboardType="number-pad" />
                 <Text style={styles.textNumber}>Número de Telefone (opcional)</Text>
-                <TextInput icon="phone" placeholder="Número do seu telefone (com DDD)" value={phone} validator={text => { setPhone(text); return telValidator(text); }} keyboardType="number-pad" />
+                <TextInput icon="phone" 
+                    placeholder="Número do seu telefone (com DDD)"  
+                    maxLength={14}
+                    value={phone} 
+                    validator={
+                        text => { 
+                            setPhone(telphoneMask(text)); 
+                            return telValidator(text); 
+                        }
+                    } 
+                    keyboardType="number-pad" />
                 <TouchableOpacity disabled={(phoneValidator(cellPhone) && telValidator(phone)) ? false : true}
                     onPress={() => {
                         pressButton()

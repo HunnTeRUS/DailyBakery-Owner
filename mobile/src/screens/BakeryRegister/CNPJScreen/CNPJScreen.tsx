@@ -9,7 +9,7 @@ import ModalPopupInfos from '../../../components/ModalPopup/ModalPopupInfo/Modal
 import { validate } from 'cnpj'
 import ModalPopupLoading from '../../../components/ModalPopup/ModalPopupLoading/ModalPopupLoading';
 import {useNetInfo} from '@react-native-community/netinfo';
-import CNPJMask, {removeCnpjMask} from '../../../components/CNPJMask'
+import CNPJMask, {removeMask} from '../../../components/InputMasks'
 
 const FirstScreenRegister = () => {
     const [typedCnpj, setTypedcnpj] = useState('')
@@ -27,10 +27,10 @@ const FirstScreenRegister = () => {
         }
         
         setShowLoading(true)
-        await findCnpjService(removeCnpjMask(typedCnpj)).then(response => {
+        await findCnpjService(removeMask(typedCnpj)).then(response => {
             if ((response.error === "" || response.error === undefined || response.error === null) && (response.cnpj !== "" && response.cnpj !== undefined && response.cnpj !== null)) {
                 setShowLoading(false)
-                navigation.navigate('FirstScreenRegister', { cnpj: typedCnpj });
+                navigation.navigate('FirstScreenRegister', { cnpj: removeMask(typedCnpj) });
             }
             else {
                 setShowLoading(false)

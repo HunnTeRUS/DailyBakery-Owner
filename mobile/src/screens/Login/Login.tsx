@@ -12,7 +12,7 @@ import verifyToken from '../../services/AuthServices/AuthServices'
 import { validate } from 'cnpj'
 import getLoggedUser, { removeLoggedUser } from '../../services/Utils/LoggedUser'
 import {useNetInfo} from '@react-native-community/netinfo';
-import CNPJMask, {removeCnpjMask} from '../../components/CNPJMask'
+import CNPJMask, {removeMask} from '../../components/InputMasks'
 
 const Login = () => {
     const [typedcnpj, setCnpj] = useState("");
@@ -83,7 +83,7 @@ const Login = () => {
         }
 
         let loggedUser: UserInterface = {}
-        await verifyLoginCredentialsService(removeCnpjMask(typedcnpj), password).then(response => {
+        await verifyLoginCredentialsService(removeMask(typedcnpj), password).then(response => {
             if (response.error === "" || response.error === undefined || response.error === null) {
                 setLoggedUserInLocalStorage(response);
 

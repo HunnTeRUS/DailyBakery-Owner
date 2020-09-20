@@ -9,11 +9,12 @@ import changeContactInfoServices from '../../services/ChangeContactInfoServices/
 import ModalPopupLoading from '../../components/ModalPopup/ModalPopupLoading/ModalPopupLoading';
 import getLoggedUser, { setAndChangeLoggedUser } from '../../services/Utils/LoggedUser';
 import ModalPopupInterrogs from '../../components/ModalPopup/ModalPopupInterrog/ModalPopupInterrogs';
+import {celPhoneMask,telphoneMask, removeMask} from '../../components/InputMasks'
 
 export default function ChangeContactInfo() {
     const [show, setShow] = useState(false);
-    const phoneValidator = (phone: string) => { return phone.length === 11 ? true : false };
-    const telValidator = (phone: string) => { if (phone) return phone.length === 10; else return true; }
+    const phoneValidator = (phone: string) => { return phone.length === 15 ? true : false };
+    const telValidator = (phone: string) => { if (phone) return phone.length === 14; else return true; }
     const navigation = useNavigation();
     const [phone, setPhone] = useState('')
     const [celPhone, setCelPhone] = useState('')
@@ -27,8 +28,8 @@ export default function ChangeContactInfo() {
     useEffect(() => {
         const num = async () => {
             const obj = await getLoggedUser();
-            setPhone(obj?.numero_telefone ? obj?.numero_telefone : "");
-            setCelPhone(obj?.numero_celular ? obj?.numero_celular : "");
+            setPhone(telphoneMask(obj?.numero_telefone ? obj?.numero_telefone : ""));
+            setCelPhone(celPhoneMask(obj?.numero_celular ? obj?.numero_celular : ""));
         }
         num();
     }, []);
@@ -52,7 +53,7 @@ export default function ChangeContactInfo() {
 
     async function pressButtonAndChangeContactInfo(){
         setShowLoading(true);
-        await changeContactInfoServices(celPhone, phone).then(response => {
+        await changeContactInfoServices(removeMask(celPhone), removeMask(phone)).then(response => {
             if(response.error === "" || response.error === undefined || response.error === null){
                 updateNumberLoggedUser();
                 setShowLoading(false);
@@ -83,25 +84,27 @@ export default function ChangeContactInfo() {
                 <Text style={styles.subTitle}>Altere se necessário os seus dados de contato</Text>
 
                 <Text style={styles.textCep}>Número de celular</Text>
-                <TextInput icon="smartphone" placeholder="Número do seu celular (com DDD)" value={celPhone}
+                <TextInput icon="smartphone" maxLength={15} placeholder="Número do seu celular (com DDD)" value={celPhone}
                     validator={text => {
                         if (!valorParaGambiarra) {
-                            text = celPhone;
+                            text = celPhoneMask(celPhone);
                             setValorParaGambiarra(true)
                         }
-                        setCelPhone(text);
+                        setCelPhone(celPhoneMask(text));
                         return phoneValidator(text);
                     }
                     } keyboardType="number-pad" />
 
                 <Text style={styles.textNumber}>Número de Telefone (opcional)</Text>
-                <TextInput icon="phone" placeholder="Número do seu telefone (com DDD)" value={phone}
+                <TextInput icon="phone" placeholder="Número do seu telefone (com DDD)" 
+                    maxLength={14}
+                    value={phone}
                     validator={text => {
                         if (!valorParaGambiarra2) {
-                            text = phone;
+                            text = telphoneMask(phone);
                             setValorParaGambiarra2(true)
                         }
-                        setPhone(text);
+                        setPhone(telphoneMask(text));
                         return telValidator(text);
                     }
                     } keyboardType="number-pad" />
