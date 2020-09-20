@@ -32,14 +32,33 @@ const styles = StyleSheet.create({
   },
   icon: {
   },
+  textInactive: {
+    color: "#E8EDFF"
+  },
   activeIcon: {
   },
   novaFornadaText: {
     textAlign: "center",
     fontFamily: 'Poppins-Bold',
     marginTop: '5%',
-    marginBottom: "3%",
     fontSize: 17,
+  },
+
+  novaFornadaTextInfo: {
+    textAlign: "center",
+    fontFamily: 'Poppins-Bold',
+    marginTop: '1%',
+    marginBottom: "3%",
+    color: '#BAA6A6',
+    fontSize: 16,
+  },
+
+  novaFornadaTextInfoWarn: {
+    textAlign: "center",
+    marginTop: '1%',
+    marginBottom: "3%",
+    color: '#FEC044',
+    fontSize: 16,
   },
 
   novaFornadaTextDeion: {
@@ -55,7 +74,6 @@ const styles = StyleSheet.create({
     color: '#FEC044',
 
   },
-
 
   novaFornadaTextWarn: {
     textAlign: "center",
@@ -104,6 +122,9 @@ export default ({ changeTextInfo, progress }: ButtonProps) => {
   const [active, setActive] = useState(false); //TA FALSEEEEE
   const [text, setText] = useState("Notificar clientes sobre nova fornada:")
   const [textInfo, setTextInfo] = useState("Os clientes que pediram para serem \n notificados receberão o aviso!")
+  const [textWarn1, setTextWarn1] = useState("Clique e segure")
+  const [textWarn2, setTextWarn2] = useState(" o botão abaixo\n para notifica-los")
+
   const [show, setShow] = useState(false);
   const [showLoading, setShowLoading] = useState(false)
   const [textError, setTextError] = useState("")
@@ -200,11 +221,15 @@ export default ({ changeTextInfo, progress }: ButtonProps) => {
   }
 
   async function changeAndDo() {
-    await newFornada();
-    await changeLastBatchValue();
+    setTextWarn1("")
+    setTextWarn2("")
     setTextInfo("Você poderá notificar seus clientes novamente dentro de 4 minutos!")
     setText("Seus clientes foram notificados!")
+    await newFornada();
+    await changeLastBatchValue();
     setTimeout(() => {
+      setTextWarn1("Clique e segure")
+      setTextWarn2(" o botão abaixo\n para notifica-los")
       setText("Notificar clientes sobre nova fornada:")
       setActive(false)
       setTextInfo("Os clientes que pediram para serem \n notificados receberão o aviso!")
@@ -226,6 +251,7 @@ export default ({ changeTextInfo, progress }: ButtonProps) => {
       {!show ? <></> : <ModalPopupWarns textToShow={textError} showModal={show} setShow={setShow} />}
       <View style={{ width: 400 }}>
         <Text style={styles.novaFornadaText}>{text}</Text>
+        <Text style={!active ? styles.novaFornadaTextInfo : styles.textInactive}><Text style={!active ? styles.novaFornadaTextInfoWarn : styles.textInactive}>{textWarn1}</Text>{textWarn2}</Text>
         <View style={{ alignSelf: "center" }}>
           <CircularProgress
             radius={SIZE / 2}
