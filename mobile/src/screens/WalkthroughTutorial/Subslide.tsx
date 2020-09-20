@@ -30,6 +30,9 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
+        alignItems: 'center',
+        alignContent: 'center',
+        alignSelf: "auto"
     },
     dualButtonAux: {
         width: '20%'
@@ -49,10 +52,6 @@ const Subslide = ({text, last, onPress, onPressSkip}: SubslideProps) => {
         <View style={styles.container}>
             <Text style={styles.text}>{text}</Text>
             <View style={styles.dualButton}>
-                <SkipButton enabled={last ? false : true} label={"Pular"} {...{onPressSkip}}></SkipButton>
-                
-                {last ? <View/>:<View style={styles.dualButtonAux}/> }
-            
                 <Comecar label={last ? "Começar": "Próximo"} {...{onPress}}></Comecar>
             </View>
         </View>
