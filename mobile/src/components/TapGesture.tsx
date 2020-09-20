@@ -9,8 +9,7 @@ import changeOpenedClosedBakery from '../services/CloseBakeryServices/CloseBaker
 import getLoggedUser, { setAndChangeLoggedUser } from '../services/Utils/LoggedUser'
 import ModalPopupWarns from '../components/ModalPopup/ModalPopupWarn/ModalPopupWarns'
 import ModalPopupLoading from "./ModalPopup/ModalPopupLoading/ModalPopupLoading";
-import newFornadaServices from "../services/NewFornadaServices/NewFornadaServices";
-import LastFornada from './LastFornada'
+import CloseBakery from '../components/CloseBakery'
 
 const styles = StyleSheet.create({
   container: {
@@ -128,9 +127,7 @@ export default () => {
           </Animated.View>
         </TapGestureHandler>
       </View>
-      <TouchableOpacity style={styles.toCloseBakery} onPress={() => closeBakery()}>
-        <Text style={styles.toCloseBakeryText}>Fechar Padaria</Text>
-      </TouchableOpacity>
+      <CloseBakery/>
     </View>
   );
 };
