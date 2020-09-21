@@ -132,29 +132,23 @@ const style = StyleSheet.create({
   imagem: {
     height: 50,
     display: 'flex',
-    alignSelf: 'center',
     width: 130,
   },
   container: {
     flexDirection: 'row',
     display: 'flex',
-    alignContent: 'center',
     flex: 1,
-    position: 'relative',
-    right: '60%',
   },
   imagemHome: {
     height: 50,
-    alignSelf: 'center',
     width: 130,
-    marginLeft: '20%'
+    marginLeft: "18%"
   },
   containerHome: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    alignContent: 'center'
   },
   textHeader: {
     alignSelf: 'center',

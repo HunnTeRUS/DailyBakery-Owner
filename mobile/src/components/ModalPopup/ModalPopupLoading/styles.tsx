@@ -12,6 +12,7 @@ export default StyleSheet.create({
         backgroundColor: '#ffffff',
         margin: 50,
         padding: 40,
+        alignSelf: "center",
         maxWidth: 350,
         borderRadius: 10,
     },

@@ -80,7 +80,7 @@ const ForgotPassword = () => {
                         value={typedcnpj} 
                         maxLength={18}
                         autoCapitalize="none" />
-                    <Text style={styles.infos}>Você receberá um e-mail com um codigo para prosseguir com a {'\n'}alteração de sua senha</Text>
+                    <Text style={styles.infos}>Você receberá um e-mail com um codigo para prosseguir com a alteração de sua senha</Text>
                 </View>
             </KeyboardAvoidingView>
             <TouchableOpacity

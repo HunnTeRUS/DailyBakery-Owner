@@ -13,6 +13,7 @@ export default StyleSheet.create({
         margin: 50,
         padding: 40,
         maxWidth: 350,
+        alignSelf: "center",
         borderRadius: 10,
     },
 

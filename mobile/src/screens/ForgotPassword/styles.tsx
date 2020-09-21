@@ -27,6 +27,8 @@ export default StyleSheet.create({
     },
     image: {
         marginTop: 30 ,
+        resizeMode: 'contain',
+        alignSelf: "center"
     },
     infos: {
         fontSize: 16,

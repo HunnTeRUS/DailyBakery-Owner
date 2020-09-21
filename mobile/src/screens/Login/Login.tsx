@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { View, Image, Text, KeyboardAvoidingView, AsyncStorage, BackHandler } from 'react-native'
 import { useNavigation, useFocusEffect } from '@react-navigation/native'
 import TextInput from '../../components/TextInput'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
 import verifyLoginCredentialsService from '../../services/Login/LoginService'
 import ModalPopupWarns from '../../components/ModalPopup/ModalPopupWarn/ModalPopupWarns'
 import ModalPopupLoading from '../../components/ModalPopup/ModalPopupLoading/ModalPopupLoading'
@@ -116,12 +116,11 @@ const Login = () => {
     WalkthroughOrHome();
 
     return (
-
         <View style={styles.container}>
             {!show ? <></> : <ModalPopupWarns textToShow={textToShow} showModal={show} setShow={setShow} />}
             {!showLoading ? <></> : <ModalPopupLoading showModal={showLoading} />}
             <KeyboardAvoidingView behavior="position">
-                <Image source={require('../../../assets/images/owner1.png')} style={styles.image} />
+                <Image resizeMode="contain" source={require('../../../assets/images/owner1.png')} style={styles.image} />
                 <View style={styles.inputs}>
                     <Text style={styles.text}>CNPJ</Text>
                     <TextInput icon="user" placeholder="Digite seu CNPJ"

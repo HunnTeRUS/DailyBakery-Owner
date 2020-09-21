@@ -10,7 +10,8 @@ export default StyleSheet.create({
 
     subcontainer: {
         backgroundColor: '#ffffff',
-        margin: 50,
+        margin: 30,
+        alignSelf: "center",
         padding: 40,
         maxWidth: 350,
         borderRadius: 10,

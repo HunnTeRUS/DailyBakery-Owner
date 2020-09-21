@@ -21,13 +21,13 @@ export default StyleSheet.create({
     inputs: {
         margin: 4,
         alignItems: "baseline",
-        width: '90%',
+        width: '80%',
         alignSelf: 'center',
         marginBottom: 20,
     },
     image: {
         marginTop: height / 8,
-
+        height: "30%",
     },
     divLinks: {
         flexDirection: "column",

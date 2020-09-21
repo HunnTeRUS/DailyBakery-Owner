@@ -32,7 +32,7 @@ export default StyleSheet.create({
     box: {
         height: '80%',
         width: '100%',
-        paddingTop: '20%',
+        paddingTop: '5%',
         justifyContent: 'flex-start',
         alignItems: 'center'
     },
