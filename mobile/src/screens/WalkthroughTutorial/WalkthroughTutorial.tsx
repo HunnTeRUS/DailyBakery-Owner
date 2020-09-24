@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#DCDCDC",
+        width: width
     },
     slider: {
         borderBottomRightRadius: 75,
