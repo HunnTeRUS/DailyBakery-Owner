@@ -6,7 +6,7 @@ import TabOneScreen from '../screens/TabOneScreen/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen/TabTwoScreen';
 import TabThreeScreen from '../screens/TabThreeScreen/TabThreeScreen';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList } from '../../types';
-import { Image, StyleSheet, View, Text} from 'react-native'
+import { Image, StyleSheet, View, Text, StatusBar} from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
@@ -20,9 +20,9 @@ export default function BottomTabNavigator() {
         {
           activeTintColor: '#FFCF6E',
           inactiveTintColor: 'white',
+          keyboardHidesTabBar: true,
           style: {
-            borderTopColor: '#CDCCCE',
-            backgroundColor: '#D6DCF3'
+            backgroundColor: "#d3d3d3",
           }
         }
       }
@@ -65,16 +65,14 @@ function TabOneNavigator() {
         name="TabOneScreen"
         component={TabOneScreen}
         options={{
-          headerTitle: () => (
-              <>
-                <View style={style.container}><Image resizeMode="contain" style={style.imagem} source={require('../../assets/images/owner1.png')} />
-                <Text style={style.textHeader}>Meu Perfil</Text></View>
-              </>
-            ),
-          headerStyle: {
-            backgroundColor: '#E8EDFF',
-          },
-          headerLeft: () => (<></>),
+          header: () => (
+            <View style={style.container}>
+              <View style={style.containerCenter}>
+                <Image resizeMode="contain" style={style.imagem} source={require('../../assets/images/owner1.png')} />
+                <Text style={style.textHeader}>Meu perfil</Text>
+              </View>
+            </View>
+          )
         }}
       />
     </TabOneStack.Navigator>
@@ -92,16 +90,17 @@ function TabTwoNavigator() {
         name="TabTwoScreen"
         component={TabTwoScreen}
         options={{
-          headerTitle: () => (
+          header: () => (
             <View style={style.containerHome}>
-              <Image resizeMode="contain" style={style.imagemHome} source={require('../../assets/images/owner1.png')} />
-              <Feather onPress={() => navigation.navigate('WalkthroughTutorial')} style={style.helpIcon} name="help-circle" size={25} />
+              <View style={style.containerPic}>
+                <Image resizeMode="contain" style={style.imagemHome} source={require('../../assets/images/owner1.png')} />
+              </View>
+              <View style={style.containerIcon}>
+                <Feather onPress={() => navigation.navigate('WalkthroughTutorial')} style={style.helpIcon} name="help-circle" size={25} />
+              </View>
             </View>
           ),
-          headerStyle: {
-            backgroundColor: '#E8EDFF',
-          },
-          headerLeft: () => (<></>),
+          animationEnabled: true,
         }}
       />
     </TabTwoStack.Navigator>
@@ -117,11 +116,14 @@ function TabThreeNavigator() {
         name="TabThreeScreen"
         component={TabThreeScreen}
         options={{
-          headerTitle: () => (<><View style={style.container}><Image resizeMode="contain" style={style.imagem} source={require('../../assets/images/owner1.png')} /><Text style={style.textHeader}>Minha padaria</Text></View></>),
-          headerStyle: {
-            backgroundColor: '#E8EDFF'
-          },
-          headerLeft: () => (<></>),
+          header: () => (
+            <View style={style.container}>
+              <View style={style.containerCenter}>
+                <Image resizeMode="contain" style={style.imagem} source={require('../../assets/images/owner1.png')} />
+                <Text style={style.textHeader}>Minha padaria</Text>
+              </View>
+            </View>
+          )
         }}
       />
     </TabThreeStack.Navigator>
@@ -131,23 +133,47 @@ function TabThreeNavigator() {
 const style = StyleSheet.create({
   imagem: {
     height: 50,
-    display: 'flex',
     width: 130,
+    alignSelf: "center",
+  },
+  containerCenter:{
+    flexDirection: "row",
+    marginRight: "10%",
+    paddingVertical: 4
   },
   container: {
-    flexDirection: 'row',
+    marginTop: StatusBar.currentHeight,
+    backgroundColor: "#E8EDFF",
+    borderBottomWidth: 2,
+    borderBottomColor: "#D3D3D3",
     display: 'flex',
+    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+  containerPic: {
+    width: "90%",
+    alignItems: 'center'
+  },
+  containerIcon:{
     flex: 1,
   },
   imagemHome: {
     height: 50,
     width: 130,
-    marginLeft: "18%"
+    marginLeft: "10%"
+  },
+  helpIcon: {
+    alignSelf: "center"
   },
   containerHome: {
+    marginTop: StatusBar.currentHeight,
+    backgroundColor: "#E8EDFF",
+    borderBottomWidth: 2,
+    borderBottomColor: "#D3D3D3",
+    paddingVertical: 4,
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
   },
   textHeader: {
@@ -157,6 +183,4 @@ const style = StyleSheet.create({
     fontSize: 17,
     color: '#8A8986'
   },
-  helpIcon: {
-  }
 })
