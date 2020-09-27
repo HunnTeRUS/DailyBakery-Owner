@@ -14,7 +14,6 @@ module.exports = {
     async updateLastBatch(request, response) {
         const { ultima_fornada } = request.body;
         const { cnpj } = request.query;
-        console.log(ultima_fornada, cnpj)
         let updated;
 
         if (!CNPJValidation.validarCNPJ(cnpj))
@@ -126,8 +125,6 @@ module.exports = {
     async updatePhoneNumber(request, response) {
         const cnpj = request.query.cnpj;
         const { numero_celular, numero_telefone } = request.body;
-
-        console.log(numero_celular, numero_telefone)
 
         if (!CNPJValidation.validarCNPJ(cnpj))
             return response.status(400).json({ error: "CNPJ inválido" });

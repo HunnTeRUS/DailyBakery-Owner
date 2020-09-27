@@ -30,6 +30,8 @@ export default async function changeAddressDAO(cnpj: string, token: string, cep:
       cnpj: cnpj
     }
   }).catch(error => {
+    console.log(error.response.data.message ? error.response.data.message : error.response.data.error)
+
     obj = {
       error: error.response.data.message ? error.response.data.message : error.response.data.error
     }

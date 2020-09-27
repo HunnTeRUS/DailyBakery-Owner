@@ -9,7 +9,6 @@ module.exports = {
 
         //Como na API é recebida a latitude e longitude, é necessario pegar separado do objeto e 
         //transformar em um objeto location para colocar dentro d objeto para inserção no DB
-        console.log(request.body);
         const { latitude, longitude } = request.body;
         PadariaDTO = request.body;
 
@@ -137,6 +136,7 @@ module.exports = {
         return response.json({ padarias });
     },
 
+    //ENDPOINT de login
     async bakeryLogin(request, response, options) {
         const { cnpj, senha } = request.body;
 

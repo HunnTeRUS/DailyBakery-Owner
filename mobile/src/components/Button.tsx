@@ -137,7 +137,6 @@ export default ({ changeTextInfo, progress }: ButtonProps) => {
 
   useEffect(() => {
     if(active) {
-      console.log("ACTIVE")
       changeAndDo()
     }
   }, [active])

@@ -34,6 +34,7 @@ export default async function findCEP(cep: string, number: string, cnpj: string)
       error: ""
     }
   }).catch(error => {
+    console.log(error.response.data.message ? error.response.data.message : error.response.data.error)
     obj = {
       error: error.response.data.message ? error.response.data.message : error.response.data.error
     };

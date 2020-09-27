@@ -70,6 +70,5 @@ export default async function register(nome: string,email: string,senha: string,
       }
     })
 
-    console.log("\n" + obj);
   return obj;
 }

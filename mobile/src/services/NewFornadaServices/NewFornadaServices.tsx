@@ -7,7 +7,6 @@ export default async function newFornadaServices(ultima_fornada: Date) {
 
     if (!ultima_fornada){
         objResponse.error = "Data é obrigatoria"
-        console.log("Data é obrigatoria")
         return objResponse;
     }
 

@@ -23,6 +23,7 @@ export default async function changePasswordDAO(token: string, cnpj: string, abe
             cnpj: cnpj
         }
     }).catch(error => {
+        console.log(error.response.data.message ? error.response.data.message : error.response.data.error)
         obj = {
             error: error.response.data.message ? error.response.data.message : error.response.data.error
         }

@@ -22,6 +22,7 @@ export default async function newFornadaDAO(cnpj: string, token: string, ultima_
             cnpj: cnpj
         }
     }).catch(error => {
+        console.log(error.response.data.message ? error.response.data.message : error.response.data.error)
         obj = {
             error: error.response.data.message ? error.response.data.message : error.response.data.error,
         }

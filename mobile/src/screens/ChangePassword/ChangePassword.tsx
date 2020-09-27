@@ -40,7 +40,6 @@ export default function ChangePassword() {
 
     async function changePass() {
         if(!netInfo.isConnected){
-            console.log("sem internet")
             setErrorMessageForModal('Você precisa estar conectado à internet para usar esta funcionalidade.')
             setShowWarn(true)
             return;
