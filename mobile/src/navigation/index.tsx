@@ -51,7 +51,7 @@ function RootNavigator() {
             animationEnabled: true,
             headerTintColor: '#FEC044',
             headerStyle: {
-              backgroundColor: '#E8EDFF',
+              backgroundColor: "#ffe9c1",
               elevation: 0,
               shadowOpacity: 0,
               borderBottomWidth: 0,
@@ -84,7 +84,7 @@ function RootNavigator() {
           elevation: 0,
           shadowOpacity: 0,
           borderBottomWidth: 0,
-          backgroundColor: '#E8EDFF'
+          backgroundColor: "#ffe9c1",
         },
         headerLeft: () => (<></>),
         animationEnabled: true,
@@ -97,7 +97,7 @@ function RootNavigator() {
           elevation: 0,
           shadowOpacity: 0,
           borderBottomWidth: 0,
-          backgroundColor: '#E8EDFF'
+          backgroundColor: "#ffe9c1",
         },
         animationEnabled: true,
         headerTintColor: '#FEC044',
@@ -109,7 +109,7 @@ function RootNavigator() {
           elevation: 0,
           shadowOpacity: 0,
           borderBottomWidth: 0,
-          backgroundColor: '#E8EDFF'
+          backgroundColor: "#ffe9c1",
         },
         animationEnabled: true,
         headerTintColor: '#FEC044',
@@ -122,7 +122,7 @@ function RootNavigator() {
           elevation: 0,
           shadowOpacity: 0,
           borderBottomWidth: 0,
-          backgroundColor: '#F4EEEE'
+          backgroundColor: "#F4EEEE",
         },
         animationEnabled: true,
         headerTintColor: '#FEC044',

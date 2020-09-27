@@ -33,7 +33,7 @@ export default function TabOneScreen() {
             <Text style={styles.nextText}>Alterar minha senha</Text>
           </TouchableOpacity>
 
-          <View style={{justifyContent: 'flex-end', width: '100%', alignItems: 'center', flex: 1, backgroundColor: '#E8EDFF', marginBottom: '15%'}}>
+          <View style={{justifyContent: 'flex-end', width: '100%', alignItems: 'center', flex: 1, backgroundColor: "#ffe9c1", marginBottom: '15%'}}>
             <TouchableOpacity disabled={false} style={[styles.nextButton, styles.logoutButton]} onPress={() => {setShowWarn(true)}}>
               <Feather size={16} name="log-out" style={styles.iconUser}/>
               <Text style={styles.nextText}>Sair</Text>

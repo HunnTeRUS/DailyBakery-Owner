@@ -22,7 +22,7 @@ export default function BottomTabNavigator() {
           inactiveTintColor: 'white',
           keyboardHidesTabBar: true,
           style: {
-            backgroundColor: "#d3d3d3",
+            backgroundColor: "#A0522D",
           }
         }
       }
@@ -142,8 +142,7 @@ const style = StyleSheet.create({
     paddingVertical: 4
   },
   container: {
-    marginTop: StatusBar.currentHeight,
-    backgroundColor: "#E8EDFF",
+    backgroundColor: "#A0522D",
     borderBottomWidth: 2,
     borderBottomColor: "#D3D3D3",
     display: 'flex',
@@ -164,11 +163,11 @@ const style = StyleSheet.create({
     marginLeft: "10%"
   },
   helpIcon: {
-    alignSelf: "center"
+    alignSelf: "center",
+    color: "white"
   },
   containerHome: {
-    marginTop: StatusBar.currentHeight,
-    backgroundColor: "#E8EDFF",
+    backgroundColor: "#A0522D",
     borderBottomWidth: 2,
     borderBottomColor: "#D3D3D3",
     paddingVertical: 4,
@@ -181,6 +180,6 @@ const style = StyleSheet.create({
     display: 'flex',
     fontWeight: 'bold',
     fontSize: 17,
-    color: '#8A8986'
+    color: 'white'
   },
 })

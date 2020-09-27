@@ -23,7 +23,6 @@ export default StyleSheet.create({
         alignItems: "baseline",
         width: '80%',
         alignSelf: 'center',
-        marginBottom: 20,
     },
     image: {
         marginTop: height / 8,
@@ -42,7 +41,6 @@ export default StyleSheet.create({
         borderRadius: 6,
         height: 45,
         width: 150,
-        marginTop: '1%',
         alignItems: 'center',
         justifyContent: 'center',
         alignSelf: 'center'

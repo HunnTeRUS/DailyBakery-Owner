@@ -10,11 +10,12 @@ import getLoggedUser, { setAndChangeLoggedUser } from '../services/Utils/LoggedU
 import ModalPopupWarns from '../components/ModalPopup/ModalPopupWarn/ModalPopupWarns'
 import ModalPopupLoading from "./ModalPopup/ModalPopupLoading/ModalPopupLoading";
 import CloseBakery from '../components/CloseBakery'
+import { StatusBar } from "react-native";
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#E8EDFF",
+    backgroundColor: "#ffe9c1",
     display: 'flex',
   },
 
@@ -66,6 +67,7 @@ const styles = StyleSheet.create({
 });
 
 export default () => {
+  StatusBar.setBackgroundColor("#A0522D", true)
   const navigation = useNavigation();
   const state = new Value(State.UNDETERMINED);
   const gestureHandler = onGestureEvent({ state: state });

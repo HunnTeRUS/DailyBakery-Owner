@@ -1,12 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import { StyleSheet, View, Text, TouchableOpacity, BackHandler, Animated, Button } from "react-native";
-import { State, TapGestureHandler } from "react-native-gesture-handler";
-import { Value, eq, cond } from "react-native-reanimated";
-import { onGestureEvent, withTransition, mix } from "react-native-redash";
+import { StyleSheet, Text, TouchableOpacity} from "react-native";
 import changeOpenedClosedBakery from "../services/CloseBakeryServices/CloseBakeryServices";
 import getLoggedUser, { setAndChangeLoggedUser } from "../services/Utils/LoggedUser";
-import ModalPopupLoading from "./ModalPopup/ModalPopupLoading/ModalPopupLoading";
 
 const styles = StyleSheet.create({
   toCloseBakery: {

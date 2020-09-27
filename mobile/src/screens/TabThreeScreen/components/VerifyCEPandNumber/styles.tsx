@@ -4,7 +4,7 @@ const width = Dimensions.get("window").width;
 export default StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#E8EDFF",
+        backgroundColor: "#ffe9c1",
         display: 'flex',
         justifyContent: 'center',
         alignContent: 'center'
@@ -17,7 +17,7 @@ export default StyleSheet.create({
         display: 'flex',
         alignItems: 'center',
         alignContent: 'center',
-        backgroundColor: "#E8EDFF",
+        backgroundColor: "#ffe9c1",
       },
       title: {
         fontSize: 17,
@@ -30,7 +30,7 @@ export default StyleSheet.create({
       subTitle: {
         fontSize: 14,
         marginTop: '3%',
-        color: '#BAA6A6',
+        color: '#939393',
         textAlign: 'center',
         fontFamily: 'Poppins-Regular',
       },

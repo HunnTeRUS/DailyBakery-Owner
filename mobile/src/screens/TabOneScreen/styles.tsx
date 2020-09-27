@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native'
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#E8EDFF",
+    backgroundColor: "#ffe9c1",
     display: 'flex',
     justifyContent: 'center',
     alignContent: 'center'
@@ -15,7 +15,7 @@ export default StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     alignContent: 'center',
-    backgroundColor: "#E8EDFF",
+    backgroundColor: "#ffe9c1",
   },
   title: {
     fontSize: 18,
@@ -27,7 +27,7 @@ export default StyleSheet.create({
   subTitle: {
     fontSize: 15,
     marginTop: '3%',
-    color: '#BAA6A6',
+    color: '#939393',
     textAlign: 'center',
     fontFamily: 'Poppins-Regular',
   },
@@ -51,6 +51,6 @@ export default StyleSheet.create({
     color:'white'
   },
   logoutButton:{
-    backgroundColor: 'red',
+    backgroundColor: '#7e7e7e',
   }
 });

@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Bold',
     marginTop: '1%',
     marginBottom: "3%",
-    color: '#BAA6A6',
+    color: '#939393',
     fontSize: 16,
   },
 
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: '1%',
     marginBottom: "3%",
-    color: '#FEC044',
+    color: '#A0522D',
     fontSize: 16,
   },
 
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
 
   ultimaFornadaTextLabel: {
     fontWeight: 'bold',
-    color: '#FEC044',
+    color: '#A0522D',
 
   },
 
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
   },
 
   viewOfFornadasAux: {
-    backgroundColor: '#c7c5c540',
+    backgroundColor: '#c7c5c530',
     marginTop: '7%',
     padding: 20,
     width: '50%',
@@ -102,14 +102,14 @@ const styles = StyleSheet.create({
 
   clockIcon: {
     marginRight: '3%',
-    color: '#FEC044',
+    color: '#A0522D',
     alignSelf: 'center'
   },
 
   ultimaFornadaText: {
     textAlign: "center",
     fontFamily: 'Poppins-Regular',
-    color: '#BAA6A6'
+    color: '#939393'
   },
 });
 

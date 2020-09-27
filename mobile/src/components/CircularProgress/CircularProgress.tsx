@@ -30,7 +30,7 @@ export default ({ progress, bg, fg, radius }: CircularProgressProps) => {
   return (
     <>
       <View style={{ zIndex: 1 }}>
-        <HalfCircle color={fg} {...{ radius }} />
+        <HalfCircle color={"#A0522D"} {...{ radius }} />
         <Animated.View
           style={{
             ...StyleSheet.absoluteFillObject,

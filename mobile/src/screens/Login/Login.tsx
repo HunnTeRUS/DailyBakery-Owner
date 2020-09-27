@@ -13,6 +13,7 @@ import { validate } from 'cnpj'
 import getLoggedUser, { removeLoggedUser } from '../../services/Utils/LoggedUser'
 import {useNetInfo} from '@react-native-community/netinfo';
 import CNPJMask, {removeMask} from '../../components/InputMasks'
+import { StatusBar } from 'react-native'
 
 const Login = () => {
     const [typedcnpj, setCnpj] = useState("");
@@ -21,7 +22,8 @@ const Login = () => {
     const navigation = useNavigation();
     const [showLoading, setShowLoading] = useState(false)
     const [textToShow, setTextToShow] = useState('CNPJ ou senha inválidos!')
-
+    StatusBar.setHidden(true);
+    
     const netInfo = useNetInfo();
 
     const WalkthroughOrHome = async () => {

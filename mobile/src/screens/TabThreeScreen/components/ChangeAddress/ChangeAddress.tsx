@@ -151,7 +151,7 @@ const ChangeAdress = () => {
                         value={state}
                     />
 
-                    <View style={{marginTop: "15%", backgroundColor: "#E8EDFF",}}>
+                    <View style={{marginTop: "15%", backgroundColor: "#ffe9c1",}}>
                         <TouchableOpacity
                             disabled={submitValidator() ? false : true}
                             style={styles.nextButton}
