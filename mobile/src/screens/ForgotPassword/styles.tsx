@@ -1,5 +1,6 @@
-import {StyleSheet} from 'react-native'
+import {Dimensions, StyleSheet} from 'react-native'
 
+const { height, width } = Dimensions.get('window');
 
 export default StyleSheet.create({
     container: {
@@ -26,9 +27,9 @@ export default StyleSheet.create({
         marginBottom: 35
     },
     image: {
-        marginTop: 30 ,
-        resizeMode: 'contain',
-        alignSelf: "center"
+        alignSelf: "center",
+        marginTop: height / 10,
+        height: "28%",
     },
     infos: {
         fontSize: 16,

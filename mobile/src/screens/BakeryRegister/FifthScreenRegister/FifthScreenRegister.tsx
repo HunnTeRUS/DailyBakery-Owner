@@ -41,16 +41,14 @@ const FifthScreenRegister = () => {
     }
     return (
         <View style={styles.container}>
-            <ScrollView>
-                <View style={styles.secondContainer}>
-                    <Baker />
-                    <Text style={styles.title}>Cadastro criado com sucesso!</Text>
-                    <Text style={styles.subTitle}>Seu cadastro foi criado com sucesso. Clique no botão abaixo para acessar o app!</Text>
-                    <TouchableOpacity disabled={false} style={styles.nextButton} onPress={() => pressButton()}>
-                        <Text style={styles.nextText}>Iniciar</Text>
-                    </TouchableOpacity>
-                </View>
-            </ScrollView>
+            <View style={styles.secondContainer}>
+                <Baker />
+                <Text style={styles.title}>Cadastro criado com sucesso!</Text>
+                <Text style={styles.subTitle}>Seu cadastro foi criado com sucesso. Clique no botão abaixo para acessar o app!</Text>
+                <TouchableOpacity style={styles.nextButton} onPress={() => pressButton()}>
+                    <Text style={styles.nextText}>Iniciar</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     )
 }

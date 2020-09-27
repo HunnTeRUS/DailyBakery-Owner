@@ -121,7 +121,7 @@ const Login = () => {
         <View style={styles.container}>
             {!show ? <></> : <ModalPopupWarns textToShow={textToShow} showModal={show} setShow={setShow} />}
             {!showLoading ? <></> : <ModalPopupLoading showModal={showLoading} />}
-            <KeyboardAvoidingView behavior="position">
+            <KeyboardAvoidingView behavior="position" style={{marginBottom: "-8%"}}>
                 <Image resizeMode="contain" source={require('../../../assets/images/owner1.png')} style={styles.image} />
                 <View style={styles.inputs}>
                     <Text style={styles.text}>CNPJ</Text>
@@ -140,15 +140,21 @@ const Login = () => {
                         validator={text => { setPassword(text); return text.length >= 6; }} />
                 </View>
             </KeyboardAvoidingView>
-            <TouchableOpacity onPress={() => {
-                setShowLoading(true);
-                pressButton()
-            }
-            }
-                disabled={(typedcnpj.length === 18) && (password.length >= 6) && validate(typedcnpj) ? false : true}
-                containerStyle={{
+            <TouchableOpacity 
+                onPress={() => {
+                    setShowLoading(true);
+                    pressButton()
+                    }
+                }
+                disabled={
+                    (typedcnpj.length === 18) && (password.length >= 6)
+                     && validate(typedcnpj) ? false : true
+                }
+                containerStyle={
+                    {
                     opacity: (typedcnpj.length === 18) && (password.length >= 6) && validate(typedcnpj) ? 1 : .4,
-                }}
+                    }
+                }
                 style={styles.nextButton}>
                 <Text style={styles.nextText}>Entrar</Text>
             </TouchableOpacity>

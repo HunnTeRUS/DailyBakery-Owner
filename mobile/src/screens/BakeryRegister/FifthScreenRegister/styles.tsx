@@ -9,13 +9,11 @@ export default StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     alignContent: 'center',
-    alignSelf: 'auto'
   },
   secondContainer: {
     height: '90%',
     width: '80%',
-    alignSelf: 'auto',
-    paddingLeft: '5%',
+    alignSelf: 'center',
     display: 'flex',
     alignItems: 'center',
     alignContent: 'center',
@@ -30,7 +28,7 @@ export default StyleSheet.create({
     marginTop: '-15%'
   },
   subTitle: {
-    fontSize: 14,
+    fontSize: 16,
     marginTop: '3%',
     color: '#BAA6A6',
     textAlign: 'center',
@@ -39,12 +37,12 @@ export default StyleSheet.create({
 
   nextButton: {
     backgroundColor: '#FEC044',
+    marginTop: '15%',
     borderRadius: 6,
     height: 40,
     width: '55%',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: '20%'
   },
 
   nextText: {

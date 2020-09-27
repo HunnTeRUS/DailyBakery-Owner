@@ -78,7 +78,7 @@ export default function ChangePassword() {
 
     return (
         <View style={styles.container}>
-            {!show ? <></> : <ModalPopupInfos onPressCloseButton={() => { navigation.navigate('Root') }} textToShow='Sua senha foi alterada com sucesso!' showModal={show} setShow={setShow} />}
+            {!show ? <></> : <ModalPopupInfos onPressCloseButton={() => { navigation.navigate('BottomTabNavigator') }} textToShow='Sua senha foi alterada com sucesso!' showModal={show} setShow={setShow} />}
             {!showWarn ? <></> : <ModalPopupWarns functionToButton={() => { }} textToShow={errorMessageForModal} showModal={showWarn} setShow={setShowWarn} />}
             {!showLoading ? <></> : <ModalPopupLoading showModal={showLoading} />}
             {!showAsk ? <></> : <ModalPopupInterrogs functionToYesButton={changePass} textToTitle='Alterar senha'

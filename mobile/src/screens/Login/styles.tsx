@@ -7,7 +7,7 @@ export default StyleSheet.create({
         height: height,
         width: width,
         backgroundColor: "#F4EEEE",
-        alignItems: "center"
+        alignItems: "center",
     },
     text: {
         marginTop: 25,

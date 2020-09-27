@@ -31,7 +31,7 @@ const Comecar = ({ label, onPress }: ComecarProps) => {
 
     if (label === 'Começar') {
         onPress = async () => {
-            navigation.navigate('Login');
+            navigation.navigate('BottomTabNavigator');
         }
     }
 

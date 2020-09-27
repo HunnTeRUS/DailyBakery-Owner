@@ -63,7 +63,7 @@ const ForgotPassword = () => {
             {!showLoading ? <></> : <ModalPopupLoading showModal={showLoading} />}
 
             <KeyboardAvoidingView behavior="position">
-                <Image source={require('../../../assets/images/owner1.png')} style={styles.image} />
+                <Image resizeMode="contain" source={require('../../../assets/images/owner1.png')} style={styles.image} />
                 <Text style={styles.title}>Recuperação de Senha</Text>
 
                 <View style={styles.inputs}>
