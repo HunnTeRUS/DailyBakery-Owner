@@ -41,16 +41,18 @@ const styles = StyleSheet.create({
 
 interface SubslideProps{
     text: string,
+    icon?: any,
     last?: boolean
     onPress: () => void;
     onPressSkip: () => void;
 }
 
 
-const Subslide = ({text, last, onPress, onPressSkip}: SubslideProps) => {
+const Subslide = ({icon, text, last, onPress, onPressSkip}: SubslideProps) => {
     return(
         <View style={styles.container}>
-            <Text style={styles.text}>{text}</Text>
+            <Text style={styles.text}>{text}{icon}</Text>
+            
             <View style={styles.dualButton}>
                 <Comecar label={last ? "Começar": "Próximo"} {...{onPress}}></Comecar>
             </View>

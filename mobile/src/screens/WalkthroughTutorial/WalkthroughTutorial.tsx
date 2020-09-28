@@ -7,15 +7,15 @@ import Subslide from "./Subslide";
 import Dots from './Components/Dots';
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useFocusEffect } from "@react-navigation/native";
-import { Feather } from "@expo/vector-icons";
+import { Feather, FontAwesome5 } from "@expo/vector-icons";
 
 const { width } = Dimensions.get("window");
 
 const tutorial = [
-    { picture: require("../../../assets/images/9.png"), label: "Minha Padaria", title: "Posso alterar informações da minha padaria?", text: "Você consegue alterar informações de endereço de sua padaria, basta clicar em (terceiro botão abaixo) dentro do app!", color: "#FFCF6E" },
-    { picture: require("../../../assets/images/7.png"), label: "Meu Perfil", title: "Onde Posso alterar meus dados?", text: "Você pode alterar alguns dados como por exemplo, endereço, senha, etc. na tela \"Meu perfil\" (bonequinho) basta digitar os novos dados e envia-los.", color: "#FFCF6E" },
-    { picture: require("../../../assets/images/6.png"), label: "Home", title: "Como notifico meus clientes?", text: "A tela principal de nosso aplicativo tem um botão em formato de um pão, no qual ao você segurar por 1 segundo você irá notificar todos os seus clientes sobre nova fornada.", color: "#FFCF6E" },
-    { picture: require("../../../assets/images/8.png"), label: "Ainda tenho dúvidas", title: "Sem problemas", text: "Você pode acessar esse tutorial quantas vezes quiser, basta clicar em (ícone de interrogação) no canto superior direito na tela inicial.", color: "#FFCF6E" },
+    { picture: require("../../../assets/images/9.png"), label: "Minha Padaria", title: "Posso alterar informações da minha padaria?", text: "Você consegue alterar informações de endereço de sua padaria, basta clicar em (minha padaria)", color: "#FFCF6E", icon: <FontAwesome5 name="industry" size={20}/> },
+    { picture: require("../../../assets/images/7.png"), label: "Meu Perfil", title: "Onde Posso alterar meus dados?", text: "Você pode alterar dados de contato e senha na tela \"Meu perfil\" basta digitar os novos dados e enviá-los, clique em (meu perfil)", color: "#FFCF6E", icon: <FontAwesome5 name="user" size={20}/> },
+    { picture: require("../../../assets/images/6.png"), label: "Home", title: "Como notifico meus clientes?", text: "A tela principal de nosso aplicativo tem um botão em formato de um pão, no qual ao você segurar por 1 segundo você irá notificar todos os seus clientes sobre nova fornada.", color: "#FFCF6E", },
+    { picture: require("../../../assets/images/8.png"), label: "Ainda tenho dúvidas", title: "Sem problemas", text: "Você pode acessar esse tutorial quantas vezes quiser, no canto superior direito na tela inicial clique em (tutorial)", color: "#FFCF6E", icon: <Feather name="help-circle" size={20} /> },
 ]
 const styles = StyleSheet.create({
     container: {
@@ -100,7 +100,7 @@ const WalkThroughTutorial = () => {
                     <Animated.View style={
                         { flexDirection: "row", width: width * slides.length, flex: 1, transform: [{ translateX: multiply(x, -1) }] }
                     }>
-                        {slides.map(({ text }, index) => (
+                        {slides.map(({ text, icon }, index) => (
                             <Subslide key={index} onPress={() => {
                                 if (scroll.current) {
                                     scroll.current.getNode().scrollTo({ x: width * (index + 1), animated: true });
@@ -110,7 +110,7 @@ const WalkThroughTutorial = () => {
                                     if (scroll.current) {
                                         scroll.current.getNode().scrollTo({ x: width * slides.length, animated: true });
                                     }
-                                }} />
+                                }} icon={icon} />
                         ))}
                     </Animated.View>
                 </View>
