@@ -2,9 +2,11 @@ const express = require('express');
 const routes = require('./routes');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate')
+const cors = require('cors')
 
 //Criando uma instancia do express pra variavel app conduzir o sistema
 const app = express();
+app.use(cors());
 
 //Criando um buscador para variaveis de ambiente
 require('dotenv').config('../.env');
