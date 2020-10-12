@@ -1,7 +1,6 @@
 const { Router } = require('express');
 const routes = Router();
 const PadariaServices = require('./services/PadariaServices');
-const UserService = requier('./services/UserService');
 const ApiValidations = require('./services/utils/ApiValidations');
 const PadariaServicesUtils = require('./services/PadariaServicesUtils');
 const VerifyToken = require('./services/Authentication/VerifyToken');
@@ -35,21 +34,5 @@ routes.put('/updateBakeryAddress', VerifyToken, ApiValidations.updateBakeryAddre
 routes.post('/getAddressByCep', ApiValidations.getAddressByCep(), PadariaServicesUtils.getAddressByCep);
 
 routes.get('/verifyCnpj', ApiValidations.getCnpjFromWs(), PadariaServicesUtils.getCnpjFromWs);
-
-
-/*******************************************************************************************************************/
-
-
-routes.post('/userRegister', ApiValidations.userRegister(), UserService.createUser);
-
-routes.post('/userLogin', ApiValidations.loginUser(), UserService.loginUser);
-
-routes.post('/userForgotPassword', ApiValidations.forgotPassword(), UserService.forgotPassword);
-
-routes.put('/userUpdatePassword', ApiValidations.updatePassword(), UserService.updatePassword);
-
-routes.put('/userUpdatePhoneNumber', ApiValidations.updatePhoneNumber(), UserService.updatePhoneNumber);
-
-routes.put('/userUpdateName', ApiValidations.updateName(), UserService.updateName);
 
 module.exports = routes;
