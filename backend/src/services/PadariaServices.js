@@ -73,7 +73,7 @@ module.exports = {
         //Pega variavel pela query: localhost:3333/listBakeryByName?nome=PadariaDoZé
         const nome = req.query.nome;
 
-        const padarias = await Padaria.find({ "nome": nome });
+        const padarias = await Padaria.find({ "nome": new RegExp("^"+ nome)})
 
         if (padarias) {
             for (var i = 0; i < padarias.length; i++) {
@@ -85,6 +85,22 @@ module.exports = {
 
         res.json({ padarias });
     },
+
+    async getBakeryById(req, res) {
+        const _id = req.query._id;
+
+        const padaria = await Padaria.findOne({ "_id": _id})
+
+        if (padaria) {
+            padaria.email = null;
+            padaria.cnpj = null;
+            padaria.senha = null;
+            res.status(200).json({ padaria });
+        }
+
+        else res.status(404).json({});
+    },
+
 
     async findBakeryByCNPJ(req, res) {
         //Pega variavel pela query: localhost:3333/listBakeryByName?nome=PadariaDoZé

@@ -42,6 +42,14 @@ module.exports = {
         });
     },
 
+    getBakeryById() {
+        return celebrate({
+            [Segments.QUERY]: Joi.object().keys({
+                _id: Joi.string().required()
+            })
+        });
+    },
+
     findBakeryByCNPJ() {
         return celebrate({
             [Segments.QUERY]: Joi.object().keys({
