@@ -9,6 +9,8 @@ routes.post('/insertBakery', ApiValidations.validateBakeryInsertion(), PadariaSe
 
 routes.get('/listBakery', PadariaServices.listBakery);
 
+routes.post('/listBakeryByListIds', ApiValidations.listBakeryByIds(), PadariaServices.listBakeryByListIds);
+
 routes.get('/listBakeryByName', ApiValidations.listBakeryByName(), PadariaServices.listBakeryByName);
 
 routes.post('/bakeryLogin', ApiValidations.bakeryLogin(), PadariaServices.bakeryLogin);
