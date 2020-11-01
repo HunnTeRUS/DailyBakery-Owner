@@ -11,7 +11,6 @@ import ModalPopupWarns from '../components/ModalPopup/ModalPopupWarn/ModalPopupW
 import ModalPopupLoading from "./ModalPopup/ModalPopupLoading/ModalPopupLoading";
 import CloseBakery from '../components/CloseBakery'
 import { StatusBar } from "react-native";
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
