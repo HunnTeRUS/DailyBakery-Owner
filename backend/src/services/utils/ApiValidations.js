@@ -168,7 +168,7 @@ module.exports = {
     getCnpjFromWs() {
         return celebrate({
             [Segments.QUERY]: Joi.object().keys({
-                _id: Joi.string().required(),
+                cnpj: Joi.string().required(),
             }),
         });
     },

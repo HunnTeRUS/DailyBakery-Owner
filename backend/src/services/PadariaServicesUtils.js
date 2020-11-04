@@ -167,15 +167,15 @@ module.exports = {
     },
 
     async getCnpjFromWs(request, response) {
-        const { _id } = request.query;
+        const { cnpj } = request.query;
         let bakery, situacao;
 
-        bakery = await Padaria.findOne({ "_id": _id });
+        bakery = await Padaria.findOne({ "cnpj": cnpj });
 
         if (bakery) {
             return response.status(400).json({ error: "Já existe um cadastro dessa padaria em nossa base" });
         }
-        axios.get(`https://www.receitaws.com.br/v1/cnpj/${bakery.cnpj}`, {
+        axios.get(`https://www.receitaws.com.br/v1/cnpj/${cnpj}`, {
                 headers: { "Authorization": 'Bearer ' + process.env.TOKEN_WS }
             })
             .then(responseAPI => {
