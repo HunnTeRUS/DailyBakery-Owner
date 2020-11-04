@@ -1,8 +1,8 @@
 import api from '../../services/api'
 import ChangeContactInfoDAOInterface from './ChangeContactInfoDAOInterface';
 
-export default async function changeContactInfoDAO(cnpj: string, token: string, numero_celular?: string, numero_telefone?: string) {
-    if (!numero_celular || !cnpj)
+export default async function changeContactInfoDAO(_id: string, token: string, numero_celular?: string, numero_telefone?: string) {
+    if (!numero_celular || !_id)
         throw "CNPJ e/ou numero de celular não podem ser vazios."
 
     var data = {};
@@ -28,7 +28,7 @@ export default async function changeContactInfoDAO(cnpj: string, token: string, 
             'x-auth-token': token
         },
         params: {
-            cnpj: cnpj
+            _id: _id
         }
     }).catch(error => {
         console.log(error.response.data.message ? error.response.data.message : error.response.data.error)

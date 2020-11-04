@@ -1,7 +1,7 @@
 import api from '../../services/api'
 import NewFornadaDAOInterface from './NewFornadaDAOInterface';
 
-export default async function newFornadaDAO(cnpj: string, token: string, ultima_fornada: Date) {
+export default async function newFornadaDAO(_id: string, token: string, ultima_fornada: Date) {
     if (!ultima_fornada)
         throw "Data e hora da fornada não podem ser vazias."
 
@@ -19,7 +19,7 @@ export default async function newFornadaDAO(cnpj: string, token: string, ultima_
             'x-auth-token': token
         },
         params: {
-            cnpj: cnpj
+            _id: _id
         }
     }).catch(error => {
         console.log(error.response.data.message ? error.response.data.message : error.response.data.error)

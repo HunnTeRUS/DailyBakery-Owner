@@ -1,8 +1,8 @@
 import api from '../services/api'
 import CepInterface from '../services/Utils/CepInterface';
 
-export default async function changeAddressDAO(cnpj: string, token: string, cep: string, street: string, neighbourhood: string, state: string, city: string, latitude: string, longitude: string, number: string,) {
-  if (!cnpj || !token || !cep || !street || !neighbourhood || !state || !city || !number || !latitude || !longitude ) {
+export default async function changeAddressDAO(_id: string, token: string, cep: string, street: string, neighbourhood: string, state: string, city: string, latitude: string, longitude: string, number: string,) {
+  if (!_id || !token || !cep || !street || !neighbourhood || !state || !city || !number || !latitude || !longitude ) {
     throw "CNPJ e/ou numero de celular não podem ser vazios."
   }
 
@@ -27,7 +27,7 @@ export default async function changeAddressDAO(cnpj: string, token: string, cep:
       'x-auth-token': token
     },
     params: {
-      cnpj: cnpj
+      _id: _id
     }
   }).catch(error => {
     console.log(error.response.data.message ? error.response.data.message : error.response.data.error)

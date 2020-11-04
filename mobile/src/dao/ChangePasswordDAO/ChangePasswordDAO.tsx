@@ -1,7 +1,7 @@
 import api from '../../services/api'
 import ChangePasswordDAOInterface from './ChangePasswordDAOInterface'
 
-export default async function changePasswordDAO(email: string, cnpj: string, newPass: string) {
+export default async function changePasswordDAO(email: string, _id: string, newPass: string) {
     if (!email) {
         throw "Email não pode ser vazio";
     }
@@ -10,7 +10,7 @@ export default async function changePasswordDAO(email: string, cnpj: string, new
 
     await api.post('/updatePassword', {
         email: email,
-        cnpj: cnpj,
+        _id: _id,
         novaSenha: newPass
     }).catch(error=> {
         console.log(error.response.data.message ? error.response.data.message : error.response.data.error)

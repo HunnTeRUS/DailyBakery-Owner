@@ -7,14 +7,13 @@ export default async function FindCEPService(cep: string, number: string) {
     throw "CEP não pode ser vazio"
   }
   const userObj = await getLoggedUser();
-  let cnpj = userObj.cnpj
+  let _id = userObj._id
   let obj: CepInterface = {}
-  await findCep(cep, number, cnpj as string).then(
+  await findCep(cep, number, _id as string).then(
     response => {
       obj = response;
     }
   )
 
-  
   return obj;
 }

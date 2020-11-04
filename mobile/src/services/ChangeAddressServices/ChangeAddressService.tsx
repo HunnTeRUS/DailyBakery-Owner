@@ -12,8 +12,8 @@ export default async function ChangeAdressService( cep: string, street: string, 
 
     const obj = await getLoggedUser();
 
-    if(obj?.cnpj && obj?.token)
-        await ChangeAdress(obj.cnpj ? obj.cnpj : "", obj.token ? obj.token : "", cep, street, neighbourhood, state, city, latitude, longitude, number)
+    if(obj?._id && obj?.token)
+        await ChangeAdress(obj._id ? obj._id : "", obj.token ? obj.token : "", cep, street, neighbourhood, state, city, latitude, longitude, number)
         .then(response => {
             objResponse = response;
         });

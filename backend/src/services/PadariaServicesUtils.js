@@ -13,16 +13,13 @@ module.exports = {
     //Altera o horario/dia da ultima fornada
     async updateLastBatch(request, response) {
         const { ultima_fornada } = request.body;
-        const { cnpj } = request.query;
+        const { _id } = request.query;
         let updated;
 
-        if (!CNPJValidation.validarCNPJ(cnpj))
-            return response.status(400).json({ Erro: "CNPJ inválido" });
-
         try {
-            await Padaria.updateOne({ "cnpj": cnpj }, { "ultima_fornada": ultima_fornada });
+            await Padaria.updateOne({ "_id": _id }, { "ultima_fornada": ultima_fornada });
 
-            updated = await Padaria.findOne({ "cnpj": cnpj });
+            updated = await Padaria.findOne({ "_id": _id });
 
             if (!updated) {
                 return response.status(400).json({ Erro: "CNPJ incorreto" });
@@ -37,17 +34,14 @@ module.exports = {
 
     //Altera o status da padaria: aberto/fechado
     async updateOpenedOrClosed(request, response) {
-        const { cnpj } = request.query;
+        const { _id } = request.query;
         const { aberto_fechado } = request.body;
         let updated;
 
-        if (!CNPJValidation.validarCNPJ(cnpj))
-            return response.status(400).json({ Erro: "CNPJ inválido" });
-
         try {
-            await Padaria.updateOne({ cnpj: cnpj }, { aberto_fechado: aberto_fechado });
+            await Padaria.updateOne({ _id: _id }, { aberto_fechado: aberto_fechado });
 
-            updated = await Padaria.findOne({ "cnpj": cnpj });
+            updated = await Padaria.findOne({ "_id": _id });
 
             if (!updated) {
                 return response.status(400).json({ error: "CNPJ incorreto" });
@@ -60,17 +54,14 @@ module.exports = {
     },
 
     async updatePassword(request, response) {
-        const { cnpj, email, novaSenha } = request.body;
-
-        if (!CNPJValidation.validarCNPJ(cnpj))
-            return response.status(400).json({ error: "CNPJ inválido" });
+        const { _id, email, novaSenha } = request.body;
 
         try {
-            const user = await Padaria.findOne({ cnpj: cnpj, email: email });
+            const user = await Padaria.findOne({ _id: _id, email: email });
 
             if (user) {
                 const novaSenhaCrypt = String(cryp.encrypt(novaSenha));
-                await Padaria.updateOne({ "cnpj": cnpj, "email": email }, { "senha": novaSenhaCrypt });
+                await Padaria.updateOne({ "_id": _id, "email": email }, { "senha": novaSenhaCrypt });
                 return response.status(200).json();
             }
 
@@ -108,13 +99,12 @@ module.exports = {
     },
 
     async updateAddress(request, response) {
-        const { cnpj } = request.query;
+        const { _id } = request.query;
         const { cep, rua, numero, bairro, cidade, estado, latitude, longitude } = request.body;
         const data_atualizacao = new Date();
 
-        if (!CNPJValidation.validarCNPJ(cnpj)) { return response.status(400).json({ error: "CNPJ inválido" }); }
         try {
-            await Padaria.updateOne({ "cnpj": cnpj }, { "cep": cep, "rua": rua, "numero": numero, "bairro": bairro, "cidade": cidade, "estado": estado, "longitude": longitude, "latitude": latitude, "tempo_espera": data_atualizacao });
+            await Padaria.updateOne({ "_id": _id }, { "cep": cep, "rua": rua, "numero": numero, "bairro": bairro, "cidade": cidade, "estado": estado, "longitude": longitude, "latitude": latitude, "tempo_espera": data_atualizacao });
 
             return response.status(200).json();
         } catch (error) {
@@ -123,18 +113,15 @@ module.exports = {
     },
 
     async updatePhoneNumber(request, response) {
-        const cnpj = request.query.cnpj;
+        const _id = request.query._id;
         const { numero_celular, numero_telefone } = request.body;
-
-        if (!CNPJValidation.validarCNPJ(cnpj))
-            return response.status(400).json({ error: "CNPJ inválido" });
 
         try {
             if ((numero_celular != null && numero_celular != "") && (numero_telefone != null && numero_telefone != ""))
-                await Padaria.updateOne({ "cnpj": cnpj }, { "numero_celular": numero_celular, "numero_telefone": numero_telefone });
+                await Padaria.updateOne({ "_id": _id }, { "numero_celular": numero_celular, "numero_telefone": numero_telefone });
 
             else if ((numero_telefone === undefined || numero_telefone === null || numero_telefone === ""))
-                await Padaria.updateOne({ "cnpj": cnpj }, { "numero_celular": numero_celular, 'numero_telefone': "" });
+                await Padaria.updateOne({ "_id": _id }, { "numero_celular": numero_celular, 'numero_telefone': "" });
 
             response.status(200).json();
 
@@ -147,12 +134,11 @@ module.exports = {
 
 
     async getAddressByCep(request, response) {
-        const { cep, numero, cnpj } = request.body;
-        if (cnpj) {
-            await Padaria.findOne({ "cnpj": cnpj }).then(resp => {
-                if (!CoolDownVerify.CoolDown(resp.tempo_espera)) { return response.status(406).json({ error: "Endereço alterado recentemente" }); }
-            })
-        }
+        const { cep, numero, _id } = request.body;
+
+        await Padaria.findOne({ "_id": _id }).then(resp => {
+            if (!CoolDownVerify.CoolDown(resp.tempo_espera)) { return response.status(406).json({ error: "Endereço alterado recentemente" }); }
+        })
         await axios.get('https://www.cepaberto.com/api/v3/cep', {
                 headers: { "Authorization": 'Token token=b8589b52d467c9c5ded3c65c244b4fe6' },
                 params: { cep: cep }
@@ -181,15 +167,15 @@ module.exports = {
     },
 
     async getCnpjFromWs(request, response) {
-        const { cnpj } = request.query;
+        const { _id } = request.query;
         let bakery, situacao;
 
-        bakery = await Padaria.findOne({ "cnpj": cnpj });
+        bakery = await Padaria.findOne({ "_id": _id });
 
         if (bakery) {
             return response.status(400).json({ error: "Já existe um cadastro dessa padaria em nossa base" });
         }
-        axios.get(`https://www.receitaws.com.br/v1/cnpj/${cnpj}`, {
+        axios.get(`https://www.receitaws.com.br/v1/cnpj/${bakery.cnpj}`, {
                 headers: { "Authorization": 'Bearer ' + process.env.TOKEN_WS }
             })
             .then(responseAPI => {

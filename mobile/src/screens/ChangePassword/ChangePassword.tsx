@@ -48,7 +48,7 @@ export default function ChangePassword() {
         setShowLoading(true)
         const loggedUser = await getLoggedUser();
         if (loggedUser?.senha === oldPass) {
-            await sendVerificationEmailServices(loggedUser.email ? loggedUser.email : "", loggedUser.cnpj ? loggedUser.cnpj : "", newPassConfirmation)
+            await sendVerificationEmailServices(loggedUser.email ? loggedUser.email : "", loggedUser._id ? loggedUser._id : "", newPassConfirmation)
                 .then(response => {
                     if(response.error === "" || response.error === undefined || response.error === null){
                         loggedUser.senha = newPassConfirmation;

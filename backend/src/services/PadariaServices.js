@@ -72,11 +72,11 @@ module.exports = {
     async listBakeryByListIds(req, res) {
         let padarias;
 
-        if(!req.body.idList) {
+        if (!req.body.idList) {
             res.status(400).json({});
         }
 
-        padarias = await Padaria.find({'_id': { $in : req.body.idList}});
+        padarias = await Padaria.find({ '_id': { $in: req.body.idList } });
 
         if (padarias) {
             for (var i = 0; i < padarias.length; i++) {
@@ -86,14 +86,14 @@ module.exports = {
             }
         }
 
-        res.json( padarias );
+        res.json(padarias);
     },
 
     async listBakeryByName(req, res) {
         //Pega variavel pela query: localhost:3333/listBakeryByName?nome=PadariaDoZé
         const nome = req.query.nome;
 
-        const padarias = await Padaria.find({ "nome": new RegExp("^"+ nome)})
+        const padarias = await Padaria.find({ "nome": new RegExp("^" + nome) })
 
         if (padarias) {
             for (var i = 0; i < padarias.length; i++) {
@@ -109,27 +109,22 @@ module.exports = {
     async getBakeryById(req, res) {
         const _id = req.query._id;
 
-        const padaria = await Padaria.findOne({ "_id": _id})
+        const padaria = await Padaria.findOne({ "_id": _id })
 
         if (padaria) {
             padaria.email = null;
             padaria.cnpj = null;
             padaria.senha = null;
             res.status(200).json({ padaria });
-        }
-
-        else res.status(404).json({});
+        } else res.status(404).json({});
     },
 
 
     async findBakeryByCNPJ(req, res) {
         //Pega variavel pela query: localhost:3333/listBakeryByName?nome=PadariaDoZé
-        const cnpj = req.query.cnpj;
+        const _id = req.query._id;
 
-        if (!CNPJValidation.validarCNPJ(cnpj))
-            return response.status(400).json({ Erro: "CNPJ inválido" });
-
-        const padarias = await Padaria.find({ "cnpj": cnpj });
+        const padarias = await Padaria.find({ "_id": _id });
 
         if (padarias) {
             for (var i = 0; i < padarias.length; i++) {
@@ -137,6 +132,8 @@ module.exports = {
                 padarias[i].cnpj = null;
                 padarias[i].senha = null;
             }
+        } else {
+            return res.status(400).json({ error: "Padaria não encontrada!" })
         }
 
         res.json({ padarias });

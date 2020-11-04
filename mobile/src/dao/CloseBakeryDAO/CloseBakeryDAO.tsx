@@ -1,8 +1,8 @@
 import api from '../../services/api'
 import CloseBakeryDAOInterface from './CloseBakeryDAOInterface'
 
-export default async function changePasswordDAO(token: string, cnpj: string, aberto_fechado: boolean) {
-    if (!cnpj) {
+export default async function changePasswordDAO(token: string, _id: string, aberto_fechado: boolean) {
+    if (!_id) {
         throw "CNPJ não pode ser vazio";
     }
 
@@ -20,7 +20,7 @@ export default async function changePasswordDAO(token: string, cnpj: string, abe
             'x-auth-token': token
         },
         params: {
-            cnpj: cnpj
+            _id: _id
         }
     }).catch(error => {
         console.log(error.response.data.message ? error.response.data.message : error.response.data.error)

@@ -1,5 +1,5 @@
 export default interface ChangePasswordDAOInterface{
-    cnpj?: string,
+    _id?: string,
     aberto_fechado?: boolean,
     error?:string
 }

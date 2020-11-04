@@ -1,15 +1,15 @@
 import api from '../services/api'
 import CepInterface from '../services/Utils/CepInterface'
-export default async function findCEP(cep: string, number: string, cnpj: string) {
+export default async function findCEP(cep: string, number: string, _id: string) {
   if (!cep || !number ) {
     throw "CEP não pode ser vazio";
   }
   let data;
-  if (cnpj) {
+  if (_id) {
     data = {
       cep: cep,
       numero: number,
-      cnpj: cnpj,
+      _id: _id,
     }
   } else {
     data = {

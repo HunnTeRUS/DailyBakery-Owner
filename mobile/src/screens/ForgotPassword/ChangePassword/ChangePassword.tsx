@@ -12,7 +12,7 @@ import {useNetInfo} from '@react-native-community/netinfo';
 
 interface ChangePassword {
     email: string,
-    cnpj: string
+    _id: string
 }
 
 export default function ChangePassword() {
@@ -47,7 +47,7 @@ export default function ChangePassword() {
         }
         else {
             setShowLoading(true)
-            await sendVerificationEmailServices(params.email, params.cnpj, confirmationPassword).then(response => {
+            await sendVerificationEmailServices(params.email, params._id, confirmationPassword).then(response => {
                 if(response.error !== "" && response.error !== undefined && response.error !== null) {
                     setMessageToWarn(response.error ? response.error : "")
                     setShowLoading(false);

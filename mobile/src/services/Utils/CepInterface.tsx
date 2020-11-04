@@ -1,4 +1,5 @@
 export default interface CepInterface {
+  _id?: string,
   cep?: string,
   latitude?: string,
   longitude?: string,

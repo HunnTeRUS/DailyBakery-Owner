@@ -12,8 +12,8 @@ export default async function newFornadaServices(ultima_fornada: Date) {
 
     const obj = await getLoggedUser();
 
-    if(obj?.cnpj && obj?.token)
-        await newFornadaDAO(obj.cnpj, obj.token, ultima_fornada)
+    if(obj?._id && obj?.token)
+        await newFornadaDAO(obj._id, obj.token, ultima_fornada)
         .then(response => {
             objResponse = response;
     });

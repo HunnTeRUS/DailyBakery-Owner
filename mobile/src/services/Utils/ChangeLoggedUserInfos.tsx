@@ -4,7 +4,8 @@ import getLoggedUser, { setAndChangeLoggedUser } from "./LoggedUser";
 export default async function changeLoggedUserInfo(obj : UserInterface) {
     var currentObj = await getLoggedUser();
 
-    if(currentObj) {
+    if (currentObj) {
+        currentObj._id = obj._id ? obj._id : currentObj._id 
         currentObj.aberto_fechado = obj.aberto_fechado ? obj.aberto_fechado : currentObj.aberto_fechado
         currentObj.bairro = obj.bairro ? obj.bairro : currentObj.bairro
         currentObj.cep = obj.cep ? obj.cep : currentObj.cep

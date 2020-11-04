@@ -64,7 +64,6 @@ module.exports = {
             [Segments.BODY]: Joi.object().keys({
                 cnpj: Joi.string().required().length(14),
                 senha: Joi.string().required(),
-
             })
         });
     },
@@ -81,7 +80,7 @@ module.exports = {
     updateOpenedOrClosed() {
         return celebrate({
             [Segments.QUERY]: Joi.object().keys({
-                cnpj: Joi.string().required().length(14),
+                _id: Joi.string().required(),
             }),
             [Segments.BODY]: Joi.object().keys({
                 aberto_fechado: Joi.boolean().required()
@@ -92,7 +91,7 @@ module.exports = {
     updateLastBatch() {
         return celebrate({
             [Segments.QUERY]: Joi.object().keys({
-                cnpj: Joi.string().required().length(14),
+                _id: Joi.string().required(),
             }),
             [Segments.BODY]: Joi.object().keys({
                 ultima_fornada: Joi.date().required()
@@ -103,8 +102,8 @@ module.exports = {
     updatePassword() {
         return celebrate({
             [Segments.BODY]: Joi.object().keys({
+                _id: Joi.string().required(),
                 email: Joi.string().email().required(),
-                cnpj: Joi.string().required().length(14),
                 novaSenha: Joi.string().required().min(4),
             }),
         })
@@ -129,7 +128,7 @@ module.exports = {
     updateBakeryAddress() {
         return celebrate({
             [Segments.QUERY]: Joi.object().keys({
-                cnpj: Joi.string().required().length(14)
+                _id: Joi.string().required(),
             }),
             [Segments.BODY]: Joi.object().keys({
                 cep: Joi.string().required().length(8),
@@ -147,7 +146,7 @@ module.exports = {
     updatePhoneNumber() {
         return celebrate({
             [Segments.QUERY]: Joi.object().keys({
-                cnpj: Joi.string().required().length(14)
+                _id: Joi.string().required(),
             }),
             [Segments.BODY]: Joi.object().keys({
                 numero_celular: Joi.string().length(11).required(),
@@ -161,7 +160,7 @@ module.exports = {
             [Segments.BODY]: Joi.object().keys({
                 cep: Joi.string().required().length(8),
                 numero: Joi.string().required(),
-                cnpj: Joi.string().optional()
+                _id: Joi.string().optional()
             }),
         });
     },
@@ -169,7 +168,7 @@ module.exports = {
     getCnpjFromWs() {
         return celebrate({
             [Segments.QUERY]: Joi.object().keys({
-                cnpj: Joi.string().required().length(14)
+                _id: Joi.string().required(),
             }),
         });
     },

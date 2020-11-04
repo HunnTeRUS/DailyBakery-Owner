@@ -14,6 +14,7 @@ async function verifyLoginCredentials(cnpj: string, password: string) {
     timeout: 1000
   }).then(response => {
     obj = {
+      _id: response.data?._id,
       nome: response.data?.nome,
       email: response.data?.email,
       senha: response.data?.senha,

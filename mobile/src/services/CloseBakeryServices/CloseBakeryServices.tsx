@@ -4,14 +4,14 @@ import CloseBakeryDAOInterface from '../../dao/CloseBakeryDAO/CloseBakeryDAOInte
 import { useState } from 'react';
 import ChangePasswordDAOInterface from '../../dao/ChangePasswordDAO/ChangePasswordDAOInterface';
 
-export default async function changeOpenedClosedBakery(cnpj: string, token: string, aberto_fechado: boolean) {
-    if(!cnpj) {
+export default async function changeOpenedClosedBakery(_id: string, token: string, aberto_fechado: boolean) {
+    if(!_id) {
         throw "CNPJ não pode ser vazio";
     }
 
     let obj : CloseBakeryDAOInterface = {}
 
-    await closeBakeryDAO(token, cnpj, aberto_fechado).then(response=>{
+    await closeBakeryDAO(token, _id, aberto_fechado).then(response=>{
         obj = response;
     });
 

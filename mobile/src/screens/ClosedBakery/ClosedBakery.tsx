@@ -36,7 +36,7 @@ export default function ClosedBakery() {
         const loggedUser = await getLoggedUser();
 
         if(loggedUser)
-        await changeOpenedClosedBakery(loggedUser?.cnpj ? loggedUser.cnpj : "", loggedUser?.token ? loggedUser.token : "", false)
+        await changeOpenedClosedBakery(loggedUser?._id ? loggedUser._id : "", loggedUser?.token ? loggedUser.token : "", false)
             .then(response => {
                 if(response.error === "" || response.error === undefined || response.error === null){
                     loggedUser.aberto_fechado = false;

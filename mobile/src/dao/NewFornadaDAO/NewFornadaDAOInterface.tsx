@@ -1,6 +1,6 @@
 export default interface NewFornadaDAOInterface{
     ultima_fornada?: Date,
-    cnpj?: string,
+    _id?: string,
     error?: string,
     token?:string
 }

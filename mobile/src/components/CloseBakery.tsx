@@ -34,7 +34,7 @@ export default () => {
     setShowLoading(true)
     const loggedUser = await getLoggedUser();
     if (loggedUser)
-      await changeOpenedClosedBakery(loggedUser.cnpj ? loggedUser.cnpj : "", loggedUser.token ? loggedUser.token : "", true).then(response => {
+      await changeOpenedClosedBakery(loggedUser._id ? loggedUser._id : "", loggedUser.token ? loggedUser.token : "", true).then(response => {
         if (response.error === "" || response.error === undefined || response.error === null) {
           setShowLoading(false)
           loggedUser.aberto_fechado = true;
