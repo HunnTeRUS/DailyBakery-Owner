@@ -39,4 +39,6 @@ routes.get('/verifyCnpj', ApiValidations.getCnpjFromWs(), PadariaServicesUtils.g
 
 routes.get('/getBakeryById', ApiValidations.getBakeryById(), PadariaServices.getBakeryById);
 
+routes.post('/findBakeryByEmail', ApiValidations.findBakeryByEmail(), PadariaServicesUtils.validateEmail)
+
 module.exports = routes;

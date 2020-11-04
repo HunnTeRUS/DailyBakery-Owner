@@ -22,32 +22,32 @@ module.exports = {
                 gia: Joi.string().optional(),
                 latitude: Joi.number(),
                 longitude: Joi.number(),
-                tempo_espera: Joi.date().optional()
-            })
+                tempo_espera: Joi.date().optional(),
+            }),
         });
     },
 
     listBakeryByName() {
         return celebrate({
             [Segments.QUERY]: Joi.object().keys({
-                nome: Joi.string().required()
-            })
+                nome: Joi.string().required(),
+            }),
         });
     },
 
     listBakeryByIds() {
         return celebrate({
             [Segments.BODY]: Joi.object().keys({
-                idList: Joi.required()
-            })
+                idList: Joi.required(),
+            }),
         });
     },
 
     getBakeryById() {
         return celebrate({
             [Segments.QUERY]: Joi.object().keys({
-                _id: Joi.string().required()
-            })
+                _id: Joi.string().required(),
+            }),
         });
     },
 
@@ -55,7 +55,7 @@ module.exports = {
         return celebrate({
             [Segments.QUERY]: Joi.object().keys({
                 cnpj: Joi.string().required().length(14),
-            })
+            }),
         });
     },
 
@@ -64,7 +64,7 @@ module.exports = {
             [Segments.BODY]: Joi.object().keys({
                 cnpj: Joi.string().required().length(14),
                 senha: Joi.string().required(),
-            })
+            }),
         });
     },
 
@@ -73,8 +73,8 @@ module.exports = {
             [Segments.QUERY]: Joi.object().keys({
                 latitude: Joi.number().required(),
                 longitude: Joi.number().required(),
-            })
-        })
+            }),
+        });
     },
 
     updateOpenedOrClosed() {
@@ -83,9 +83,9 @@ module.exports = {
                 _id: Joi.string().required(),
             }),
             [Segments.BODY]: Joi.object().keys({
-                aberto_fechado: Joi.boolean().required()
-            })
-        })
+                aberto_fechado: Joi.boolean().required(),
+            }),
+        });
     },
 
     updateLastBatch() {
@@ -94,9 +94,9 @@ module.exports = {
                 _id: Joi.string().required(),
             }),
             [Segments.BODY]: Joi.object().keys({
-                ultima_fornada: Joi.date().required()
+                ultima_fornada: Joi.date().required(),
             }),
-        })
+        });
     },
 
     updatePassword() {
@@ -106,7 +106,7 @@ module.exports = {
                 email: Joi.string().email().required(),
                 novaSenha: Joi.string().required().min(4),
             }),
-        })
+        });
     },
 
     forgotPassword() {
@@ -114,15 +114,15 @@ module.exports = {
             [Segments.BODY]: Joi.object().keys({
                 cnpj: Joi.string().required().length(14),
             }),
-        })
+        });
     },
 
     bakeryToken() {
         return celebrate({
             [Segments.HEADERS]: Joi.object().keys({
-                token: Joi.required()
+                token: Joi.required(),
             }),
-        })
+        });
     },
 
     updateBakeryAddress() {
@@ -140,7 +140,7 @@ module.exports = {
                 latitude: Joi.number(),
                 longitude: Joi.number(),
             }),
-        })
+        });
     },
 
     updatePhoneNumber() {
@@ -152,7 +152,7 @@ module.exports = {
                 numero_celular: Joi.string().length(11).required(),
                 numero_telefone: Joi.string().length(10).optional(),
             }),
-        })
+        });
     },
 
     getAddressByCep() {
@@ -160,7 +160,7 @@ module.exports = {
             [Segments.BODY]: Joi.object().keys({
                 cep: Joi.string().required().length(8),
                 numero: Joi.string().required(),
-                _id: Joi.string().optional()
+                _id: Joi.string().optional(),
             }),
         });
     },
@@ -172,4 +172,12 @@ module.exports = {
             }),
         });
     },
-}
+
+    findBakeryByEmail() {
+        return celebrate({
+            [Segments.BODY]: Joi.object().keys({
+                email: Joi.string().required(),
+            }),
+        });
+    },
+};
