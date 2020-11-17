@@ -200,5 +200,5 @@ module.exports = {
             return response.status(400).json({ error: 'CNPJ invalido!' });
         }
 
-    }
+    },
 };
