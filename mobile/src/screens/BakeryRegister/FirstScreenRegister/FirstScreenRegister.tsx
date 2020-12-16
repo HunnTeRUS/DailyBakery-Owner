@@ -5,7 +5,7 @@ import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
 import styles from './styles';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import RegisterInterface from '../../../services/Utils/RegisterInterface';
-import FindEmailService from '../../../services/Register/FindEmailService';
+//import FindEmailService from '../../../services/Register/FindEmailService';
 import ModalPopupLoading from '../../../components/ModalPopup/ModalPopupLoading/ModalPopupLoading';
 import ModalPopupWarns from '../../../components/ModalPopup/ModalPopupWarn/ModalPopupWarns';
 
@@ -41,24 +41,24 @@ const FirstScreenRegister = () => {
   };
 
   async function pressButton() {
-    setLoading(true);
-    await FindEmailService(email).then((response) => {
-      setLoading(false);
-      if (
-        response.error === '' ||
-        response.error === undefined ||
-        response.error === null
-      ) {
-        navigation.navigate('SecondScreenRegister', {
-          cnpj: routeParams.cnpj,
-          senha: password,
-          email: email,
-        });
-      } else {
-        setShow(true);
-        setTextToShow(response.error);
-      }
+    //    setLoading(true);
+    //    await FindEmailService(email).then((response) => {
+    setLoading(false);
+    //      if (
+    //        response.error === '' ||
+    //        response.error === undefined ||
+    //        response.error === null
+    //      ) {
+    navigation.navigate('SecondScreenRegister', {
+      cnpj: routeParams.cnpj,
+      senha: password,
+      email: email,
     });
+    //      } else {
+    //      setShow(true);
+    //        setTextToShow(response.error);
+    //    }
+    //   });
   }
 
   return (
