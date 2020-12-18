@@ -4,6 +4,5 @@
   "dev": true,
   "minify": false,
   "urlRandomness": "pz-pw5",
-  "https": false,
-  "scheme": null
+  "https": false
 }
