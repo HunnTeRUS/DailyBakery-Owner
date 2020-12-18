@@ -27,8 +27,7 @@ import FourthScreenRegister from '../screens/BakeryRegister/FourthScreenRegister
 import CNPJScreen from '../screens/BakeryRegister/CNPJScreen/CNPJScreen';
 import WalkThroughTutorial from '../screens/WalkthroughTutorial/WalkthroughTutorial';
 import ChangePasswordForgot from '../screens/ForgotPassword/ChangePassword/ChangePassword';
-import * as Notifications from 'expo-notifications';
-import * as Permissions from 'expo-permissions';
+
 
 export default function Navigation({
   colorScheme,
@@ -48,14 +47,6 @@ export default function Navigation({
 const Stack = createStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
-  Notifications.setNotificationHandler({
-    handleNotification: async () => ({
-      shouldShowAlert: true,
-      shouldPlaySound: false,
-      shouldSetBadge: false,
-    }),
-  });
-
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Root" component={Login} />

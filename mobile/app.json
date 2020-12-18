@@ -1,36 +1,30 @@
 {
-  "expo": {
-    "name": "DailyBakery Owner",
-    "slug": "DailyBakery Owner",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
-    "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
-    "userInterfaceStyle": "automatic",
-    "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffcf6e"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true
-    },
-    "android":{
-
-    },
-    "web": {
-      "favicon": "./assets/images/favicon.png"
+    "expo": {
+        "name": "DailyBakery Owner",
+        "slug": "DailyBakery Owner",
+        "version": "1.0.0",
+        "orientation": "portrait",
+        "platforms": ["ios", "android", "web"],
+        "icon": "./assets/images/icon.png",
+        "scheme": "myapp",
+        "userInterfaceStyle": "automatic",
+        "splash": {
+            "image": "./assets/images/splash.png",
+            "resizeMode": "contain",
+            "backgroundColor": "#ffcf6e"
+        },
+        "updates": {
+            "fallbackToCacheTimeout": 0
+        },
+        "assetBundlePatterns": ["**/*"],
+        "ios": {
+            "supportsTablet": true
+        },
+        "android": {
+            "useNextNotificationsApi": true
+        },
+        "web": {
+            "favicon": "./assets/images/favicon.png"
+        }
     }
-  }
 }
