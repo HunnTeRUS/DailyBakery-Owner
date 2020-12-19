@@ -27,8 +27,7 @@ import FourthScreenRegister from '../screens/BakeryRegister/FourthScreenRegister
 import CNPJScreen from '../screens/BakeryRegister/CNPJScreen/CNPJScreen';
 import WalkThroughTutorial from '../screens/WalkthroughTutorial/WalkthroughTutorial';
 import ChangePasswordForgot from '../screens/ForgotPassword/ChangePassword/ChangePassword';
-
-
+import * as Notifications from 'expo-notifications';
 export default function Navigation({
   colorScheme,
 }: {
@@ -43,6 +42,15 @@ export default function Navigation({
     </NavigationContainer>
   );
 }
+
+//Bloco que configura a notificação pra aparecer com o app em execução em primeiro plano
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
 
 const Stack = createStackNavigator<RootStackParamList>();
 

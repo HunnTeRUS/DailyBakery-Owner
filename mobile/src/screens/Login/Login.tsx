@@ -34,19 +34,19 @@ const Login = () => {
   StatusBar.setHidden(true);
 
   const netInfo = useNetInfo();
-
-  async function notify() {
+  //Variavel que trigga a notificação
+  const triggerNotificationHandler = () => {
+    //Ativador da notificação, recebe um payload com os campos content e trigger sendo obrigatórios
     Notifications.scheduleNotificationAsync({
       content: {
         title: 'Login tá errado',
-        body: 'Escreve direito porra',
-        sound: 'email-sound.wav', // <- for Android below 8.0
+        body: 'Otávio gay',
       },
       trigger: {
-        seconds: 2,
+        seconds: 1,
       },
     });
-  }
+  };
 
   const WalkthroughOrHome = async () => {
     var variavel = await AsyncStorage.getItem('firstAccess');
@@ -138,18 +138,16 @@ const Login = () => {
           setShowLoading(false);
           navigation.navigate('BottomTabNavigator');
         } else {
-          async () => {
-            await notify();
-          };
           setTextToShow(response.error);
           setShowLoading(false);
           setShow(true);
         }
       })
       .catch(() => {
-        setTextToShow('Ocorreu um erro, tente novamente mais tarde!');
+        triggerNotificationHandler();
+        //setTextToShow('Ocorreu um erro, tente novamente mais tarde!');
         setShowLoading(false);
-        setShow(true);
+        //setShow(true);
       });
   }
 
