@@ -18,6 +18,9 @@ import newFornadaServices from '../services/NewFornadaServices/NewFornadaService
 import ModalPopupWarns from '../components/ModalPopup/ModalPopupWarn/ModalPopupWarns';
 import UserInterface from '../services/Utils/UserInterface';
 import { useFocusEffect } from '@react-navigation/native';
+import registerForPushNotificationsAsync, {
+  sendPushNotification,
+} from '../notifications/NotificationRegister';
 
 const SIZE = 150;
 const STROKE_WIDTH = 10;
@@ -141,6 +144,12 @@ export default ({ changeTextInfo, progress }: ButtonProps) => {
   const [lastBatch, setLastBatch] = useState('');
   const [day, setDay] = useState('');
 
+  async function sendNotificationHandler() {
+    let token = await registerForPushNotificationsAsync();
+    if (token) {
+      await sendPushNotification(token);
+    }
+  }
   useFocusEffect(() => {
     changeLastBatchValue();
   });
@@ -251,7 +260,7 @@ export default ({ changeTextInfo, progress }: ButtonProps) => {
     backingTime.setHours(backingTime.getHours() + 3);
     var now = new Date();
     var total = now.getTime() - backingTime.getTime();
-    
+
     if (total >= 240000) {
       setTextWarn1('Clique e segure');
       setTextWarn2(' o botão abaixo\n para notifica-los');
@@ -280,6 +289,7 @@ export default ({ changeTextInfo, progress }: ButtonProps) => {
   }
 
   async function changeAndDo() {
+    await sendNotificationHandler();
     await newFornada();
     await changeLastBatchValue();
     await handlerTimeOut();

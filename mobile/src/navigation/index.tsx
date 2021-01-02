@@ -5,7 +5,7 @@ import {
   useNavigation,
 } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Image, StyleSheet, View, ColorSchemeName } from 'react-native';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import ChangeAddress from '../screens/TabThreeScreen/components/ChangeAddress/ChangeAddress';
@@ -28,6 +28,10 @@ import CNPJScreen from '../screens/BakeryRegister/CNPJScreen/CNPJScreen';
 import WalkThroughTutorial from '../screens/WalkthroughTutorial/WalkthroughTutorial';
 import ChangePasswordForgot from '../screens/ForgotPassword/ChangePassword/ChangePassword';
 import * as Notifications from 'expo-notifications';
+import registerForPushNotificationsAsync, {
+  handleNotifications,
+} from '../notifications/NotificationRegister';
+
 export default function Navigation({
   colorScheme,
 }: {
@@ -55,6 +59,40 @@ Notifications.setNotificationHandler({
 const Stack = createStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
+  async function handlerNotification() {
+    await registerForPushNotificationsAsync();
+  }
+  const [expoPushToken, setExpoPushToken] = useState('');
+  const [notification, setNotification] = useState(false);
+  const notificationListener: any = useRef();
+  const responseListener: any = useRef();
+  useEffect(() => {
+    handlerNotification();
+
+    registerForPushNotificationsAsync().then((token) =>
+      setExpoPushToken(token ? token : '')
+    );
+
+    // This listener is fired whenever a notification is received while the app is foregrounded
+    notificationListener.current = Notifications.addNotificationReceivedListener(
+      (notification) => {
+        setNotification(notification ? true : false);
+      }
+    );
+
+    // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(
+      (response) => {
+        console.log(response);
+      }
+    );
+
+    return () => {
+      Notifications.removeNotificationSubscription(notificationListener);
+      Notifications.removeNotificationSubscription(responseListener);
+    };
+  }, []);
+
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Root" component={Login} />

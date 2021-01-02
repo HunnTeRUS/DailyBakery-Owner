@@ -24,6 +24,8 @@ import { useNetInfo } from '@react-native-community/netinfo';
 import CNPJMask, { removeMask } from '../../components/InputMasks';
 import { StatusBar } from 'react-native';
 import * as Notifications from 'expo-notifications';
+import registerForPushNotificationsAsync from '../../notifications/NotificationRegister';
+
 const Login = () => {
   const [typedcnpj, setCnpj] = useState('');
   const [password, setPassword] = useState('');
@@ -31,21 +33,26 @@ const Login = () => {
   const navigation = useNavigation();
   const [showLoading, setShowLoading] = useState(false);
   const [textToShow, setTextToShow] = useState('CNPJ ou senha inválidos!');
+
   StatusBar.setHidden(true);
 
   const netInfo = useNetInfo();
   //Variavel que trigga a notificação
-  const triggerNotificationHandler = () => {
+  const triggerNotificationHandler = async () => {
     //Ativador da notificação, recebe um payload com os campos content e trigger sendo obrigatórios
-    Notifications.scheduleNotificationAsync({
-      content: {
-        title: 'Login tá errado',
-        body: 'Otávio gay',
-      },
-      trigger: {
-        seconds: 1,
-      },
-    });
+    let token = await registerForPushNotificationsAsync();
+    if (token) {
+      Notifications.scheduleNotificationAsync({
+        content: {
+          title: 'Login tá errado',
+          body: 'Otávio gay',
+        },
+        trigger: {
+          seconds: 1,
+        },
+      });
+    }
+    return;
   };
 
   const WalkthroughOrHome = async () => {
@@ -145,9 +152,9 @@ const Login = () => {
       })
       .catch(() => {
         triggerNotificationHandler();
-        //setTextToShow('Ocorreu um erro, tente novamente mais tarde!');
+        setTextToShow('Ocorreu um erro, tente novamente mais tarde!');
         setShowLoading(false);
-        //setShow(true);
+        setShow(true);
       });
   }
 
