@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-dailybakery-dev-43444-authRole",
+      "UnauthRoleArn": "arn:aws:iam::746251520558:role/amplify-dailybakery-dev-43444-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::746251520558:role/amplify-dailybakery-dev-43444-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-dailybakery-dev-43444-deployment",
+      "UnauthRoleName": "amplify-dailybakery-dev-43444-unauthRole",
+      "StackName": "amplify-dailybakery-dev-43444",
+      "StackId": "arn:aws:cloudformation:us-east-1:746251520558:stack/amplify-dailybakery-dev-43444/51f85ff0-5316-11eb-ae68-12446ecd5e01",
+      "AmplifyAppId": "d3qy95crx1z984"
+    },
+    "categories": {
+      "auth": {
+        "dailybakery7239d209": {}
+      }
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "auth": {
+    "dailybakery7239d209": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  },
+  "api": {
+    "dailybakery": {
+      "service": "AppSync",
+      "providerPlugin": "awscloudformation",
+      "output": {
+        "authConfig": {
+          "defaultAuthentication": {
+            "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+            "userPoolConfig": {
+              "userPoolId": "authdailybakery7239d209"
+            }
+          },
+          "additionalAuthenticationProviders": []
+        }
+      }
+    }
+  },
+  "analytics": {
+    "dailybakery": {
+      "service": "Pinpoint",
+      "providerPlugin": "awscloudformation"
+    }
+  },
+  "function": {
+    "dailyBakeryLambdaFunction": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  }
+}

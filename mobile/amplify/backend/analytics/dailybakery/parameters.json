@@ -1,0 +1,21 @@
+{
+    "appName": "dailybakery",
+    "roleName": "pinpointLambdaRole6afb5742",
+    "cloudformationPolicyName": "cloudformationPolicy6afb5742",
+    "cloudWatchPolicyName": "cloudWatchPolicy6afb5742",
+    "pinpointPolicyName": "pinpointPolicy6afb5742",
+    "authPolicyName": "pinpoint_amplify_6afb5742",
+    "unauthPolicyName": "pinpoint_amplify_6afb5742",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "authRoleArn": {
+        "Fn::GetAtt": [
+            "AuthRole",
+            "Arn"
+        ]
+    }
+}
