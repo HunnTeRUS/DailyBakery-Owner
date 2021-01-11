@@ -9,17 +9,34 @@ import * as Permissions from 'expo-permissions';
 import { useEffect } from 'react';
 
 export default function Config2() {
-  const [state, setState] = useState({
+
+  interface user {
+    [key: string]: any;
+  }
+
+  interface state {
+    profile: {
+      expoToken: string,
+      name: string,
+      email: string
+    };
+    message: string;
+    user: user
+  }
+
+  const [state, setState] = useState<state>({
     profile: {
       expoToken: '',
       name: '',
       email: '',
     },
     message: '',
-    user: '',
+    user: [],
   });
 
-  handleSubmit();
+  useEffect(() => {
+    init();
+  }, []);
 
   async function getUserProfile(sub: any) {
     const result: any = await API.graphql(
@@ -40,8 +57,10 @@ export default function Config2() {
   async function init() {
     const user = await Auth.currentSession()
       .then((data) => {
+        console.log(data)
         //idToken.payload.sub
-        setState({ ...state, user: String(data.getIdToken().payload) });
+        setState({ ...state, user: data.getIdToken().payload });
+        console.log(state)
         return data.getIdToken().payload;
       })
       .catch((err) => console.log(err));
@@ -74,11 +93,8 @@ export default function Config2() {
     }
   }
 
-  useEffect(() => {
-    init();
-  }, []);
-
   async function handleSubmit() {
+    console.log(state);
     const inputParams = {
       message: state.message,
       token: state.profile.expoToken,
@@ -90,6 +106,7 @@ export default function Config2() {
     const result = await API.graphql(
       graphqlOperation(mutations.pinpoint, { input: inputParams })
     );
+    console.log(result);
 
     if (result) {
       console.log(result);
@@ -116,7 +133,7 @@ export default function Config2() {
           marginTop: 2,
         }}
       ></TextInput>
-      <Button title="Submit" onPress={handleSubmit} />
+      <Button title="Submit" onPress={() => {handleSubmit()}} />
     </View>
   );
 }
